@@ -16,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,38 +25,62 @@ import java.sql.Statement;
  */
 public class FXMLDocumentController implements Initializable {
     
-    static String[] usernameArray;
-    static String[] passwordArray;
-    static int lineCount = 0;
+    List<String> usernameList = new ArrayList<String>();
+    List<String> passwordList = new ArrayList<String>();
+    static long lineCount;
     static String usernameSQL;
     static String passwordSQL;
-    public static void main(String[] args){
+    int noneFoundFlag = 1;
+
+    @FXML
+    TextField usernameTxt;
+    
+    @FXML
+    TextField passwordTxt;
+     
+    @FXML
+    private void submitButtonAction(ActionEvent event) {
+        String[] usernameArray = new String[usernameList.size()];
+        String[] passwordArray = new String[passwordList.size()];
+        usernameArray = usernameList.toArray(usernameArray);
+        passwordArray = passwordList.toArray(passwordArray);
+        String username = usernameTxt.getText();
+        String password = passwordTxt.getText();
+        for(int i = 0; i < usernameList.size();i++)
+        {
+            if(username.matches(usernameArray[i]))
+            {
+                System.out.println("it worked");
+                noneFoundFlag = 2;
+                break;
+            }
+        }
+        if(noneFoundFlag == 1)
+        {
+            System.out.println("none found");
+        }
+        
+    }
+    
+    @FXML
+    private void createAccountButtonAction(ActionEvent event) {
+        //open new form for creating an account
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
         try {
-            System.out.println("help1");
-            String url = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-            conn = DriverManager.getConnection(url, "root", "Rockgod101!");
+            String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            conn = DriverManager.getConnection(url2, "root", "Rockgod101!");
             Statement stmt = null;
             String query = "SELECT username, password FROM capstone.users";
-            String query2 = "SELECT COUNT(*) FROM capstone.users";
             try {
-                System.out.println("help2");
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                ResultSet rs2 = stmt.executeQuery(query2);
-                while (rs2.next()){
-                    lineCount = rs2.getInt("COUNT(*)");
-                }
-                for(int i = 0; i<lineCount; i++){
-                    System.out.println("line count = " + lineCount);
-                    while (rs.next()){
-                        usernameSQL = rs.getString("username");
-                        passwordSQL = rs.getString("password");
-                    }
-                    usernameArray[i] = usernameSQL;
-                    System.out.println("username = " + usernameSQL);
-                    passwordArray[i] = passwordSQL;
-                    System.out.println("password = " + passwordSQL);
+                while (rs.next()){
+                    usernameList.add(rs.getString(1));
+                    passwordList.add(rs.getString(2));
                 }
             }
             catch (SQLException e ) {
@@ -70,28 +96,6 @@ public class FXMLDocumentController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
-    }
-
-    
-    @FXML
-    TextField usernameTxt;
-    
-    @FXML
-    TextField passwordTxt;
-     
-    @FXML
-    private void submitButtonAction(ActionEvent event) {
-        String username = usernameTxt.getText();
-        String password = passwordTxt.getText();
-    }
-    
-    @FXML
-    private void createAccountButtonAction(ActionEvent event) {
-        //open new form for creating an account
-    }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
     }    
     
 }
