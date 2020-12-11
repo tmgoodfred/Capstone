@@ -1,5 +1,6 @@
 package capstone;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -42,9 +43,12 @@ public class LoginScreenController implements Initializable {
     
     @FXML
     Button createAccountBtn;
+    
+    @FXML
+    Button submitBtn;
      
     @FXML
-    private void submitButtonAction(ActionEvent event) {    //when the submit button is pressed, it will take the accepted text field information and compare it to the database to find matching users
+    private void submitButtonAction(ActionEvent event) throws IOException {    //when the submit button is pressed, it will take the accepted text field information and compare it to the database to find matching users
         String[] usernameArray = new String[usernameList.size()];
         String[] passwordArray = new String[passwordList.size()];
         usernameArray = usernameList.toArray(usernameArray);    //converts list to array for easy traversal
@@ -56,16 +60,22 @@ public class LoginScreenController implements Initializable {
             if(username.matches(usernameArray[i]))  //checks the username input against every username in the database, as soon as one matches, it moves on
             {
                 moveOn=2;
-                //show next scene
+                noneFoundFlag = 2;
                 if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
                 {
                     //we move on to the next scene
-                    JOptionPane.showMessageDialog(parent, "Correct");
-                    noneFoundFlag2 = 2;
+                    noneFoundFlag2 = 3;
+                    Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                    stage3.close();
+                    Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
                     break;
                 }
-                noneFoundFlag = 2;  //flag is flipped showing that a user was found and don't show the error message
-                break;  //gets us out of the loop if a user is found
+                //noneFoundFlag = 2;  //flag is flipped showing that a user was found and don't show the error message
+                //break;  //gets us out of the loop if a user is found
             }
         }
         if(noneFoundFlag == 1)  //if the previous loop does not find anything, after it completes, this will run and output the error message.
