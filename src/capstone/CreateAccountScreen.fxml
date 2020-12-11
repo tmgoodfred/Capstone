@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="344.0" prefWidth="327.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.CreateAccountScreenController">
+   <children>
+      <Button fx:id="nextBtn" layoutX="144.0" layoutY="243.0" mnemonicParsing="false" onAction="#nextButtonAction" text="Next" />
+      <Button fx:id="backBtn" layoutX="144.0" layoutY="284.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <TextField fx:id="firstNameTxt" layoutX="96.0" layoutY="91.0" promptText="First Name" />
+      <TextField fx:id="usernameTxt" layoutX="96.0" layoutY="60.0" promptText="Username" />
+      <TextField fx:id="lastNameTxt" layoutX="96.0" layoutY="124.0" promptText="Last Name" />
+      <TextField fx:id="ageTxt" alignment="CENTER" layoutX="109.0" layoutY="159.0" prefHeight="25.0" prefWidth="54.0" promptText="Age" />
+      <Label layoutX="136.0" layoutY="35.0" text="* = Required" />
+      <Label layoutX="82.0" layoutY="64.0" text="*" />
+      <Label layoutX="82.0" layoutY="95.0" text="*" />
+      <Label layoutX="82.0" layoutY="128.0" text="*" />
+      <Label layoutX="171.0" layoutY="163.0" text="(From 18-99)" />
+      <ComboBox fx:id="genderDropBox" layoutX="95.0" layoutY="196.0" prefWidth="150.0" promptText="Gender" />
+   </children>
+</AnchorPane>
