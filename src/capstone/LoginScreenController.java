@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,6 +14,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -34,6 +39,9 @@ public class LoginScreenController implements Initializable {
     
     @FXML
     TextField passwordTxt;
+    
+    @FXML
+    Button createAccountBtn;
      
     @FXML
     private void submitButtonAction(ActionEvent event) {    //when the submit button is pressed, it will take the accepted text field information and compare it to the database to find matching users
@@ -75,8 +83,14 @@ public class LoginScreenController implements Initializable {
     }
     
     @FXML
-    private void createAccountButtonAction(ActionEvent event) {
-        //open new form for creating an account
+    private void createAccountButtonAction(ActionEvent event) throws Exception {
+        Stage stage2 = (Stage) createAccountBtn.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("CreateAccountScreen.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
     @Override
