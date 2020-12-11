@@ -437,7 +437,6 @@ public class CreateAccountScreenController implements Initializable {
                     insertPrep.setDouble(17, historyLvl);
                     insertPrep.setDouble(18, youngAdultLvl);
                     insertPrep.executeUpdate();
-                    conn.commit();
                     Stage stage2 = (Stage) backBtn.getScene().getWindow();
                     stage2.close();
                     Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
