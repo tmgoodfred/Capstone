@@ -51,7 +51,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="allTableView1" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                        <TableView fx:id="readTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
                            <columns>
                               <TableColumn fx:id="readTitleTab" prefWidth="139.0" text="Title" />
                               <TableColumn fx:id="readAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
