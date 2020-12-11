@@ -1,5 +1,6 @@
 package capstone;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,14 +28,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ToggleGroup;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tyler Goodfred
  */
 public class CreateAccountScreenController implements Initializable {
-        
-    List<String> usernameList = new ArrayList<String>();
+    
+    JFrame parent = new JFrame();   //for error pop up message that user was not found
+    List<String> usernameList = new ArrayList<String>(); 
     
     @FXML
     Button backBtn;
@@ -46,12 +50,15 @@ public class CreateAccountScreenController implements Initializable {
     TextField passwordTxt;
     
     @FXML
+    TextField confirmPasswordTxt;
+    
+    @FXML
     TextField ageTxt;
     
     @FXML
     ComboBox genderDropBox;
     double actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl;
-    
+    int moveOn = 1;
     
     // <editor-fold defaultstate="collapsed" desc="radio buttons">
     @FXML
@@ -189,9 +196,8 @@ public class CreateAccountScreenController implements Initializable {
     // </editor-fold>
     
     
-    //toggleGroup.getSelectedToggle() use this to retrieve chosen item
     @FXML
-    private void submitButtonAction(ActionEvent event) {
+    private void submitButtonAction(ActionEvent event) throws IOException {
         // <editor-fold defaultstate="collapsed" desc="if statements for radio buttons">
         if(aaG.getSelectedToggle() == aa1){
             actionAdventureLvl = 0.0;
@@ -375,30 +381,101 @@ public class CreateAccountScreenController implements Initializable {
         }
         // </editor-fold>
         
-        Connection conn = null;
-        try {
-            String url = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-            conn = DriverManager.getConnection(url, "root", "Rockgod101!");
-            Statement stmt = null;
-            String insert = "INSERT INTO capstone.users (username, password, userFirstName, userLastName, userAge, userGender, actionAdventureLvl, classicLvl, mysteryLvl, "
-                    + "fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement insertPrep = conn.prepareStatement(insert);
-            try {
-                insertPrep.executeUpdate();
-                conn.commit();
-            }
-            catch (SQLException e ) {
-              throw new Error("Problem", e);
-            } finally {
-              if (stmt != null) { stmt.close(); }
+        String username = usernameTxt.getText();
+        String[] usernameArray = new String[usernameList.size()];
+        usernameArray = usernameList.toArray(usernameArray);
+        for(int i=0; i<usernameList.size();i++){
+            if(username.matches(usernameArray[i]))  //checks the username input against every username in the database, as soon as one matches, it throws the error
+            {
+                moveOn = 2;
+                break;
             }
         }
-        catch (SQLException e) {
-            throw new Error("Problem", e);
-        } finally {
-          try {if (conn != null) {conn.close();}} 
-          catch (SQLException ex) {System.out.println(ex.getMessage());}
+        
+        String password = passwordTxt.getText();
+        String confirmPassword = confirmPasswordTxt.getText();
+        if(!password.matches(confirmPassword) && moveOn != 2){
+            moveOn = 3;
+        }
+        
+        String age = ageTxt.getText();
+        int ageNum = Integer.parseInt(age);
+        if((ageNum < 18 || ageNum > 99) && moveOn != 2 && moveOn != 3){
+            moveOn = 4;
+        }
+        String gender = (String) genderDropBox.getValue();
+        if((gender == "Gender" || gender == null) && moveOn != 2 && moveOn != 3 && moveOn!= 4){
+            moveOn = 5;
+        }
+        Connection conn = null;
+        while(moveOn == 1){
+            try {
+                String url = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                conn = DriverManager.getConnection(url, "root", "Rockgod101!");
+                Statement stmt = null;
+                String insert = "INSERT INTO capstone.users (username, password, userFirstName, userLastName, userAge, userGender, actionAdventureLvl, classicLvl, mysteryLvl, "
+                        + "fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                PreparedStatement insertPrep = conn.prepareStatement(insert);
+                try {
+                    insertPrep.setString(1, username);
+                    insertPrep.setString(2, password);
+                    insertPrep.setString(3, username);
+                    insertPrep.setString(4, username);
+                    insertPrep.setInt(5, Integer.parseInt(age));
+                    insertPrep.setString(6, gender);
+                    insertPrep.setDouble(7, actionAdventureLvl);
+                    insertPrep.setDouble(8, classicLvl);
+                    insertPrep.setDouble(9, mysteryLvl);
+                    insertPrep.setDouble(10, fantasyLvl);
+                    insertPrep.setDouble(11, historicalFictionLvl);
+                    insertPrep.setDouble(12, horrorLvl);
+                    insertPrep.setDouble(13, thrillerLvl);
+                    insertPrep.setDouble(14, romanceLvl);
+                    insertPrep.setDouble(15, sciFiLvl);
+                    insertPrep.setDouble(16, shortStoriesLvl);
+                    insertPrep.setDouble(17, historyLvl);
+                    insertPrep.setDouble(18, youngAdultLvl);
+                    insertPrep.executeUpdate();
+                    conn.commit();
+                    Stage stage2 = (Stage) backBtn.getScene().getWindow();
+                    stage2.close();
+                    Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                }
+                catch (SQLException e ) {
+                  throw new Error("Problem", e);
+                } finally {
+                  if (stmt != null) { stmt.close(); }
+                }
+            }
+            catch (SQLException e) {
+                throw new Error("Problem", e);
+            } finally {
+              try {if (conn != null) {conn.close();}} 
+              catch (SQLException ex) {System.out.println(ex.getMessage());}
+            }
+        } //end of while statement
+        if (moveOn == 2){
+            usernameTxt.clear();    //clears the text boxes for fresh data to be input
+            passwordTxt.clear();    //users will often time think they're signing in with the proper username but will sometimes have small errors like a missing letter.
+            confirmPasswordTxt.clear();
+            JOptionPane.showMessageDialog(parent, "Error: Username already taken");
+        }
+        if (moveOn == 3){
+            passwordTxt.clear();
+            confirmPasswordTxt.clear();
+            JOptionPane.showMessageDialog(parent, "Error: Passwords do not match");
+        }
+        if (moveOn == 4){
+            ageTxt.clear();
+            JOptionPane.showMessageDialog(parent, "Error: Please enter an age between 18 and 99");
+        }
+        if (moveOn == 5){
+            JOptionPane.showMessageDialog(parent, "Error: Please select a gender");
         }
     }
     
