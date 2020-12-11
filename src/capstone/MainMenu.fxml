@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.MainMenuController">
+<AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.MainMenuController">
    <children>
-      <Label layoutX="275.0" layoutY="192.0" text="Welcome" />
+      <TabPane prefHeight="659.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Recommendations">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="recTableView" layoutX="20.0" layoutY="21.0" prefHeight="590.0" prefWidth="847.0">
+                          <columns>
+                            <TableColumn fx:id="recTitleTab" prefWidth="136.0" text="Title" />
+                            <TableColumn fx:id="recAuthTab" minWidth="8.0" prefWidth="122.0" text="Author" />
+                              <TableColumn fx:id="recDescTab" prefWidth="331.0" text="Description" />
+                              <TableColumn fx:id="recPgCntTab" minWidth="0.0" prefWidth="73.0" text="Page Count" />
+                              <TableColumn fx:id="recGenreTab" prefWidth="109.0" text="Genre" />
+                              <TableColumn fx:id="recRateTab" prefWidth="75.0" text="Avg. Rating" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="All Books">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                           <columns>
+                              <TableColumn fx:id="allTitleTab" prefWidth="139.0" text="Title" />
+                              <TableColumn fx:id="allAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
+                              <TableColumn fx:id="allDescTab" prefWidth="306.0" text="Description" />
+                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
+                              <TableColumn fx:id="allGenreTab" prefWidth="112.0" text="Genre" />
+                              <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Books You've Read">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="allTableView1" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                           <columns>
+                              <TableColumn fx:id="readTitleTab" prefWidth="139.0" text="Title" />
+                              <TableColumn fx:id="readAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
+                              <TableColumn fx:id="readDescTab" prefWidth="306.0" text="Description" />
+                              <TableColumn fx:id="readPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
+                              <TableColumn fx:id="readGenreTab" prefWidth="112.0" text="Genre" />
+                              <TableColumn fx:id="readRateTab" prefWidth="75.0" text="Avg. Rating" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="searchTableView" text="Search">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="searchTxt" layoutX="369.0" layoutY="14.0" promptText="Search:" />
+                        <TableView layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
+                           <columns>
+                              <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
+                              <TableColumn fx:id="searchAuthTab" minWidth="8.0" prefWidth="132.0" text="Author" />
+                              <TableColumn fx:id="searchDescTab" prefWidth="319.0" text="Description" />
+                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="70.0" text="Page Count" />
+                              <TableColumn fx:id="searchGenreTab" prefWidth="103.0" text="Genre" />
+                              <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
