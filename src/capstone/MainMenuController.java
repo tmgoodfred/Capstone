@@ -17,6 +17,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import java.util.List;
 import java.util.ArrayList;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -38,14 +44,14 @@ public class MainMenuController implements Initializable {
     List<Integer> bookTotalReads = new ArrayList<Integer>();
     List<String> bookMainGenre = new ArrayList<String>();
     
-    Integer[] bookIDArray = new Integer[bookID.size()];
+    /*Integer[] bookIDArray = new Integer[bookID.size()];
     String[] bookTitleArray = new String[bookTitle.size()];
     String[] bookAuthorArray = new String[bookAuthor.size()];
     String[] bookDescriptionArray = new String[bookDescription.size()];
     Integer[] bookPageCountArray = new Integer[bookPageCount.size()];
     Double[] bookRatingArray = new Double[bookRating.size()];
     Integer[] bookTotalReadsArray = new Integer[bookTotalReads.size()];
-    String[] bookMainGenreArray = new String[bookMainGenre.size()];
+    String[] bookMainGenreArray = new String[bookMainGenre.size()];*/
     
     @FXML
     TableColumn allTitleTab;
@@ -120,11 +126,31 @@ public class MainMenuController implements Initializable {
     this.mainGenres = mainGenres;
     this.bookRatings = bookRatings;
     }
+       
+    public StringProperty bookTitlesProperty(){
+        return new SimpleStringProperty(bookTitles);
+    }
+    public StringProperty bookAuthorsProperty(){
+        return new SimpleStringProperty(bookAuthors);
+    }
+    public StringProperty bookDescriptionsProperty(){
+        return new SimpleStringProperty(bookDescriptions);
+    }
+    public IntegerProperty bookPageCountsProperty(){
+        return new SimpleIntegerProperty(bookPageCounts);
+    }
+    public StringProperty mainGenresProperty(){
+        return new SimpleStringProperty(mainGenres);
+    }
+    public DoubleProperty bookRatingsProperty(){
+        return new SimpleDoubleProperty(bookRatings);
+    }
+    
     
     public ObservableList<MainMenuController> getItems(){
         ObservableList<MainMenuController> items = FXCollections.observableArrayList();
         for(int i=0; i<bookID.size();i++){
-            items.add(new MainMenuController(bookTitleArray[i],bookAuthorArray[i], bookDescriptionArray[i], bookPageCountArray[i], bookMainGenreArray[i],bookRatingArray[i]));
+            items.add(new MainMenuController(bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
         }
         return items;
     }
@@ -164,29 +190,28 @@ public class MainMenuController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
+        //allTableView.getColumns().clear();
         
-        allTableView.getColumns().clear();
-        allTableView.getColumns().addAll(allTitleTab, allAuthTab, allDescTab, allPgCntTab, allGenreTab, allRateTab);
-        
-        bookIDArray = bookID.toArray(bookIDArray);
+        /*bookIDArray = bookID.toArray(bookIDArray);
         bookTitleArray = bookTitle.toArray(bookTitleArray);
         bookAuthorArray = bookAuthor.toArray(bookAuthorArray);
         bookDescriptionArray = bookDescription.toArray(bookDescriptionArray);
         bookPageCountArray = bookPageCount.toArray(bookPageCountArray);
         bookRatingArray = bookRating.toArray(bookRatingArray);
         bookTotalReadsArray = bookTotalReads.toArray(bookTotalReadsArray);
-        bookMainGenreArray = bookMainGenre.toArray(bookMainGenreArray);  
+        bookMainGenreArray = bookMainGenre.toArray(bookMainGenreArray);  */
         
-        allTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitle"));
-        allAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthor"));
-        allDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescription"));
-        allPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCount"));
-        allGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenre"));
-        allRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRating"));
+        allTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));
+        allAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
+        allDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
+        allPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
+        allGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
+        allRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
         
         //allTableView.getColumns().clear();
-        allTableView.setItems(getItems());
+        //allTableView.setItems(getItems());
         //allTableView.getColumns().addAll(allTitleTab, allAuthTab, allDescTab, allPgCntTab, allGenreTab, allRateTab);
+        allTableView.setItems(getItems());
         
     }  
     
