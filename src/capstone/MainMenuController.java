@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package capstone;
 
 import java.net.URL;
@@ -43,15 +38,6 @@ public class MainMenuController implements Initializable {
     List<Double> bookRating = new ArrayList<Double>();
     List<Integer> bookTotalReads = new ArrayList<Integer>();
     List<String> bookMainGenre = new ArrayList<String>();
-    
-    /*Integer[] bookIDArray = new Integer[bookID.size()];
-    String[] bookTitleArray = new String[bookTitle.size()];
-    String[] bookAuthorArray = new String[bookAuthor.size()];
-    String[] bookDescriptionArray = new String[bookDescription.size()];
-    Integer[] bookPageCountArray = new Integer[bookPageCount.size()];
-    Double[] bookRatingArray = new Double[bookRating.size()];
-    Integer[] bookTotalReadsArray = new Integer[bookTotalReads.size()];
-    String[] bookMainGenreArray = new String[bookMainGenre.size()];*/
     
     @FXML
     TableColumn allTitleTab;
@@ -190,16 +176,6 @@ public class MainMenuController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
-        //allTableView.getColumns().clear();
-        
-        /*bookIDArray = bookID.toArray(bookIDArray);
-        bookTitleArray = bookTitle.toArray(bookTitleArray);
-        bookAuthorArray = bookAuthor.toArray(bookAuthorArray);
-        bookDescriptionArray = bookDescription.toArray(bookDescriptionArray);
-        bookPageCountArray = bookPageCount.toArray(bookPageCountArray);
-        bookRatingArray = bookRating.toArray(bookRatingArray);
-        bookTotalReadsArray = bookTotalReads.toArray(bookTotalReadsArray);
-        bookMainGenreArray = bookMainGenre.toArray(bookMainGenreArray);  */
         
         allTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));
         allAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
@@ -208,9 +184,6 @@ public class MainMenuController implements Initializable {
         allGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
         allRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
         
-        //allTableView.getColumns().clear();
-        //allTableView.setItems(getItems());
-        //allTableView.getColumns().addAll(allTitleTab, allAuthTab, allDescTab, allPgCntTab, allGenreTab, allRateTab);
         allTableView.setItems(getItems());
         
     }  
