@@ -42,6 +42,12 @@ public class CreateAccountScreenController implements Initializable {
     TextField usernameTxt;
     
     @FXML
+    TextField firstNameTxt;
+    
+    @FXML
+    TextField lastNameTxt;
+    
+    @FXML
     TextField passwordTxt;
     
     @FXML
@@ -393,6 +399,9 @@ public class CreateAccountScreenController implements Initializable {
             moveOn = 3;
         }
         
+        String firstName = firstNameTxt.getText();
+        String lastName = lastNameTxt.getText();
+        
         String age = ageTxt.getText();
         int ageNum = Integer.parseInt(age);
         if((ageNum < 18 || ageNum > 99) && moveOn != 2 && moveOn != 3){
@@ -415,8 +424,8 @@ public class CreateAccountScreenController implements Initializable {
                 try {
                     insertPrep.setString(1, username);
                     insertPrep.setString(2, password);
-                    insertPrep.setString(3, username);
-                    insertPrep.setString(4, username);
+                    insertPrep.setString(3, firstName);
+                    insertPrep.setString(4, lastName);
                     insertPrep.setInt(5, Integer.parseInt(age));
                     insertPrep.setString(6, gender);
                     insertPrep.setDouble(7, actionAdventureLvl);
