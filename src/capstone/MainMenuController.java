@@ -184,7 +184,7 @@ public class MainMenuController implements Initializable {
         String searchTerm = searchTxt.getText();
         for(int i=0; i<bookTitle.size();i++){
             {
-                if(bookTitle.get(i).contains(searchTerm) || bookAuthor.get(i).contains(searchTerm) || bookDescription.get(i).contains(searchTerm))
+                if(bookTitle.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || bookAuthor.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || bookDescription.get(i).toLowerCase().contains(searchTerm.toLowerCase()))
                 {
                     searchbookTitle.add(bookTitle.get(i));
                     searchbookAuthor.add(bookAuthor.get(i));
