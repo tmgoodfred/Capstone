@@ -103,13 +103,15 @@ public class MainMenuController implements Initializable {
     
     @FXML
     TableView<MainMenuController> allTableView;
-    //@FXML
-    //TableView<MainMenuController> recTableView;
+    @FXML
+    TableView<MainMenuController> recTableView;
     @FXML
     TableView<MainMenuController> searchTableView;
     
     @FXML
     Button searchBtn;
+    @FXML
+    Button refreshBtn;
     @FXML
     TextField searchTxt;
     
@@ -165,38 +167,35 @@ public class MainMenuController implements Initializable {
     
     public ObservableList<MainMenuController> getSearchItems(){
         ObservableList<MainMenuController> items2 = FXCollections.observableArrayList();
-        for(int i=0; i<searchbookID.size();i++){
+        for(int i=0; i<searchbookTitle.size();i++){
             items2.add(new MainMenuController(searchbookTitle.get(i), searchbookAuthor.get(i), searchbookDescription.get(i), searchbookPageCount.get(i), searchbookMainGenre.get(i),searchbookRating.get(i)));
         }
         return items2;
     }
 
     @FXML
-    private void submitButtonAction(ActionEvent event) throws IOException {    
+    private void submitButtonAction(ActionEvent event) throws IOException { 
+        searchbookTitle.clear();
+        searchbookAuthor.clear();
+        searchbookDescription.clear();
+        searchbookPageCount.clear();
+        searchbookMainGenre.clear();
+        searchbookRating.clear();
         String searchTerm = searchTxt.getText();
         for(int i=0; i<bookTitle.size();i++){
             {
-                //if(searchTerm.contains(bookTitle.get(i)) || searchTerm.contains(bookAuthor.get(i)) || searchTerm.contains(bookDescription.get(i)))
                 if(bookTitle.get(i).contains(searchTerm) || bookAuthor.get(i).contains(searchTerm) || bookDescription.get(i).contains(searchTerm))
                 {
                     searchbookTitle.add(bookTitle.get(i));
                     searchbookAuthor.add(bookAuthor.get(i));
                     searchbookDescription.add(bookDescription.get(i));
                     searchbookPageCount.add(bookPageCount.get(i));
-                    searchbookRating.add(bookRating.get(i));
                     searchbookMainGenre.add(bookMainGenre.get(i));
+                    searchbookRating.add(bookRating.get(i));
                 }
                 
             }
         }
-        //for some reason this isn't putting data into the table upon button press.
-        searchTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));
-        searchAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
-        searchDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
-        searchPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
-        searchGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
-        searchRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
-
         searchTableView.setItems(getSearchItems());
     }
     
@@ -242,6 +241,13 @@ public class MainMenuController implements Initializable {
         allPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
         allGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
         allRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
+        
+        searchTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));
+        searchAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
+        searchDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
+        searchPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
+        searchGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
+        searchRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
         
         allTableView.setItems(getItems());
         
