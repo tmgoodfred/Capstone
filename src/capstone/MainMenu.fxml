@@ -65,12 +65,12 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="searchTableView" text="Search">
+            <Tab text="Search">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="searchTxt" layoutX="369.0" layoutY="14.0" promptText="Search:" />
-                        <TableView layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
+                        <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Search:" />
+                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
                            <columns>
                               <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
                               <TableColumn fx:id="searchAuthTab" minWidth="8.0" prefWidth="132.0" text="Author" />
@@ -80,6 +80,7 @@
                               <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
+                        <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Search" />
                      </children>
                   </AnchorPane>
               </content>
