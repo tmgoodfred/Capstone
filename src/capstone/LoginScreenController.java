@@ -48,7 +48,7 @@ public class LoginScreenController implements Initializable {
     Button submitBtn;
      
     @FXML
-    private void submitButtonAction(ActionEvent event) throws IOException {    //when the submit button is pressed, it will take the accepted text field information and compare it to the database to find matching users
+    private void submitButtonAction(ActionEvent event) throws IOException, SQLException {    //when the submit button is pressed, it will take the accepted text field information and compare it to the database to find matching users
         String[] usernameArray = new String[usernameList.size()];
         String[] passwordArray = new String[passwordList.size()];
         usernameArray = usernameList.toArray(usernameArray);    //converts list to array for easy traversal
@@ -63,6 +63,34 @@ public class LoginScreenController implements Initializable {
                 noneFoundFlag = 2;
                 if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
                 {
+                    Connection conn = null;
+                    try {
+                        String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                        conn = DriverManager.getConnection(url2, "root", "Rootpass1");
+                        Statement stmt = null;
+                        String update = "UPDATE capstone.users SET (userTimesAccessed = userTimesAccessed+1) WHERE userID ="; //NEED TO FIX THIS 
+                        try {                       //THIS NEEDS UPDATE TO EXECUTE THE UPDATE
+                            stmt = conn.createStatement();
+                            ResultSet rs = stmt.executeQuery(update);
+                            while (rs.next()){
+                                usernameList.add(rs.getString(1));  //adds usernames to username list
+                                passwordList.add(rs.getString(2));  //adds passwords to password list
+                            }
+                        }
+                        catch (SQLException e ) {
+                          throw new Error("Problem", e);
+                        } finally {
+                          if (stmt != null) { stmt.close(); }
+                        }
+                    }
+                    catch (SQLException e) {
+                        throw new Error("Problem", e);
+                    } 
+                    finally {
+                      try {if (conn != null) {conn.close();}} 
+                      catch (SQLException ex) {System.out.println(ex.getMessage());}
+                    }
+                    
                     //we move on to the next scene
                     noneFoundFlag2 = 3;
                     Stage stage3 = (Stage) submitBtn.getScene().getWindow();
