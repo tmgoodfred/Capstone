@@ -1,5 +1,6 @@
 package capstone;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +21,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -38,6 +42,15 @@ public class MainMenuController implements Initializable {
     List<Double> bookRating = new ArrayList<Double>();
     List<Integer> bookTotalReads = new ArrayList<Integer>();
     List<String> bookMainGenre = new ArrayList<String>();
+    
+    List<Integer> searchbookID = new ArrayList<Integer>();
+    List<String> searchbookTitle = new ArrayList<String>();
+    List<String> searchbookAuthor = new ArrayList<String>();
+    List<String> searchbookDescription = new ArrayList<String>();
+    List<Integer> searchbookPageCount = new ArrayList<Integer>();
+    List<Double> searchbookRating = new ArrayList<Double>();
+    List<Integer> searchbookTotalReads = new ArrayList<Integer>();
+    List<String> searchbookMainGenre = new ArrayList<String>();
     
     @FXML
     TableColumn allTitleTab;
@@ -90,6 +103,15 @@ public class MainMenuController implements Initializable {
     
     @FXML
     TableView<MainMenuController> allTableView;
+    //@FXML
+    //TableView<MainMenuController> recTableView;
+    @FXML
+    TableView<MainMenuController> searchTableView;
+    
+    @FXML
+    Button searchBtn;
+    @FXML
+    TextField searchTxt;
     
     private String bookTitles, bookAuthors, bookDescriptions, mainGenres;
     private Integer bookPageCounts;
@@ -140,7 +162,44 @@ public class MainMenuController implements Initializable {
         }
         return items;
     }
+    
+    public ObservableList<MainMenuController> getSearchItems(){
+        ObservableList<MainMenuController> items2 = FXCollections.observableArrayList();
+        for(int i=0; i<searchbookID.size();i++){
+            items2.add(new MainMenuController(searchbookTitle.get(i), searchbookAuthor.get(i), searchbookDescription.get(i), searchbookPageCount.get(i), searchbookMainGenre.get(i),searchbookRating.get(i)));
+        }
+        return items2;
+    }
 
+    @FXML
+    private void submitButtonAction(ActionEvent event) throws IOException {    
+        String searchTerm = searchTxt.getText();
+        for(int i=0; i<bookTitle.size();i++){
+            {
+                //if(searchTerm.contains(bookTitle.get(i)) || searchTerm.contains(bookAuthor.get(i)) || searchTerm.contains(bookDescription.get(i)))
+                if(bookTitle.get(i).contains(searchTerm) || bookAuthor.get(i).contains(searchTerm) || bookDescription.get(i).contains(searchTerm))
+                {
+                    searchbookTitle.add(bookTitle.get(i));
+                    searchbookAuthor.add(bookAuthor.get(i));
+                    searchbookDescription.add(bookDescription.get(i));
+                    searchbookPageCount.add(bookPageCount.get(i));
+                    searchbookRating.add(bookRating.get(i));
+                    searchbookMainGenre.add(bookMainGenre.get(i));
+                }
+                
+            }
+        }
+        //for some reason this isn't putting data into the table upon button press.
+        searchTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));
+        searchAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
+        searchDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
+        searchPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
+        searchGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
+        searchRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
+
+        searchTableView.setItems(getSearchItems());
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
@@ -186,7 +245,6 @@ public class MainMenuController implements Initializable {
         
         allTableView.setItems(getItems());
         
-    }  
-    
+    }
 }
 
