@@ -29,8 +29,11 @@ import javax.swing.JOptionPane;
 public class LoginScreenController implements Initializable {
     
     JFrame parent = new JFrame();   //for error pop up message that user was not found
+    List<Integer> userIDList = new ArrayList<Integer>();
     List<String> usernameList = new ArrayList<String>();    //used to store usernames from the database
     List<String> passwordList = new ArrayList<String>();    //used to store passwords from the database
+    List<Integer> accessLvlList = new ArrayList<Integer>();
+    List<Integer> userAccessList = new ArrayList<Integer>();
     int noneFoundFlag = 1;  //flag to be set off when a user is not found during sign in
     int noneFoundFlag2 = 1;  //flag to be set off when the password does not match
     int moveOn = 1; //used to make sure that if both username and password are incorrect, only username error is shown
@@ -63,19 +66,19 @@ public class LoginScreenController implements Initializable {
                 noneFoundFlag = 2;
                 if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
                 {
+                    Integer accessLvl = accessLvlList.get(i);
+                    Integer userID = userIDList.get(i);
+                    Integer userAccess = userAccessList.get(i);
+                    userAccess = userAccess + 1;
                     Connection conn = null;
                     try {
                         String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                         conn = DriverManager.getConnection(url2, "root", "Rootpass1");
                         Statement stmt = null;
-                        String update = "UPDATE capstone.users SET (userTimesAccessed = userTimesAccessed+1) WHERE userID ="; //NEED TO FIX THIS 
-                        try {                       //THIS NEEDS UPDATE TO EXECUTE THE UPDATE
+                        String update = "UPDATE capstone.users SET userTimesAccessed = "+userAccess+" WHERE userID = "+userID+";";
+                        try {
                             stmt = conn.createStatement();
-                            ResultSet rs = stmt.executeQuery(update);
-                            while (rs.next()){
-                                usernameList.add(rs.getString(1));  //adds usernames to username list
-                                passwordList.add(rs.getString(2));  //adds passwords to password list
-                            }
+                            stmt.executeUpdate(update);
                         }
                         catch (SQLException e ) {
                           throw new Error("Problem", e);
@@ -91,16 +94,23 @@ public class LoginScreenController implements Initializable {
                       catch (SQLException ex) {System.out.println(ex.getMessage());}
                     }
                     
-                    //we move on to the next scene
-                    noneFoundFlag2 = 3;
-                    Stage stage3 = (Stage) submitBtn.getScene().getWindow();
-                    stage3.close();
-                    Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    break;
+                    if(accessLvl == 3){
+                        noneFoundFlag2 = 3;
+                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                        stage3.close();
+                        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+                        Stage stage = new Stage();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        break;
+                    }
+                    else if (accessLvl == 1){
+                        //this will show the admin screen (not yet created)
+                    }
+                    else if (accessLvl == 2){
+                        //this will show the "librarian" screen (not yet created)
+                    }
                 }
                 //noneFoundFlag = 2;  //flag is flipped showing that a user was found and don't show the error message
                 //break;  //gets us out of the loop if a user is found
@@ -138,13 +148,16 @@ public class LoginScreenController implements Initializable {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "root", "Rootpass1");
             Statement stmt = null;
-            String query = "SELECT username, password FROM capstone.users"; //gets login data from database
+            String query = "SELECT userID, username, password, accessLvl, userTimesAccessed FROM capstone.users"; //gets login data from database
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()){
-                    usernameList.add(rs.getString(1));  //adds usernames to username list
-                    passwordList.add(rs.getString(2));  //adds passwords to password list
+                    userIDList.add(rs.getInt(1));
+                    usernameList.add(rs.getString(2));  //adds usernames to username list
+                    passwordList.add(rs.getString(3));  //adds passwords to password list
+                    accessLvlList.add(rs.getInt(4));
+                    userAccessList.add(rs.getInt(5));
                 }
             }
             catch (SQLException e ) {
