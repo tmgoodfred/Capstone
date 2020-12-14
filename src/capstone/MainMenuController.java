@@ -329,7 +329,6 @@ public class MainMenuController implements Initializable {
                         for(int j=0;j<listOfString.size();j++){
                             if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //for some reason it breaks here ?
                             {
-                                System.out.println("comparing book read: "+elements[i]+" to " + bookID.get(i));
                                 readbookID.add(bookID.get(i));
                                 readbookTitle.add(bookTitle.get(i));
                                 readbookAuthor.add(bookAuthor.get(i));
