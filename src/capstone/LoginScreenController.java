@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class LoginScreenController implements Initializable {
     
+    public static int userIDtoShare;
     JFrame parent = new JFrame();   //for error pop up message that user was not found
     List<Integer> userIDList = new ArrayList<Integer>();    //used to store user IDs from the database
     List<String> usernameList = new ArrayList<String>();    //used to store usernames from the database
@@ -66,6 +67,7 @@ public class LoginScreenController implements Initializable {
                 noneFoundFlag = 2;
                 if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
                 {
+                    userIDtoShare = userIDList.get(i);
                     Integer accessLvl = accessLvlList.get(i);   //gets the access level of the user that matches the login info to navigate to whichever screen is neccessary
                     Integer userID = userIDList.get(i);     //userID is used to specify which row to update in the database for the user times accessed field
                     Integer userAccess = userAccessList.get(i); //gets the user's times accessed
