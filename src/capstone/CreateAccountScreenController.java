@@ -58,6 +58,7 @@ public class CreateAccountScreenController implements Initializable {
     
     @FXML
     ComboBox genderDropBox;
+    
     double actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl;
     int moveOn = 1;
     
@@ -395,7 +396,7 @@ public class CreateAccountScreenController implements Initializable {
         
         String password = passwordTxt.getText();
         String confirmPassword = confirmPasswordTxt.getText();
-        if(!password.matches(confirmPassword) && moveOn != 2){
+        if(!password.matches(confirmPassword) && moveOn != 2){  //checks if the passwords match
             moveOn = 3;
         }
         
@@ -404,11 +405,11 @@ public class CreateAccountScreenController implements Initializable {
         
         String age = ageTxt.getText();
         int ageNum = Integer.parseInt(age);
-        if((ageNum < 18 || ageNum > 99) && moveOn != 2 && moveOn != 3){
+        if((ageNum < 18 || ageNum > 99) && moveOn != 2 && moveOn != 3){ //checks to make sure the age is from 18 to 99
             moveOn = 4;
         }
         String gender = (String) genderDropBox.getValue();
-        if((gender == "Gender" || gender == null) && moveOn != 2 && moveOn != 3 && moveOn!= 4){
+        if((gender == "Gender" || gender == null) && moveOn != 2 && moveOn != 3 && moveOn!= 4){ //this checks to make sure a gender is selected
             moveOn = 5;
         }
         Connection conn = null;
@@ -417,7 +418,7 @@ public class CreateAccountScreenController implements Initializable {
                 String url = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 conn = DriverManager.getConnection(url, "root", "Rootpass1");
                 Statement stmt = null;
-                String insert = "INSERT INTO capstone.users (username, password, userFirstName, userLastName, userAge, userGender, actionAdventureLvl, classicLvl, mysteryLvl, "
+                String insert = "INSERT INTO capstone.users (username, password, userFirstName, userLastName, userAge, userGender, actionAdventureLvl, classicLvl, mysteryLvl, "    //statement for inserting into the database
                         + "fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl) "
                         + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement insertPrep = conn.prepareStatement(insert);
@@ -440,8 +441,8 @@ public class CreateAccountScreenController implements Initializable {
                     insertPrep.setDouble(16, shortStoriesLvl);
                     insertPrep.setDouble(17, historyLvl);
                     insertPrep.setDouble(18, youngAdultLvl);
-                    insertPrep.executeUpdate();
-                    Stage stage2 = (Stage) backBtn.getScene().getWindow();
+                    insertPrep.executeUpdate(); //executes the insert
+                    Stage stage2 = (Stage) backBtn.getScene().getWindow();  //the following takes the user back to the login screen
                     stage2.close();
                     Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
                     Stage stage = new Stage();
@@ -469,7 +470,7 @@ public class CreateAccountScreenController implements Initializable {
             JOptionPane.showMessageDialog(parent, "Error: Username already taken");
         }
         if (moveOn == 3){
-            passwordTxt.clear();
+            passwordTxt.clear();    //if the passwords do not match, clear the passwords but not username
             confirmPasswordTxt.clear();
             JOptionPane.showMessageDialog(parent, "Error: Passwords do not match");
         }
