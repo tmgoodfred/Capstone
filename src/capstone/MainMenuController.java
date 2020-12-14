@@ -320,9 +320,6 @@ public class MainMenuController implements Initializable {
                 elements = userBooksReadList.split(",");    //splits the string
                 List<String> fixedLengthList = Arrays.asList(elements);
                 ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
-                for(int i=0;i<listOfString.size();i++){
-                    System.out.println(Integer.parseInt(listOfString.get(i)));
-                }
                 for(int i=0;i<bookTitle.size();i++){
                     if(elements != null)
                     {
