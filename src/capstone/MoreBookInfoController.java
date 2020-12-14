@@ -55,7 +55,6 @@ public class MoreBookInfoController implements Initializable {
     static int bookIDtoComp = MainMenuController.bookIDtoShare;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(bookIDtoComp);
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
