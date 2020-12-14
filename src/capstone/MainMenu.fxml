@@ -25,7 +25,7 @@
                               <TableColumn fx:id="recRateTab" prefWidth="75.0" text="Avg. Rating" />
                           </columns>
                         </TableView>
-                        <Button fx:id="recReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
+                        <Button fx:id="recReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readMoreButtonAction" text="Read more" />
                      </children>
                   </AnchorPane>
             </content>
@@ -44,7 +44,7 @@
                               <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
-                        <Button fx:id="allReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
+                        <Button fx:id="allReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readMoreButtonAction" text="Read more" />
                      </children>
                   </AnchorPane>
             </content>
@@ -63,7 +63,7 @@
                               <TableColumn fx:id="readRateTab" prefWidth="75.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
-                        <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
+                        <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readMoreButtonAction" text="Read more" />
                      </children>
                   </AnchorPane>
                </content>
