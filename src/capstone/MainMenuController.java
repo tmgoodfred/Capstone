@@ -51,26 +51,26 @@ public class MainMenuController implements Initializable {
     List<Integer> bookTotalReads = new ArrayList<>();
     List<String> bookMainGenre = new ArrayList<>();
     
-    List<Integer> searchbookID = new ArrayList<Integer>();  //lists to store book data to be added to the tableviews
-    List<String> searchbookTitle = new ArrayList<String>();
-    List<String> searchbookAuthor = new ArrayList<String>();
-    List<String> searchbookDescription = new ArrayList<String>();
-    List<Integer> searchbookPageCount = new ArrayList<Integer>();
-    List<Double> searchbookRating = new ArrayList<Double>();
-    List<Integer> searchbookTotalReads = new ArrayList<Integer>();
-    List<String> searchbookMainGenre = new ArrayList<String>();
+    List<Integer> searchbookID = new ArrayList<>();  //lists to store book data to be added to the tableviews
+    List<String> searchbookTitle = new ArrayList<>();
+    List<String> searchbookAuthor = new ArrayList<>();
+    List<String> searchbookDescription = new ArrayList<>();
+    List<Integer> searchbookPageCount = new ArrayList<>();
+    List<Double> searchbookRating = new ArrayList<>();
+    List<Integer> searchbookTotalReads = new ArrayList<>();
+    List<String> searchbookMainGenre = new ArrayList<>();
     
-    List<Integer> readbookID = new ArrayList<Integer>();  //lists to store book data to be added to the tableviews
-    List<String> readbookTitle = new ArrayList<String>();
-    List<String> readbookAuthor = new ArrayList<String>();
-    List<String> readbookDescription = new ArrayList<String>();
-    List<Integer> readbookPageCount = new ArrayList<Integer>();
-    List<Double> readbookRating = new ArrayList<Double>();
-    List<Integer> readbookTotalReads = new ArrayList<Integer>();
-    List<String> readbookMainGenre = new ArrayList<String>();
+    List<Integer> readbookID = new ArrayList<>();  //lists to store book data to be added to the tableviews
+    List<String> readbookTitle = new ArrayList<>();
+    List<String> readbookAuthor = new ArrayList<>();
+    List<String> readbookDescription = new ArrayList<>();
+    List<Integer> readbookPageCount = new ArrayList<>();
+    List<Double> readbookRating = new ArrayList<>();
+    List<Integer> readbookTotalReads = new ArrayList<>();
+    List<String> readbookMainGenre = new ArrayList<>();
     
     public static String userBooksReadList;
-    public static String[] elements;
+    public static String[] elements = {"0"};
     public static Integer userTotalBooksReadList;
     
     @FXML
@@ -317,27 +317,29 @@ public class MainMenuController implements Initializable {
                     userBooksReadList = rs2.getString(1);
                     userTotalBooksReadList = rs2.getInt(2);
                 }
-                elements = userBooksReadList.split(",");    //splits the string
-                List<String> fixedLengthList = Arrays.asList(elements);
-                ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
-                for(int i=0;i<bookTitle.size();i++){
-                    if(elements != null)
-                    {
-                        for(int j=0;j<listOfString.size();j++){
-                            if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //for some reason it breaks here ?
-                            {
-                                readbookID.add(bookID.get(i));
-                                readbookTitle.add(bookTitle.get(i));
-                                readbookAuthor.add(bookAuthor.get(i));
-                                readbookDescription.add(bookDescription.get(i));
-                                readbookPageCount.add(bookPageCount.get(i));
-                                readbookMainGenre.add(bookMainGenre.get(i));
-                                readbookRating.add(bookRating.get(i));
+                if(userBooksReadList != null){
+                    elements = userBooksReadList.split(",");    //splits the string
+                    List<String> fixedLengthList = Arrays.asList(elements);
+                    ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
+                    for(int i=0;i<bookTitle.size();i++){
+                        if(elements != null)
+                        {
+                            for(int j=0;j<listOfString.size();j++){
+                                if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //for some reason it breaks here ?
+                                {
+                                    readbookID.add(bookID.get(i));
+                                    readbookTitle.add(bookTitle.get(i));
+                                    readbookAuthor.add(bookAuthor.get(i));
+                                    readbookDescription.add(bookDescription.get(i));
+                                    readbookPageCount.add(bookPageCount.get(i));
+                                    readbookMainGenre.add(bookMainGenre.get(i));
+                                    readbookRating.add(bookRating.get(i));
+                                }
                             }
                         }
                     }
                 }
-                        
+                //maybe an else stamement? elements is showing null and throwing error
             }
             catch (SQLException e ) {
               throw new Error("Problem", e);
