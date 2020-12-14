@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -467,19 +468,39 @@ public class CreateAccountScreenController implements Initializable {
             usernameTxt.clear();    //clears the text boxes for fresh data to be input
             passwordTxt.clear();    //users will often time think they're signing in with the proper username but will sometimes have small errors like a missing letter.
             confirmPasswordTxt.clear();
-            JOptionPane.showMessageDialog(parent, "Error: Username already taken");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Username already taken");
+
+            alert.showAndWait();
         }
         if (moveOn == 3){
             passwordTxt.clear();    //if the passwords do not match, clear the passwords but not username
             confirmPasswordTxt.clear();
-            JOptionPane.showMessageDialog(parent, "Error: Passwords do not match");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Passwords do not match");
+
+            alert.showAndWait();
         }
         if (moveOn == 4){
             ageTxt.clear();
-            JOptionPane.showMessageDialog(parent, "Error: Please enter an age between 18 and 99");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please enter an age between 18 and 99");
+
+            alert.showAndWait();
         }
         if (moveOn == 5){
-            JOptionPane.showMessageDialog(parent, "Error: Please select a gender");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please select a gender");
+
+            alert.showAndWait();
         }
     }
     
