@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -53,7 +55,7 @@ public class BookSurveyController implements Initializable {
     Double rating;
     double bookRating, ratingToInsert;
     int bookTotalReads, readsToInsert;
-    int continueCommand = 0;
+    boolean continueCommand = true;
     String booksReadToInsert;
     int totalReadToInsert;
     JFrame parent = new JFrame();   //for error pop up message
@@ -73,18 +75,18 @@ public class BookSurveyController implements Initializable {
         //which means selecting the total reads, current score, and then adding 1 and then doing the maths
         //also adding this book read to the user's list, and first checking if the user has already read, then
         //outputting an error saying "you've already read and rated this book!" and closing the window
-        List<String> fixedLengthList = Arrays.asList(elements);
-        ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
-        for(int i=0;i<listOfString.size();i++)
+        List<String> listOfBooksRead = Arrays.asList(elements); //[3],[4],[1]
+        Integer ID = MainMenuController.bookIDtoShare;
+        for(int i=0;i<listOfBooksRead.size();i++)
         {
-            if(elements[i].equals(MainMenuController.bookIDtoShare))
+            System.out.println("BOOK COMPARE: "+listOfBooksRead.get(i));
+            if(listOfBooksRead.get(i).equals(ID.toString()))
             {
-                continueCommand = 1;
+                continueCommand = false;
                 break;
             }
-            break;
         }
-        if(continueCommand == 0){
+        if(continueCommand == true){
             if(rate.getSelectedToggle() == rate1){
                     rating = 1.0;
                 }
@@ -136,15 +138,19 @@ public class BookSurveyController implements Initializable {
                   try {if (conn != null) {conn.close();}} 
                   catch (SQLException ex) {System.out.println(ex.getMessage());}
                 }
-
                 Stage stage = (Stage) submitBtn.getScene().getWindow();
                 stage.close();
         }
         else{
-            JOptionPane.showMessageDialog(parent, "Error: You've already read and rated this book!");
-            Stage stage = (Stage) backBtn.getScene().getWindow();
-            stage.close();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("You've already read and rated this book!");
+
+            alert.showAndWait();
         }
+        Stage stage = (Stage) submitBtn.getScene().getWindow();
+        stage.close();
     }
     @FXML
     private void backButtonAction(ActionEvent event) throws Exception { //back button goes back to book screen
