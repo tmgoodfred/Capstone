@@ -116,11 +116,11 @@ public class BookSurveyController implements Initializable {
                         }
                         readsToInsert = bookTotalReads+1;
                         ratingToInsert = (bookRating+rating)/readsToInsert;
-                        String update = "UPDATE capstone.books(bookRating, bookTotalReads) AS "+ratingToInsert+","+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
+                        String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
                         stmt.executeUpdate(update);
                         booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;
                         totalReadToInsert = MainMenuController.userTotalBooksReadList+1;
-                        String update2 = "UPDATE capstone.users(userBooksRead,userBooksReadTotal) AS "+booksReadToInsert+","+totalReadToInsert+" WHERE userID = "+LoginScreenController.userIDtoShare+";";
+                        String update2 = "UPDATE capstone.users SET userBooksRead="+booksReadToInsert+", userBooksReadTotal="+totalReadToInsert+" WHERE userID = "+LoginScreenController.userIDtoShare+";";
                         stmt.executeUpdate(update2);
                     }
                     catch (SQLException e ) {
