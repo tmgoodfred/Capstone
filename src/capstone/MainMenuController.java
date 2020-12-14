@@ -69,9 +69,9 @@ public class MainMenuController implements Initializable {
     List<Integer> readbookTotalReads = new ArrayList<Integer>();
     List<String> readbookMainGenre = new ArrayList<String>();
     
-    String userBooksReadList;
+    public static String userBooksReadList;
     public static String[] elements;
-    Integer userTotalBooksReadList;
+    public static Integer userTotalBooksReadList;
     
     @FXML
     TableColumn allTitleTab;
