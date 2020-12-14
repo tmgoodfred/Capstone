@@ -52,7 +52,7 @@ public class MoreBookInfoController implements Initializable {
     String bookTitle,bookAuthor,bookDescription;
     InputStream bookCover;
     
-    static int bookIDtoComp = MainMenuController.bookIDtoShare;
+    int bookIDtoComp = MainMenuController.bookIDtoShare;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
