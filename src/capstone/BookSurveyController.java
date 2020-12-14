@@ -71,10 +71,6 @@ public class BookSurveyController implements Initializable {
 
     @FXML
     private void submitButtonAction(ActionEvent event) throws Exception {
-        //here will be code to add +1 to book reads, recalculate the book rating
-        //which means selecting the total reads, current score, and then adding 1 and then doing the maths
-        //also adding this book read to the user's list, and first checking if the user has already read, then
-        //outputting an error saying "you've already read and rated this book!" and closing the window
         List<String> listOfBooksRead = Arrays.asList(elements); //[3],[4],[1]
         Integer ID = MainMenuController.bookIDtoShare;
         for(int i=0;i<listOfBooksRead.size();i++)
