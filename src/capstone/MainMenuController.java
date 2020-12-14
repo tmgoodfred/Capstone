@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -39,6 +40,8 @@ import javafx.stage.Stage;
 public class MainMenuController implements Initializable {
 
     public static int bookIDtoShare;
+    static int userIDfromLogin = LoginScreenController.userIDtoShare;
+    
     List<Integer> bookID = new ArrayList<Integer>();    //lists to store book data to be added to the tableviews
     List<String> bookTitle = new ArrayList<String>();
     List<String> bookAuthor = new ArrayList<String>();
@@ -56,6 +59,19 @@ public class MainMenuController implements Initializable {
     List<Double> searchbookRating = new ArrayList<Double>();
     List<Integer> searchbookTotalReads = new ArrayList<Integer>();
     List<String> searchbookMainGenre = new ArrayList<String>();
+    
+    List<Integer> readbookID = new ArrayList<Integer>();  //lists to store book data to be added to the tableviews
+    List<String> readbookTitle = new ArrayList<String>();
+    List<String> readbookAuthor = new ArrayList<String>();
+    List<String> readbookDescription = new ArrayList<String>();
+    List<Integer> readbookPageCount = new ArrayList<Integer>();
+    List<Double> readbookRating = new ArrayList<Double>();
+    List<Integer> readbookTotalReads = new ArrayList<Integer>();
+    List<String> readbookMainGenre = new ArrayList<String>();
+    
+    String userBooksReadList;
+    public static String[] elements;
+    Integer userTotalBooksReadList;
     
     @FXML
     TableColumn allTitleTab;
@@ -192,6 +208,13 @@ public class MainMenuController implements Initializable {
         }
         return items2;
     }
+    public ObservableList<MainMenuController> getReadItems(){ //gets the items read by the users
+        ObservableList<MainMenuController> items3 = FXCollections.observableArrayList();
+        for(int i=0; i<readbookTitle.size();i++){
+            items3.add(new MainMenuController(readbookID.get(i), readbookTitle.get(i), readbookAuthor.get(i), readbookDescription.get(i), readbookPageCount.get(i), readbookMainGenre.get(i),readbookRating.get(i)));
+        }
+        return items3;
+    }
             
     @FXML
     private void allreadMoreButtonAction (ActionEvent event) throws IOException{
@@ -274,6 +297,7 @@ public class MainMenuController implements Initializable {
             conn = DriverManager.getConnection(url2, "root", "Rootpass1");
             Statement stmt = null;
             String query = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre FROM capstone.books"; //gets relevant book data from database
+            String userQuery = "SELECT userBooksRead, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -287,6 +311,37 @@ public class MainMenuController implements Initializable {
                     bookTotalReads.add(rs.getInt(7));
                     bookMainGenre.add(rs.getString(8));
                 }
+                ResultSet rs2 = stmt.executeQuery(userQuery);   //gets the users read list
+                while(rs2.next())
+                {
+                    userBooksReadList = rs2.getString(1);
+                    userTotalBooksReadList = rs2.getInt(2);
+                }
+                elements = userBooksReadList.split(",");    //splits the string
+                List<String> fixedLengthList = Arrays.asList(elements);
+                ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
+                for(int i=0;i<listOfString.size();i++){
+                    System.out.println(Integer.parseInt(listOfString.get(i)));
+                }
+                for(int i=0;i<bookTitle.size();i++){
+                    if(elements != null)
+                    {
+                        for(int j=0;j<listOfString.size();j++){
+                            if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //for some reason it breaks here ?
+                            {
+                                System.out.println("comparing book read: "+elements[i]+" to " + bookID.get(i));
+                                readbookID.add(bookID.get(i));
+                                readbookTitle.add(bookTitle.get(i));
+                                readbookAuthor.add(bookAuthor.get(i));
+                                readbookDescription.add(bookDescription.get(i));
+                                readbookPageCount.add(bookPageCount.get(i));
+                                readbookMainGenre.add(bookMainGenre.get(i));
+                                readbookRating.add(bookRating.get(i));
+                            }
+                        }
+                    }
+                }
+                        
             }
             catch (SQLException e ) {
               throw new Error("Problem", e);
@@ -316,7 +371,15 @@ public class MainMenuController implements Initializable {
         searchGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
         searchRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
         
+        readTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles")); //initializes the table columns to prepare them to retrieve the data
+        readAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
+        readDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
+        readPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
+        readGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
+        readRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
+        
         allTableView.setItems(getItems());  //puts all book data into the table view
+        readTableView.setItems(getReadItems());
         
     }
 }
