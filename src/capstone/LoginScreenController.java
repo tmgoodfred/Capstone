@@ -29,11 +29,11 @@ import javax.swing.JOptionPane;
 public class LoginScreenController implements Initializable {
     
     JFrame parent = new JFrame();   //for error pop up message that user was not found
-    List<Integer> userIDList = new ArrayList<Integer>();
+    List<Integer> userIDList = new ArrayList<Integer>();    //used to store user IDs from the database
     List<String> usernameList = new ArrayList<String>();    //used to store usernames from the database
     List<String> passwordList = new ArrayList<String>();    //used to store passwords from the database
-    List<Integer> accessLvlList = new ArrayList<Integer>();
-    List<Integer> userAccessList = new ArrayList<Integer>();
+    List<Integer> accessLvlList = new ArrayList<Integer>(); //used to store access levels from the database
+    List<Integer> userAccessList = new ArrayList<Integer>();//used to store the user's times accessed from the database  
     int noneFoundFlag = 1;  //flag to be set off when a user is not found during sign in
     int noneFoundFlag2 = 1;  //flag to be set off when the password does not match
     int moveOn = 1; //used to make sure that if both username and password are incorrect, only username error is shown
@@ -66,16 +66,16 @@ public class LoginScreenController implements Initializable {
                 noneFoundFlag = 2;
                 if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
                 {
-                    Integer accessLvl = accessLvlList.get(i);
-                    Integer userID = userIDList.get(i);
-                    Integer userAccess = userAccessList.get(i);
-                    userAccess = userAccess + 1;
+                    Integer accessLvl = accessLvlList.get(i);   //gets the access level of the user that matches the login info to navigate to whichever screen is neccessary
+                    Integer userID = userIDList.get(i);     //userID is used to specify which row to update in the database for the user times accessed field
+                    Integer userAccess = userAccessList.get(i); //gets the user's times accessed
+                    userAccess = userAccess + 1;    //increments by 1
                     Connection conn = null;
                     try {
                         String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                         conn = DriverManager.getConnection(url2, "root", "Rootpass1");
                         Statement stmt = null;
-                        String update = "UPDATE capstone.users SET userTimesAccessed = "+userAccess+" WHERE userID = "+userID+";";
+                        String update = "UPDATE capstone.users SET userTimesAccessed = "+userAccess+" WHERE userID = "+userID+";";  //update statement to increment the user times accessed by 1
                         try {
                             stmt = conn.createStatement();
                             stmt.executeUpdate(update);
@@ -94,7 +94,7 @@ public class LoginScreenController implements Initializable {
                       catch (SQLException ex) {System.out.println(ex.getMessage());}
                     }
                     
-                    if(accessLvl == 3){
+                    if(accessLvl == 3){ //shows the main menu screen for the typical user - access level 3
                         noneFoundFlag2 = 3;
                         Stage stage3 = (Stage) submitBtn.getScene().getWindow();
                         stage3.close();
@@ -156,8 +156,8 @@ public class LoginScreenController implements Initializable {
                     userIDList.add(rs.getInt(1));
                     usernameList.add(rs.getString(2));  //adds usernames to username list
                     passwordList.add(rs.getString(3));  //adds passwords to password list
-                    accessLvlList.add(rs.getInt(4));
-                    userAccessList.add(rs.getInt(5));
+                    accessLvlList.add(rs.getInt(4));    //adds the access level to the access level list
+                    userAccessList.add(rs.getInt(5));   //adds the total number of times the account has been accessed and adds to list
                 }
             }
             catch (SQLException e ) {
