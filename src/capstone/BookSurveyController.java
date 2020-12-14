@@ -119,8 +119,10 @@ public class BookSurveyController implements Initializable {
                         String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
                         stmt.executeUpdate(update);
                         booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;
+                        System.out.println(booksReadToInsert);
                         totalReadToInsert = MainMenuController.userTotalBooksReadList+1;
-                        String update2 = "UPDATE capstone.users SET userBooksRead="+booksReadToInsert+", userBooksReadTotal="+totalReadToInsert+" WHERE userID = "+LoginScreenController.userIDtoShare+";";
+                        System.out.println(totalReadToInsert);
+                        String update2 = "UPDATE capstone.users SET userBooksRead=\""+booksReadToInsert+"\", userBooksReadTotal="+totalReadToInsert+" WHERE userID="+LoginScreenController.userIDtoShare+";";
                         stmt.executeUpdate(update2);
                     }
                     catch (SQLException e ) {
