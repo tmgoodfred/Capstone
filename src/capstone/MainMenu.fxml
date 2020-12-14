@@ -9,22 +9,23 @@
 
 <AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.MainMenuController">
    <children>
-      <TabPane prefHeight="659.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="693.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Recommendations">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="886.0">
                      <children>
                         <TableView fx:id="recTableView" layoutX="20.0" layoutY="21.0" prefHeight="590.0" prefWidth="847.0">
                           <columns>
-                            <TableColumn fx:id="recTitleTab" prefWidth="136.0" text="Title" />
-                            <TableColumn fx:id="recAuthTab" minWidth="8.0" prefWidth="122.0" text="Author" />
-                              <TableColumn fx:id="recDescTab" prefWidth="331.0" text="Description" />
+                            <TableColumn fx:id="recTitleTab" prefWidth="139.0" text="Title" />
+                            <TableColumn fx:id="recAuthTab" minWidth="8.0" prefWidth="133.0" text="Author" />
+                              <TableColumn fx:id="recDescTab" prefWidth="317.0" text="Description" />
                               <TableColumn fx:id="recPgCntTab" minWidth="0.0" prefWidth="73.0" text="Page Count" />
                               <TableColumn fx:id="recGenreTab" prefWidth="109.0" text="Genre" />
                               <TableColumn fx:id="recRateTab" prefWidth="75.0" text="Avg. Rating" />
                           </columns>
                         </TableView>
+                        <Button fx:id="recReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
                      </children>
                   </AnchorPane>
             </content>
@@ -43,6 +44,7 @@
                               <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
+                        <Button fx:id="allReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
                      </children>
                   </AnchorPane>
             </content>
@@ -61,6 +63,7 @@
                               <TableColumn fx:id="readRateTab" prefWidth="75.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
+                        <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
                      </children>
                   </AnchorPane>
                </content>
@@ -81,6 +84,7 @@
                            </columns>
                         </TableView>
                         <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Search" />
+                        <Button fx:id="searchReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" text="Read more" />
                      </children>
                   </AnchorPane>
               </content>
