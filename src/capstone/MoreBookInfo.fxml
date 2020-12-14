@@ -7,14 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.MoreBookInfoController">
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.MoreBookInfoController">
    <children>
       <ImageView fx:id="thumbnailImg" fitHeight="284.0" fitWidth="216.0" layoutX="37.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="titleTxt" editable="false" layoutX="300.0" layoutY="50.0" prefHeight="25.0" prefWidth="187.0" promptText="Title" />
       <TextField fx:id="authorTxt" editable="false" layoutX="300.0" layoutY="88.0" prefHeight="25.0" prefWidth="187.0" promptText="Author" />
       <TextArea fx:id="descriptionTxt" layoutX="300.0" layoutY="125.0" prefHeight="210.0" prefWidth="270.0" promptText="Description" />
-      <Button fx:id="backButton" layoutX="280.0" layoutY="354.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="backBtn" layoutX="280.0" layoutY="354.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
       <CheckBox fx:id="readCheck" layoutX="508.0" layoutY="67.0" mnemonicParsing="false" text="Read?" />
    </children>
 </AnchorPane>
