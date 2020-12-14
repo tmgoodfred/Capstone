@@ -42,14 +42,14 @@ public class MainMenuController implements Initializable {
     public static int bookIDtoShare;
     static int userIDfromLogin = LoginScreenController.userIDtoShare;
     
-    List<Integer> bookID = new ArrayList<Integer>();    //lists to store book data to be added to the tableviews
-    List<String> bookTitle = new ArrayList<String>();
-    List<String> bookAuthor = new ArrayList<String>();
-    List<String> bookDescription = new ArrayList<String>();
-    List<Integer> bookPageCount = new ArrayList<Integer>();
-    List<Double> bookRating = new ArrayList<Double>();
-    List<Integer> bookTotalReads = new ArrayList<Integer>();
-    List<String> bookMainGenre = new ArrayList<String>();
+    List<Integer> bookID = new ArrayList<>();    //lists to store book data to be added to the tableviews
+    List<String> bookTitle = new ArrayList<>();
+    List<String> bookAuthor = new ArrayList<>();
+    List<String> bookDescription = new ArrayList<>();
+    List<Integer> bookPageCount = new ArrayList<>();
+    List<Double> bookRating = new ArrayList<>();
+    List<Integer> bookTotalReads = new ArrayList<>();
+    List<String> bookMainGenre = new ArrayList<>();
     
     List<Integer> searchbookID = new ArrayList<Integer>();  //lists to store book data to be added to the tableviews
     List<String> searchbookTitle = new ArrayList<String>();
