@@ -79,7 +79,6 @@ public class BookSurveyController implements Initializable {
         Integer ID = MainMenuController.bookIDtoShare;
         for(int i=0;i<listOfBooksRead.size();i++)
         {
-            System.out.println("BOOK COMPARE: "+listOfBooksRead.get(i));
             if(listOfBooksRead.get(i).equals(ID.toString()))
             {
                 continueCommand = false;
