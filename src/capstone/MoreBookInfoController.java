@@ -84,7 +84,10 @@ public class MoreBookInfoController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
-        
+        /*noImageAvailable.setText("");
+        titleTxt.clear();
+        authorTxt.clear();
+        descriptionTxt.clear();*/
         if(bookCover != null){
             Image bookThumbnail = new Image(bookCover);
             thumbnailImg.setImage(bookThumbnail);
