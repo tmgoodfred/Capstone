@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package capstone;
 
 import static capstone.MainMenuController.elements;
@@ -12,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,12 +20,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
  *
- * @author tmgoo
+ * @author Tyler Goodfred
  */
 public class BookSurveyController implements Initializable {
 
@@ -58,7 +51,6 @@ public class BookSurveyController implements Initializable {
     boolean continueCommand = true;
     String booksReadToInsert;
     int totalReadToInsert;
-    JFrame parent = new JFrame();   //for error pop up message
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +67,7 @@ public class BookSurveyController implements Initializable {
         Integer ID = MainMenuController.bookIDtoShare;
         for(int i=0;i<listOfBooksRead.size();i++)
         {
-            if(listOfBooksRead.get(i).equals(ID.toString()))
+            if(listOfBooksRead.get(i).equals(ID.toString()))    //if any books match the books the user has read, do not allow them to rate again
             {
                 continueCommand = false;
                 break;
@@ -133,10 +125,11 @@ public class BookSurveyController implements Initializable {
                   try {if (conn != null) {conn.close();}} 
                   catch (SQLException ex) {System.out.println(ex.getMessage());}
                 }
+                
                 Stage stage = (Stage) submitBtn.getScene().getWindow();
                 stage.close();
         }
-        else{
+        else{   //shows if the user has already read the book selected
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("ERROR");
