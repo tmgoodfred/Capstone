@@ -317,7 +317,7 @@ public class MainMenuController implements Initializable {
                     userBooksReadList = rs2.getString(1);
                     userTotalBooksReadList = rs2.getInt(2);
                 }
-                if(userBooksReadList != null){
+                if(!userBooksReadList.equals("0")){
                     elements = userBooksReadList.split(",");    //splits the string
                     List<String> fixedLengthList = Arrays.asList(elements);
                     ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
@@ -338,6 +338,9 @@ public class MainMenuController implements Initializable {
                             }
                         }
                     }
+                } //end of if statement
+                else{
+                    elements = userBooksReadList.split("");
                 }
                 //maybe an else stamement? elements is showing null and throwing error
             }
