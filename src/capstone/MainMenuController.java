@@ -314,35 +314,31 @@ public class MainMenuController implements Initializable {
                 ResultSet rs2 = stmt.executeQuery(userQuery);   //gets the users read list
                 while(rs2.next())
                 {
-                    userBooksReadList = rs2.getString(1);
+                    userBooksReadList = rs2.getString(1);   //these are actually strings not lists despite the naming
                     userTotalBooksReadList = rs2.getInt(2);
                 }
                 if(!userBooksReadList.equals("0")){
-                    elements = userBooksReadList.split(",");    //splits the string
+                    elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
                     List<String> fixedLengthList = Arrays.asList(elements);
                     ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
                     for(int i=0;i<bookTitle.size();i++){
-                        if(elements != null)
-                        {
-                            for(int j=0;j<listOfString.size();j++){
-                                if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //for some reason it breaks here ?
-                                {
-                                    readbookID.add(bookID.get(i));
-                                    readbookTitle.add(bookTitle.get(i));
-                                    readbookAuthor.add(bookAuthor.get(i));
-                                    readbookDescription.add(bookDescription.get(i));
-                                    readbookPageCount.add(bookPageCount.get(i));
-                                    readbookMainGenre.add(bookMainGenre.get(i));
-                                    readbookRating.add(bookRating.get(i));
-                                }
+                        for(int j=0;j<listOfString.size();j++){ //I hate that this is O(n^2).
+                            if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //this compares each bookID to the list of books read by the user
+                            {
+                                readbookID.add(bookID.get(i));
+                                readbookTitle.add(bookTitle.get(i));
+                                readbookAuthor.add(bookAuthor.get(i));
+                                readbookDescription.add(bookDescription.get(i));
+                                readbookPageCount.add(bookPageCount.get(i));
+                                readbookMainGenre.add(bookMainGenre.get(i));
+                                readbookRating.add(bookRating.get(i));
                             }
                         }
                     }
                 } //end of if statement
                 else{
-                    elements = userBooksReadList.split("");
+                    elements = userBooksReadList.split(""); //if the users books read are = 0, split it by "nothing"
                 }
-                //maybe an else stamement? elements is showing null and throwing error
             }
             catch (SQLException e ) {
               throw new Error("Problem", e);
@@ -380,7 +376,7 @@ public class MainMenuController implements Initializable {
         readRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
         
         allTableView.setItems(getItems());  //puts all book data into the table view
-        readTableView.setItems(getReadItems());
+        readTableView.setItems(getReadItems()); //puts the read book data into the table view
         
     }
 }
