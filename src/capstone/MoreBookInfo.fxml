@@ -12,8 +12,9 @@
       <ImageView fx:id="thumbnailImg" fitHeight="284.0" fitWidth="216.0" layoutX="37.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="titleTxt" editable="false" layoutX="300.0" layoutY="50.0" prefHeight="25.0" prefWidth="187.0" promptText="Title" />
       <TextField fx:id="authorTxt" editable="false" layoutX="300.0" layoutY="88.0" prefHeight="25.0" prefWidth="187.0" promptText="Author" />
-      <TextArea fx:id="descriptionTxt" layoutX="300.0" layoutY="125.0" prefHeight="210.0" prefWidth="270.0" promptText="Description" />
-      <Button fx:id="backBtn" layoutX="280.0" layoutY="354.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
-      <CheckBox fx:id="readCheck" layoutX="508.0" layoutY="67.0" mnemonicParsing="false" text="Read?" />
+      <TextArea fx:id="descriptionTxt" editable="false" layoutX="300.0" layoutY="125.0" prefHeight="210.0" prefWidth="270.0" promptText="Description" wrapText="true" />
+      <Button fx:id="backBtn" layoutX="212.0" layoutY="354.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <Label fx:id="noImageAvailable" layoutX="82.0" layoutY="184.0" prefHeight="17.0" prefWidth="110.0" />
+      <Button fx:id="bookReadBtn" layoutX="283.0" layoutY="354.0" mnemonicParsing="false" onAction="#readButtonAction" text="Read this Book?" />
    </children>
 </AnchorPane>
