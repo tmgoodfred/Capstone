@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="171.0" prefWidth="311.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.BookSurveyController">
+<AnchorPane id="AnchorPane" prefHeight="171.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.BookSurveyController">
    <children>
       <Label layoutX="52.0" layoutY="14.0" text="How would you rate this book?">
          <font>
@@ -20,7 +19,7 @@
       <RadioButton fx:id="rate3" layoutX="138.0" layoutY="78.0" mnemonicParsing="false" />
       <RadioButton fx:id="rate4" layoutX="177.0" layoutY="78.0" mnemonicParsing="false" />
       <RadioButton fx:id="rate5" layoutX="219.0" layoutY="78.0" mnemonicParsing="false" />
-      <Label layoutX="47.0" layoutY="44.0" prefHeight="17.0" prefWidth="224.0" text="1 - Hate It                              5 - Love It" />
+      <Label layoutX="47.0" layoutY="44.0" prefHeight="17.0" prefWidth="224.0" text=" Hate It                                     Love It" />
       <Label layoutX="36.0" layoutY="61.0" prefHeight="17.0" prefWidth="247.0" text="         1          2         3          4           5" />
       <Button fx:id="submitBtn" layoutX="161.0" layoutY="117.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit" />
       <Button fx:id="backBtn" layoutX="92.0" layoutY="117.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
