@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package capstone;
 
 import java.io.InputStream;
@@ -30,7 +25,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author tmgoo
+ * @author Tyler Goodfred
  */
 public class MoreBookInfoController implements Initializable {
 
@@ -84,11 +79,7 @@ public class MoreBookInfoController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
-        /*noImageAvailable.setText("");
-        titleTxt.clear();
-        authorTxt.clear();
-        descriptionTxt.clear();*/
-        if(bookCover != null){
+        if(bookCover != null){  //if there is no book cover, it will display a text, otherwise will show the thumbnail
             Image bookThumbnail = new Image(bookCover);
             thumbnailImg.setImage(bookThumbnail);
             titleTxt.setText(bookTitle);
