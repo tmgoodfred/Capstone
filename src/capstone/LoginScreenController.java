@@ -114,8 +114,6 @@ public class LoginScreenController implements Initializable {
                         //this will show the "librarian" screen (not yet created)
                     }
                 }
-                //noneFoundFlag = 2;  //flag is flipped showing that a user was found and don't show the error message
-                //break;  //gets us out of the loop if a user is found
             }
         }
         if(noneFoundFlag == 1)  //if the previous loop does not find anything, after it completes, this will run and output the error message.
