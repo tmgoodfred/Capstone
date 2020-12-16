@@ -64,6 +64,7 @@
                            </columns>
                         </TableView>
                         <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="refreshButton" layoutX="501.0" layoutY="625.0" mnemonicParsing="false" onAction="#refreshButtonAction" text="Refresh" />
                      </children>
                   </AnchorPane>
                </content>
@@ -72,7 +73,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Search:" />
+                        <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Enter a Keyword" />
                         <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
                            <columns>
                               <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
