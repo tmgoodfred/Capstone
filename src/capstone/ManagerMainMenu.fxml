@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.ManagerMainMenuController">
+   <children>
+      <TabPane prefHeight="693.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="All Books">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                           <columns>
+                              <TableColumn fx:id="allTitleTab" prefWidth="139.0" text="Title" />
+                              <TableColumn fx:id="allAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
+                              <TableColumn fx:id="allDescTab" prefWidth="306.0" text="Description" />
+                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
+                              <TableColumn fx:id="allGenreTab" prefWidth="112.0" text="Genre" />
+                              <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="addBookButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="editBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="deleteBookButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" text="Delete" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <!--<Tab text="Book Information">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Enter a Keyword" />
+                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
+                           <columns>
+                              <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
+                              <TableColumn fx:id="searchAuthTab" minWidth="8.0" prefWidth="132.0" text="Author" />
+                              <TableColumn fx:id="searchDescTab" prefWidth="319.0" text="Description" />
+                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="70.0" text="Page Count" />
+                              <TableColumn fx:id="searchGenreTab" prefWidth="103.0" text="Genre" />
+                              <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>-->
+            <Tab text="User Information">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="userTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                           <columns>
+                              <TableColumn fx:id="usernameTab" prefWidth="176.0" text="Username" />
+                              <TableColumn fx:id="userFirstNameTab" minWidth="8.0" prefWidth="185.0" text="First Name" />
+                              <TableColumn fx:id="userLastNameTab" prefWidth="263.0" text="Last Name" />
+                              <TableColumn fx:id="userBooksReadTotalTab" minWidth="0.0" prefWidth="123.0" text="Total Books Read" />
+                              <TableColumn fx:id="userTimesAccessed" prefWidth="98.0" text="Times Accessed" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="addUserButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="editUserButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="deleteUserButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" text="Delete" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
