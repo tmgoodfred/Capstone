@@ -50,6 +50,7 @@ public class BookSurveyController implements Initializable {
     int bookTotalReads, readsToInsert;
     boolean continueCommand = true;
     String booksReadToInsert;
+    String booksRatingToInsert;
     int totalReadToInsert;
     
     @Override
@@ -108,8 +109,9 @@ public class BookSurveyController implements Initializable {
                         String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
                         stmt.executeUpdate(update);
                         booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;
+                        booksRatingToInsert = MainMenuController.userBooksRatingList+","+rating.toString();
                         totalReadToInsert = MainMenuController.userTotalBooksReadList+1;
-                        String update2 = "UPDATE capstone.users SET userBooksRead=\""+booksReadToInsert+"\", userBooksReadTotal="+totalReadToInsert+" WHERE userID="+LoginScreenController.userIDtoShare+";";
+                        String update2 = "UPDATE capstone.users SET userBooksRead=\""+booksReadToInsert+"\", userBooksRating=\""+booksRatingToInsert+"\", userBooksReadTotal="+totalReadToInsert+" WHERE userID="+LoginScreenController.userIDtoShare+";";
                         stmt.executeUpdate(update2);
                     }
                     catch (SQLException e ) {
