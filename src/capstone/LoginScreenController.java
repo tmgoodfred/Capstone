@@ -108,10 +108,26 @@ public class LoginScreenController implements Initializable {
                         break;
                     }
                     else if (accessLvl == 1){
-                        //this will show the admin screen (not yet created)
+                        noneFoundFlag2 = 3;
+                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                        stage3.close();
+                        Parent root = FXMLLoader.load(getClass().getResource("AdminMainMenu.fxml"));
+                        Stage stage = new Stage();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        break;
                     }
                     else if (accessLvl == 2){
-                        //this will show the "librarian" screen (not yet created)
+                        noneFoundFlag2 = 3;
+                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                        stage3.close();
+                        Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
+                        Stage stage = new Stage();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        break;
                     }
                 }
             }
