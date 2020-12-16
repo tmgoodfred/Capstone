@@ -219,7 +219,7 @@ public class MainMenuController implements Initializable {
     }
     
     @FXML
-    private void refreshButtonAction (ActionEvent event){
+    private void refreshButtonAction (ActionEvent event){   //for when a user adds books to their read list after the form has been initialized initially. 
         readbookID.clear();
         readbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
         readbookAuthor.clear();
