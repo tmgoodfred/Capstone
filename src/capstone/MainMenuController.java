@@ -70,6 +70,7 @@ public class MainMenuController implements Initializable {
     List<String> readbookMainGenre = new ArrayList<>();
     
     public static String userBooksReadList;
+    public static String userBooksRatingList;
     public static String[] elements = {"0"};
     public static Integer userTotalBooksReadList;
     
@@ -232,14 +233,15 @@ public class MainMenuController implements Initializable {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "root", "Rootpass1");
             Statement stmt = null;
-            String userQuery = "SELECT userBooksRead, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
+            String userQuery = "SELECT userBooksRead, userBooksRating, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
             try {
                 stmt = conn.createStatement();
                 ResultSet rs2 = stmt.executeQuery(userQuery);   //gets the users read list
                 while(rs2.next())
                 {
                     userBooksReadList = rs2.getString(1);   //these are actually strings not lists despite the naming
-                    userTotalBooksReadList = rs2.getInt(2);
+                    userBooksRatingList = rs2.getString(2);
+                    userTotalBooksReadList = rs2.getInt(3);
                 }
                     elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
                     List<String> fixedLengthList = Arrays.asList(elements);
@@ -356,7 +358,7 @@ public class MainMenuController implements Initializable {
             conn = DriverManager.getConnection(url2, "root", "Rootpass1");
             Statement stmt = null;
             String query = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre FROM capstone.books"; //gets relevant book data from database
-            String userQuery = "SELECT userBooksRead, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
+            String userQuery = "SELECT userBooksRead, userBooksRating, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -374,7 +376,8 @@ public class MainMenuController implements Initializable {
                 while(rs2.next())
                 {
                     userBooksReadList = rs2.getString(1);   //these are actually strings not lists despite the naming
-                    userTotalBooksReadList = rs2.getInt(2);
+                    userBooksRatingList = rs2.getString(2);
+                    userTotalBooksReadList = rs2.getInt(3);
                 }
                 if(!userBooksReadList.equals("0")){
                     elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
