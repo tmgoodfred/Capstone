@@ -136,6 +136,8 @@ public class MainMenuController implements Initializable {
     @FXML
     Button refreshBtn;
     @FXML
+    Button refreshButton;
+    @FXML
     TextField searchTxt;
     @FXML
     Button recReadMoreButton;
@@ -215,7 +217,64 @@ public class MainMenuController implements Initializable {
         }
         return items3;
     }
-            
+    
+    @FXML
+    private void refreshButtonAction (ActionEvent event){
+        readbookID.clear();
+        readbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        readbookAuthor.clear();
+        readbookDescription.clear();
+        readbookPageCount.clear();
+        readbookMainGenre.clear();
+        readbookRating.clear();
+        Connection conn = null;
+        try {
+            String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            conn = DriverManager.getConnection(url2, "root", "Rootpass1");
+            Statement stmt = null;
+            String userQuery = "SELECT userBooksRead, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
+            try {
+                stmt = conn.createStatement();
+                ResultSet rs2 = stmt.executeQuery(userQuery);   //gets the users read list
+                while(rs2.next())
+                {
+                    userBooksReadList = rs2.getString(1);   //these are actually strings not lists despite the naming
+                    userTotalBooksReadList = rs2.getInt(2);
+                }
+                    elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
+                    List<String> fixedLengthList = Arrays.asList(elements);
+                    ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
+                    for(int i=0;i<bookTitle.size();i++){
+                        for(int j=0;j<listOfString.size();j++){ //I hate that this is O(n^2).
+                            if(bookID.get(i).equals(Integer.parseInt(listOfString.get(j)))) //this compares each bookID to the list of books read by the user
+                            {
+                                readbookID.add(bookID.get(i));
+                                readbookTitle.add(bookTitle.get(i));
+                                readbookAuthor.add(bookAuthor.get(i));
+                                readbookDescription.add(bookDescription.get(i));
+                                readbookPageCount.add(bookPageCount.get(i));
+                                readbookMainGenre.add(bookMainGenre.get(i));
+                                readbookRating.add(bookRating.get(i));
+                            }
+                        }
+                    }
+                }
+                catch (SQLException e ) {
+                      throw new Error("Problem", e);
+                    } finally {
+                      if (stmt != null) { stmt.close(); }
+                    }
+                }
+                catch (SQLException e) {
+                    throw new Error("Problem", e);
+                } 
+                finally {
+                  try {if (conn != null) {conn.close();}} 
+                  catch (SQLException ex) {System.out.println(ex.getMessage());}
+                }
+        readTableView.setItems(getReadItems()); //puts the read book data into the table view
+    }
+    
     @FXML
     private void allreadMoreButtonAction (ActionEvent event) throws IOException{
         MainMenuController person = allTableView.getSelectionModel().getSelectedItem();
