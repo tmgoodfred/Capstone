@@ -42,10 +42,7 @@ public class Book {
     static List<Double> readbookRating = new ArrayList<>();
     static List<Integer> readbookTotalReads = new ArrayList<>();
     static List<String> readbookMainGenre = new ArrayList<>();
-    
-    //private String bookTitles, bookAuthors, bookDescriptions, mainGenres;   //variables for the generic class
-    //private Integer bookIDs, bookPageCounts;
-    //private Double bookRatings;
+
     public String bookTitles, bookAuthors, bookDescriptions, mainGenres;   //variables for the generic class
     public Integer bookIDs, bookPageCounts;
     public Double bookRatings;
