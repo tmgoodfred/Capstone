@@ -436,9 +436,12 @@ public class AddBookController implements Initializable {
 
     }
     
-    public void backButtonAction(ActionEvent event){
-        Stage stage = (Stage) backBtn.getScene().getWindow();
-        stage.close();
+    public void backButtonAction(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
     @Override
