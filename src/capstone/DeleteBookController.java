@@ -37,9 +37,9 @@ public class DeleteBookController implements Initializable {
             try {
                 String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 conn = DriverManager.getConnection(url2, "root", "Rootpass1");
-                Statement stmt = null;
+                Statement stmt = conn.createStatement();
                     try {
-                        stmt.executeQuery(delete);
+                        stmt.executeUpdate(delete);
                         Stage stage2 = (Stage) yesBtn.getScene().getWindow();  //the following takes the user back to the manager main menu screen
                         stage2.close();
                         Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
