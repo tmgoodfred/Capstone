@@ -6,13 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="420.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.AddBookController">
+<AnchorPane id="AnchorPane" prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.AddBookController">
    <children>
       <TextField fx:id="titleTxt" layoutX="43.0" layoutY="46.0" promptText="Title" />
       <TextField fx:id="authorTxt" layoutX="43.0" layoutY="84.0" promptText="Author" />
       <TextArea fx:id="descriptionTxt" layoutX="43.0" layoutY="127.0" prefHeight="86.0" prefWidth="265.0" promptText="Description" />
-      <Button fx:id="bookCoverImageBtn" layoutX="43.0" layoutY="230.0" mnemonicParsing="false" text="Book Cover Art" />
+      <Button fx:id="bookCoverImageBtn" layoutX="43.0" layoutY="230.0" mnemonicParsing="false" onAction="#uploadImageButtonAction" text="Book Cover Art" />
       <TextField fx:id="pageCountTxt" layoutX="43.0" layoutY="267.0" prefHeight="25.0" prefWidth="129.0" promptText="Page Count" />
       <TextField fx:id="difficultyTxt" layoutX="43.0" layoutY="305.0" prefHeight="25.0" prefWidth="129.0" promptText="Difficulty Level (1-10)" />
       <TextField fx:id="mainGenreTxt" layoutX="43.0" layoutY="344.0" prefHeight="25.0" prefWidth="129.0" promptText="Main Genre" />
@@ -28,7 +27,7 @@
       <TextField fx:id="ssTxt" layoutX="390.0" layoutY="282.0" promptText="Short Stories Level" />
       <TextField fx:id="hsTxt" layoutX="390.0" layoutY="307.0" promptText="History Level" />
       <TextField fx:id="yaTxt" layoutX="390.0" layoutY="330.0" promptText="Young Adult Level" />
-      <Button fx:id="submitBtn" layoutX="282.0" layoutY="383.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="submitBtn" layoutX="282.0" layoutY="383.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit" />
       <Label layoutX="431.0" layoutY="17.0" text="From 0.0-1.0" />
       <Label layoutX="384.0" layoutY="37.0" text="If left empty, will default to 0.0" />
       <Label layoutX="63.0" layoutY="17.0" text="* if required field" />
