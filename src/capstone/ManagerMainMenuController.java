@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,6 +62,8 @@ public class ManagerMainMenuController implements Initializable {
     Button addBookButton;
     @FXML
     Button editBookButton;
+    @FXML
+    Button deleteBookButton;
     
     public static int bookIDtoShare;
     public static String bookNametoShare;
@@ -83,6 +86,18 @@ public class ManagerMainMenuController implements Initializable {
         Stage stage2 = (Stage) editBookButton.getScene().getWindow();
         stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("EditBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void deleteButtonAction(ActionEvent event) throws IOException{
+        Book person = allTableView.getSelectionModel().getSelectedItem();
+        bookIDtoShare = person.bookIDs;
+        Stage stage2 = (Stage) deleteBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("DeleteBook.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
