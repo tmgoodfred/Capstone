@@ -64,7 +64,6 @@ public class User {
     }
     
     public static ObservableList<User> getUserItems(){   //gets all the users and stores them into one observable list - needed for putting into a table column
-        System.out.println("We got to get user items");
         ObservableList<User> items = FXCollections.observableArrayList();
         for(int i=0; i<userIDL.size();i++){
             items.add(new User(userIDL.get(i), usernameL.get(i), userFirstNameL.get(i), userLastNameL.get(i), userBooksReadTotalL.get(i), userTimesAccessedL.get(i)));
