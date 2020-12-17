@@ -26,7 +26,7 @@
                            </columns>
                         </TableView>
                         <Button fx:id="addBookButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#addButtonAction" text="Add" />
-                        <Button fx:id="editBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="editBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#editButtonAction" text="Edit" />
                         <Button fx:id="deleteBookButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" text="Delete" />
                      </children>
                   </AnchorPane>
