@@ -435,6 +435,8 @@ public class AddBookController implements Initializable {
     }
     
     public void backButtonAction(ActionEvent event) throws IOException{
+        Stage stage2 = (Stage) backBtn.getScene().getWindow();  //the following takes the user back to the login screen
+        stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
