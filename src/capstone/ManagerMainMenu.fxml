@@ -64,9 +64,9 @@
                               <TableColumn fx:id="userTimesAccessedTab" prefWidth="98.0" text="Times Accessed" />
                            </columns>
                         </TableView>
-                        <Button fx:id="addUserButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" text="Add" />
-                        <Button fx:id="editUserButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" text="Edit" />
-                        <Button fx:id="deleteUserButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="addUserButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#addUserButtonAction" text="Add" />
+                        <Button fx:id="editUserButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#editUserButtonAction" text="Edit" />
+                        <Button fx:id="deleteUserButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" onAction="#deleteUserButtonAction" text="Delete" />
                      </children>
                   </AnchorPane>
                </content>
