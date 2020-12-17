@@ -71,7 +71,7 @@ public class Book {
         return new SimpleDoubleProperty(bookRatings);
     }
     
-    public ObservableList<Book> getItems(){   //gets all the books and stores them into one observable list - needed for putting into a table column
+    public static ObservableList<Book> getBookItems(){   //gets all the books and stores them into one observable list - needed for putting into a table column
         ObservableList<Book> items = FXCollections.observableArrayList();
         for(int i=0; i<bookID.size();i++){
             items.add(new Book(bookID.get(i), bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
