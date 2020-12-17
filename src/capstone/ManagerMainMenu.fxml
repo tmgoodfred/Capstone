@@ -61,7 +61,7 @@
                               <TableColumn fx:id="userFirstNameTab" minWidth="8.0" prefWidth="185.0" text="First Name" />
                               <TableColumn fx:id="userLastNameTab" prefWidth="263.0" text="Last Name" />
                               <TableColumn fx:id="userBooksReadTotalTab" minWidth="0.0" prefWidth="123.0" text="Total Books Read" />
-                              <TableColumn fx:id="userTimesAccessed" prefWidth="98.0" text="Times Accessed" />
+                              <TableColumn fx:id="userTimesAccessedTab" prefWidth="98.0" text="Times Accessed" />
                            </columns>
                         </TableView>
                         <Button fx:id="addUserButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" text="Add" />
