@@ -62,6 +62,8 @@ public class ManagerMainMenuController implements Initializable {
     
     @FXML
     public void addButtonAction(ActionEvent event) throws IOException{
+        Stage stage2 = (Stage) addBookButton.getScene().getWindow();
+        stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("AddBook.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
