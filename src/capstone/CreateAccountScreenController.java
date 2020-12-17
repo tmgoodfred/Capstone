@@ -24,7 +24,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleGroup;
-import javax.swing.JFrame;
 
 /**
  *
@@ -32,7 +31,6 @@ import javax.swing.JFrame;
  */
 public class CreateAccountScreenController implements Initializable {
     
-    JFrame parent = new JFrame();   //for error pop up message that user was not found
     List<String> usernameList = new ArrayList<String>(); 
     
     @FXML
