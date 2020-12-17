@@ -63,8 +63,15 @@ public class ManagerMainMenuController implements Initializable {
     Button editBookButton;
     @FXML
     Button deleteBookButton;
+    @FXML
+    Button addUserButton;
+    @FXML
+    Button editUserButton;
+    @FXML
+    Button deleteUserButton;
     
     public static int bookIDtoShare;
+    public static int userIDtoShare;
     public static String bookNametoShare;
     
     @FXML
@@ -97,6 +104,40 @@ public class ManagerMainMenuController implements Initializable {
         Stage stage2 = (Stage) deleteBookButton.getScene().getWindow();
         stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("DeleteBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void addUserButtonAction(ActionEvent event) throws IOException{
+        Stage stage2 = (Stage) addUserButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("CreateAccountScreen.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void editUserButtonAction(ActionEvent event) throws IOException{
+        User person = userTableView.getSelectionModel().getSelectedItem();
+        userIDtoShare = person.userID;
+        Stage stage2 = (Stage) editUserButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("EditUser.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void deleteUserButtonAction(ActionEvent event) throws IOException{
+        User person = userTableView.getSelectionModel().getSelectedItem();
+        userIDtoShare = person.userID;
+        Stage stage2 = (Stage) deleteBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("DeleteUser.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
