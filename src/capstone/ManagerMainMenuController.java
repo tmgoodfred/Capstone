@@ -59,6 +59,11 @@ public class ManagerMainMenuController implements Initializable {
     
     @FXML
     Button addBookButton;
+    @FXML
+    Button editBookButton;
+    
+    public static int bookIDtoShare;
+    public static String bookNametoShare;
     
     @FXML
     public void addButtonAction(ActionEvent event) throws IOException{
@@ -70,9 +75,37 @@ public class ManagerMainMenuController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    public void editButtonAction(ActionEvent event) throws IOException{
+        Book person = allTableView.getSelectionModel().getSelectedItem();
+        bookIDtoShare = person.bookIDs;
+        bookNametoShare = person.bookTitles;
+        Stage stage2 = (Stage) editBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("EditBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Book.bookID.clear();
+        Book.bookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.bookAuthor.clear();
+        Book.bookDescription.clear();
+        Book.bookPageCount.clear();
+        Book.bookMainGenre.clear();
+        Book.bookRating.clear();
+        
+        User.userIDL.clear();
+        User.usernameL.clear();
+        User.userFirstNameL.clear();
+        User.userLastNameL.clear();
+        User.userBooksReadTotalL.clear();
+        User.userTimesAccessedL.clear();
+        
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
