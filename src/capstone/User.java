@@ -22,8 +22,8 @@ public class User {
     static List<Integer> userBooksReadTotalL = new ArrayList<>();
     static List<Integer> userTimesAccessedL = new ArrayList<>();
     
-    private String username, userFirstName, userLastName;   //variables for the generic class
-    private Integer userID, userBooksReadTotal, userTimesAccessed;
+    public String username, userFirstName, userLastName;   //variables for the generic class
+    public Integer userID, userBooksReadTotal, userTimesAccessed;
     
     public User(){    //the generic class for users to be added to the tableviews
     this.userID = 0;
