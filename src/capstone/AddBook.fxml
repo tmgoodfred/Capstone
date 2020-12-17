@@ -37,5 +37,6 @@
       <Label layoutX="37.0" layoutY="271.0" text="*" />
       <Label layoutX="37.0" layoutY="311.0" text="*" />
       <Label layoutX="37.0" layoutY="348.0" text="*" />
+      <Button fx:id="backBtn" layoutX="220.0" layoutY="383.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
    </children>
 </AnchorPane>
