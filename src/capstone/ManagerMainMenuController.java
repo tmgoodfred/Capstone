@@ -1,5 +1,13 @@
 package capstone;
 
+import capstone.User;
+import capstone.Book;
+import static capstone.User.userBooksReadTotalL;
+import static capstone.User.userFirstNameL;
+import static capstone.User.userIDL;
+import static capstone.User.userLastNameL;
+import static capstone.User.userTimesAccessedL;
+import static capstone.User.usernameL;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,7 +39,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ManagerMainMenuController implements Initializable {
 
     @FXML
-    TableView<ManagerMainMenuController> allTableView;
+    TableView<Book> allTableView;
     @FXML
     TableView<User> userTableView;
     
@@ -44,7 +52,7 @@ public class ManagerMainMenuController implements Initializable {
     @FXML
     TableColumn userBooksReadTotalTab;
     @FXML
-    TableColumn userTimesAccessed;
+    TableColumn userTimesAccessedTab;
     @FXML
     TableColumn allTitleTab;
     @FXML
@@ -58,70 +66,6 @@ public class ManagerMainMenuController implements Initializable {
     @FXML
     TableColumn allRateTab;
     
-    List<Integer> bookID = new ArrayList<>();    //lists to store book data to be added to the tableviews
-    List<String> bookTitle = new ArrayList<>();
-    List<String> bookAuthor = new ArrayList<>();
-    List<String> bookDescription = new ArrayList<>();
-    List<Integer> bookPageCount = new ArrayList<>();
-    List<Double> bookRating = new ArrayList<>();
-    List<Integer> bookTotalReads = new ArrayList<>();
-    List<String> bookMainGenre = new ArrayList<>();
-    
-    private String bookTitles, bookAuthors, bookDescriptions, mainGenres;   //variables for the generic class
-    private Integer bookIDs, bookPageCounts;
-    private Double bookRatings;
-    
-    public ManagerMainMenuController(){    //the generic class for books to be added to the tableviews
-    this.bookIDs = 0;
-    this.bookTitles = "";
-    this.bookAuthors = "";
-    this.bookDescriptions = "";
-    this.bookPageCounts = 0;
-    this.mainGenres = "";
-    this.bookRatings = 0.0;
-    }
-
-    public ManagerMainMenuController (Integer bookIDs, String bookTitles, String bookAuthors, String bookDescriptions, Integer bookPageCounts, String mainGenres, Double bookRatings){ //the generic class for books to be added to the tableviews
-    this.bookIDs = bookIDs;
-    this.bookTitles = bookTitles;
-    this.bookAuthors = bookAuthors;
-    this.bookDescriptions = bookDescriptions;
-    this.bookPageCounts = bookPageCounts;
-    this.mainGenres = mainGenres;
-    this.bookRatings = bookRatings;
-    }
-    
-    
-    public IntegerProperty bookIDProperty(){    //these are used to store the data from the books into each column
-        return new SimpleIntegerProperty(bookIDs);
-    }
-    public StringProperty bookTitlesProperty(){
-        return new SimpleStringProperty(bookTitles);
-    }
-    public StringProperty bookAuthorsProperty(){
-        return new SimpleStringProperty(bookAuthors);
-    }
-    public StringProperty bookDescriptionsProperty(){
-        return new SimpleStringProperty(bookDescriptions);
-    }
-    public IntegerProperty bookPageCountsProperty(){
-        return new SimpleIntegerProperty(bookPageCounts);
-    }
-    public StringProperty mainGenresProperty(){
-        return new SimpleStringProperty(mainGenres);
-    }
-    public DoubleProperty bookRatingsProperty(){
-        return new SimpleDoubleProperty(bookRatings);
-    }
-    
-    public ObservableList<ManagerMainMenuController> getItems(){   //gets all the books and stores them into one observable list - needed for putting into a table column
-        ObservableList<ManagerMainMenuController> items = FXCollections.observableArrayList();
-        for(int i=0; i<bookID.size();i++){
-            items.add(new ManagerMainMenuController(bookID.get(i), bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
-        }
-        return items;
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
@@ -130,18 +74,28 @@ public class ManagerMainMenuController implements Initializable {
             conn = DriverManager.getConnection(url2, "root", "Rootpass1");
             Statement stmt = null;
             String query = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre FROM capstone.books"; //gets relevant book data from database
+            String query2 = "SELECT userID,username,userFirstName,userLastName,userBooksReadTotal,userTimesAccessed FROM capstone.users WHERE accessLvl=3"; //gets relevant book data from database
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()){
-                    bookID.add(rs.getInt(1));
-                    bookTitle.add(rs.getString(2));
-                    bookAuthor.add(rs.getString(3));
-                    bookDescription.add(rs.getString(4));
-                    bookPageCount.add(rs.getInt(5));
-                    bookRating.add(rs.getDouble(6));
-                    bookTotalReads.add(rs.getInt(7));
-                    bookMainGenre.add(rs.getString(8));
+                    Book.bookID.add(rs.getInt(1));
+                    Book.bookTitle.add(rs.getString(2));
+                    Book.bookAuthor.add(rs.getString(3));
+                    Book.bookDescription.add(rs.getString(4));
+                    Book.bookPageCount.add(rs.getInt(5));
+                    Book.bookRating.add(rs.getDouble(6));
+                    Book.bookTotalReads.add(rs.getInt(7));
+                    Book.bookMainGenre.add(rs.getString(8));
+                }
+                ResultSet rs2 = stmt.executeQuery(query2);
+                while (rs2.next()){
+                    User.userIDL.add(rs2.getInt(1));
+                    User.usernameL.add(rs2.getString(2));
+                    User.userFirstNameL.add(rs2.getString(3));
+                    User.userLastNameL.add(rs2.getString(4));
+                    User.userBooksReadTotalL.add(rs2.getInt(5));
+                    User.userTimesAccessedL.add(rs2.getInt(6));
                 }
             }
             catch (SQLException e ) {
@@ -158,14 +112,21 @@ public class ManagerMainMenuController implements Initializable {
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
         
-        allTitleTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookTitles"));    //initializes the table columns to prepare them to retrieve the data
-        allAuthTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookAuthors"));
-        allDescTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("bookDescriptions"));
-        allPgCntTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Integer>("bookPageCounts"));
-        allGenreTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, String>("mainGenres"));
-        allRateTab.setCellValueFactory(new PropertyValueFactory<MainMenuController, Double>("bookRatings"));
+        allTitleTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookTitles"));    //initializes the table columns to prepare them to retrieve the data
+        allAuthTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookAuthors"));
+        allDescTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookDescriptions"));
+        allPgCntTab.setCellValueFactory(new PropertyValueFactory<Book, Integer>("bookPageCounts"));
+        allGenreTab.setCellValueFactory(new PropertyValueFactory<Book, String>("mainGenres"));
+        allRateTab.setCellValueFactory(new PropertyValueFactory<Book, Double>("bookRatings"));
         
-        allTableView.setItems(getItems());  //puts all book data into the table view
+        usernameTab.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
+        userFirstNameTab.setCellValueFactory(new PropertyValueFactory<User, String>("userFirstName"));
+        userLastNameTab.setCellValueFactory(new PropertyValueFactory<User, String>("userLastName"));
+        userBooksReadTotalTab.setCellValueFactory(new PropertyValueFactory<User, Integer>("userBooksReadTotal"));
+        userTimesAccessedTab.setCellValueFactory(new PropertyValueFactory<User, Integer>("userTimesAccessed"));
+        
+        allTableView.setItems(Book.getBookItems());  //puts all book data into the table view
+        userTableView.setItems(User.getUserItems());
     }    
     
 }
