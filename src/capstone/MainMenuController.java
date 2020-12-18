@@ -230,8 +230,9 @@ public class MainMenuController implements Initializable {
         String searchTerm = searchTxt.getText();    //gets the data from the search bar
         for(int i=0; i<Book.bookTitle.size();i++){   //iterates over each book 
             {
-                if(Book.bookTitle.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookAuthor.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookDescription.get(i).toLowerCase().contains(searchTerm.toLowerCase()))
-                {   //the above line is comparing the search terms to titles, authors, and or descriptions,and converts it all to lower case for accurate information retrieval. Otherwise Life would not match life or vice versa
+                if(Book.bookTitle.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookAuthor.get(i).toLowerCase().contains(searchTerm.toLowerCase()) 
+                        || Book.bookDescription.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookMainGenre.get(i).toLowerCase().contains(searchTerm.toLowerCase()))
+                {   //the above line is comparing the search terms to titles, authors, descriptions, and or genres and converts it all to lower case for accurate information retrieval. Otherwise Life would not match life or vice versa
                     Book.searchbookID.add(Book.bookID.get(i));
                     Book.searchbookTitle.add(Book.bookTitle.get(i));
                     Book.searchbookAuthor.add(Book.bookAuthor.get(i));
