@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="376.0" prefWidth="299.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.EditUserController">
+    <children>
+      <Button fx:id="submitBtn" layoutX="130.0" layoutY="289.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit" />
+      <Button fx:id="backBtn" layoutX="136.0" layoutY="329.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <TextField fx:id="firstNameTxt" layoutX="82.0" layoutY="145.0" promptText="First Name" />
+      <TextField fx:id="usernameTxt" layoutX="82.0" layoutY="54.0" promptText="Username" />
+      <TextField fx:id="lastNameTxt" layoutX="82.0" layoutY="178.0" promptText="Last Name" />
+      <TextField fx:id="ageTxt" alignment="CENTER" layoutX="95.0" layoutY="213.0" prefHeight="25.0" prefWidth="54.0" promptText="Age" />
+      <Label layoutX="122.0" layoutY="31.0" text="* = Required" />
+      <Label layoutX="68.0" layoutY="59.0" text="*" />
+      <Label layoutX="68.0" layoutY="149.0" text="*" />
+      <Label layoutX="68.0" layoutY="182.0" text="*" />
+      <Label layoutX="157.0" layoutY="217.0" text="(From 18-99)" />
+      <ComboBox fx:id="genderDropBox" layoutX="81.0" layoutY="250.0" prefWidth="150.0" promptText="Gender" />
+      <TextField fx:id="confirmPasswordTxt" layoutX="82.0" layoutY="114.0" promptText="Confirm Password" />
+      <TextField fx:id="passwordTxt" layoutX="82.0" layoutY="84.0" promptText="Password" />
+      <Label layoutX="68.0" layoutY="88.0" text="*" />
+      <Label layoutX="68.0" layoutY="118.0" text="*" />
+   </children>
+</AnchorPane>
