@@ -414,7 +414,7 @@ public class CreateAccountScreenController implements Initializable {
         while(moveOn == 1){
             try {
                 String url = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-                conn = DriverManager.getConnection(url, "root", "Rootpass1");
+                conn = DriverManager.getConnection(url, "root", "Rootpass1!");
                 Statement stmt = null;
                 String insert = "INSERT INTO capstone.users (username, password, userFirstName, userLastName, userAge, userGender, actionAdventureLvl, classicLvl, mysteryLvl, "    //statement for inserting into the database
                         + "fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl) "
@@ -579,7 +579,7 @@ public class CreateAccountScreenController implements Initializable {
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-            conn = DriverManager.getConnection(url2, "root", "Rootpass1");
+            conn = DriverManager.getConnection(url2, "root", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT username, password FROM capstone.users"; //gets login data from database
             try {
