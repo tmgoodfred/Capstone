@@ -310,7 +310,7 @@ public class AddBookController implements Initializable {
             Connection conn = null;
             try {
                 String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-                conn = DriverManager.getConnection(url2, "root", "Rootpass1");
+                conn = DriverManager.getConnection(url2, "root", "Rootpass1!");
                 Statement stmt = null;
                 PreparedStatement insertPrep = conn.prepareStatement(insert);
                     try {
@@ -449,7 +449,7 @@ public class AddBookController implements Initializable {
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://localhost:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
-            conn = DriverManager.getConnection(url2, "root", "Rootpass1");
+            conn = DriverManager.getConnection(url2, "root", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT bookTitle FROM capstone.books"; //gets relevant book data from database
             try {
