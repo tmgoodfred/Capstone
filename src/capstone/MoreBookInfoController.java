@@ -52,7 +52,7 @@ public class MoreBookInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
         try {
-            String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT bookTitle, bookAuthor, bookCover, bookDescription FROM capstone.books WHERE bookID ="+bookIDtoComp+";"; //gets relevant book data from database
