@@ -35,7 +35,7 @@ public class DeleteBookController implements Initializable {
         String delete = "DELETE FROM capstone.books WHERE bookID ="+bookIDtoComp+";";   //delete statement
         Connection conn = null;
             try {
-                String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
                 Statement stmt = conn.createStatement();
                     try {
