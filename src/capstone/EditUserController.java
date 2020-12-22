@@ -105,7 +105,7 @@ public class EditUserController implements Initializable {
         Connection conn = null;
         while(moveOn == 1){
             try {
-                String url = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                String url = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 conn = DriverManager.getConnection(url, "tyler", "Rootpass1!");
                 Statement stmt = null;
                 PreparedStatement insert = conn.prepareStatement("UPDATE capstone.users SET username = ?, password = ?, userFirstName = ?, userLastName = ?, userAge = ?, userGender = ?"    //statement for inserting into the database
@@ -197,7 +197,7 @@ public class EditUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {    //upon initialization, the datbase is access and queries are run
         Connection conn = null;
         try {
-            String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT username, password, userFirstName, userLastName, userAge, userGender FROM capstone.users WHERE userID ="+userIDtoComp+";"; //gets login data from database
