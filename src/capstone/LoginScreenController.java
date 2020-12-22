@@ -74,7 +74,7 @@ public class LoginScreenController implements Initializable {
                     userAccess = userAccess + 1;    //increments by 1
                     Connection conn = null;
                     try {
-                        String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                        String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                         conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
                         Statement stmt = null;
                         String update = "UPDATE capstone.users SET userTimesAccessed = "+userAccess+" WHERE userID = "+userID+";";  //update statement to increment the user times accessed by 1
@@ -161,7 +161,7 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {    //upon initialization, the datbase is access and queries are run
         Connection conn = null;
         try {
-            String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT userID, username, password, accessLvl, userTimesAccessed FROM capstone.users"; //gets login data from database
