@@ -309,7 +309,7 @@ public class AddBookController implements Initializable {
         if(moveOn == 0 && moveOn2 == 0 && moveOn3 == 0 && moveOn4 == 0){
             Connection conn = null;
             try {
-                String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                 conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
                 Statement stmt = null;
                 PreparedStatement insertPrep = conn.prepareStatement(insert);
@@ -448,7 +448,7 @@ public class AddBookController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
         try {
-            String url2 = "jdbc:mysql://192.168.1.23:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT bookTitle FROM capstone.books"; //gets relevant book data from database
