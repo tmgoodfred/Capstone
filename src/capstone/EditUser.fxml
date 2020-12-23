@@ -6,23 +6,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="376.0" prefWidth="299.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.EditUserController">
+<AnchorPane id="AnchorPane" prefHeight="376.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.EditUserController">
     <children>
-      <Button fx:id="submitBtn" layoutX="130.0" layoutY="289.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit" />
-      <Button fx:id="backBtn" layoutX="136.0" layoutY="329.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
-      <TextField fx:id="firstNameTxt" layoutX="82.0" layoutY="145.0" promptText="First Name" />
-      <TextField fx:id="usernameTxt" layoutX="82.0" layoutY="54.0" promptText="Username" />
-      <TextField fx:id="lastNameTxt" layoutX="82.0" layoutY="178.0" promptText="Last Name" />
-      <TextField fx:id="ageTxt" alignment="CENTER" layoutX="95.0" layoutY="213.0" prefHeight="25.0" prefWidth="54.0" promptText="Age" />
-      <Label layoutX="122.0" layoutY="31.0" text="* = Required" />
-      <Label layoutX="68.0" layoutY="59.0" text="*" />
-      <Label layoutX="68.0" layoutY="149.0" text="*" />
-      <Label layoutX="68.0" layoutY="182.0" text="*" />
-      <Label layoutX="157.0" layoutY="217.0" text="(From 18-99)" />
-      <ComboBox fx:id="genderDropBox" layoutX="81.0" layoutY="250.0" prefWidth="150.0" promptText="Gender" />
-      <TextField fx:id="confirmPasswordTxt" layoutX="82.0" layoutY="114.0" promptText="Confirm Password" />
-      <TextField fx:id="passwordTxt" layoutX="82.0" layoutY="84.0" promptText="Password" />
-      <Label layoutX="68.0" layoutY="88.0" text="*" />
-      <Label layoutX="68.0" layoutY="118.0" text="*" />
+      <Button fx:id="submitBtn" layoutX="154.0" layoutY="294.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Submit" />
+      <Button fx:id="backBtn" layoutX="160.0" layoutY="329.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <TextField fx:id="firstNameTxt" layoutX="156.0" layoutY="148.0" promptText="First Name" />
+      <TextField fx:id="usernameTxt" layoutX="156.0" layoutY="57.0" promptText="Username" />
+      <TextField fx:id="lastNameTxt" layoutX="156.0" layoutY="181.0" promptText="Last Name" />
+      <TextField fx:id="ageTxt" alignment="CENTER" layoutX="169.0" layoutY="216.0" prefHeight="25.0" prefWidth="54.0" promptText="Age" />
+      <Label layoutX="196.0" layoutY="34.0" text="* = Required" />
+      <Label layoutX="142.0" layoutY="62.0" text="*" />
+      <Label layoutX="142.0" layoutY="152.0" text="*" />
+      <Label layoutX="142.0" layoutY="185.0" text="*" />
+      <Label layoutX="231.0" layoutY="220.0" text="(From 18-99)" />
+      <ComboBox fx:id="genderDropBox" layoutX="155.0" layoutY="253.0" prefWidth="150.0" promptText="Gender" />
+      <TextField fx:id="confirmPasswordTxt" layoutX="156.0" layoutY="117.0" promptText="Confirm Password" />
+      <TextField fx:id="passwordTxt" layoutX="156.0" layoutY="87.0" promptText="Password" />
+      <Label layoutX="142.0" layoutY="91.0" text="*" />
+      <Label layoutX="142.0" layoutY="121.0" text="*" />
+      <Label layoutX="74.0" layoutY="62.0" text="Username" />
+      <Label layoutX="76.0" layoutY="91.0" text="Password" />
+      <Label layoutX="33.0" layoutY="120.0" text="Confirm Password" />
+      <Label layoutX="72.0" layoutY="152.0" text="First Name" />
+      <Label layoutX="73.0" layoutY="185.0" text="Last Name" />
+      <Label layoutX="103.0" layoutY="220.0" text="Age" />
+      <Label layoutX="84.0" layoutY="257.0" text="Gender" />
    </children>
 </AnchorPane>
