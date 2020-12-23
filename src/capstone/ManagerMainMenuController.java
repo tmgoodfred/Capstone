@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -33,6 +34,11 @@ public class ManagerMainMenuController implements Initializable {
     TableView<Book> allTableView;
     @FXML
     TableView<User> userTableView;
+    @FXML
+    TableView<Book> searchTableView;
+    
+    @FXML
+    TextField searchTxt;
     
     @FXML
     TableColumn usernameTab;
@@ -56,6 +62,18 @@ public class ManagerMainMenuController implements Initializable {
     TableColumn allGenreTab;
     @FXML
     TableColumn allRateTab;
+    @FXML
+    TableColumn searchTitleTab;
+    @FXML
+    TableColumn searchAuthTab;
+    @FXML
+    TableColumn searchDescTab;
+    @FXML
+    TableColumn searchPgCntTab;
+    @FXML
+    TableColumn searchGenreTab;
+    @FXML
+    TableColumn searchRateTab;
     
     @FXML
     Button addBookButton;
@@ -63,6 +81,14 @@ public class ManagerMainMenuController implements Initializable {
     Button editBookButton;
     @FXML
     Button deleteBookButton;
+    @FXML
+    Button searchAddBookButton;
+    @FXML
+    Button searchEditBookButton;
+    @FXML
+    Button searchDeleteBookButton;
+    @FXML
+    Button searchBtn;
     @FXML
     Button addUserButton;
     @FXML
@@ -110,6 +136,41 @@ public class ManagerMainMenuController implements Initializable {
         stage.show();
     }
     @FXML
+    public void searchAddButtonAction(ActionEvent event) throws IOException{
+        Stage stage2 = (Stage) addBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("AddBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void searchEditButtonAction(ActionEvent event) throws IOException{
+        Book person = searchTableView.getSelectionModel().getSelectedItem();
+        bookIDtoShare = person.bookIDs;
+        bookNametoShare = person.bookTitles;
+        Stage stage2 = (Stage) editBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("EditBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void searchDeleteButtonAction(ActionEvent event) throws IOException{
+        Book person = searchTableView.getSelectionModel().getSelectedItem();
+        bookIDtoShare = person.bookIDs;
+        Stage stage2 = (Stage) deleteBookButton.getScene().getWindow();
+        stage2.close();
+        Parent root = FXMLLoader.load(getClass().getResource("DeleteBook.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
     public void addUserButtonAction(ActionEvent event) throws IOException{
         Stage stage2 = (Stage) addUserButton.getScene().getWindow();
         stage2.close();
@@ -142,6 +203,35 @@ public class ManagerMainMenuController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @FXML
+    private void searchButtonAction(ActionEvent event) throws IOException { //submit button for the search tab
+        Book.searchbookID.clear();
+        Book.searchbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.searchbookAuthor.clear();
+        Book.searchbookDescription.clear();
+        Book.searchbookPageCount.clear();
+        Book.searchbookMainGenre.clear();
+        Book.searchbookRating.clear();
+        String searchTerm = searchTxt.getText();    //gets the data from the search bar
+        for(int i=0; i<Book.bookTitle.size();i++){   //iterates over each book 
+            {
+                if(Book.bookTitle.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookAuthor.get(i).toLowerCase().contains(searchTerm.toLowerCase()) 
+                        || Book.bookDescription.get(i).toLowerCase().contains(searchTerm.toLowerCase()) || Book.bookMainGenre.get(i).toLowerCase().contains(searchTerm.toLowerCase()))
+                {   //the above line is comparing the search terms to titles, authors, descriptions, and or genres and converts it all to lower case for accurate information retrieval. Otherwise Life would not match life or vice versa
+                    Book.searchbookID.add(Book.bookID.get(i));
+                    Book.searchbookTitle.add(Book.bookTitle.get(i));
+                    Book.searchbookAuthor.add(Book.bookAuthor.get(i));
+                    Book.searchbookDescription.add(Book.bookDescription.get(i));
+                    Book.searchbookPageCount.add(Book.bookPageCount.get(i));
+                    Book.searchbookMainGenre.add(Book.bookMainGenre.get(i));
+                    Book.searchbookRating.add(Book.bookRating.get(i));
+                }
+                
+            }
+        }
+        searchTableView.setItems(Book.getSearchItems()); //puts the data from the searched books list into to table view
     }
     
     @Override
@@ -211,6 +301,13 @@ public class ManagerMainMenuController implements Initializable {
         allPgCntTab.setCellValueFactory(new PropertyValueFactory<Book, Integer>("bookPageCounts"));
         allGenreTab.setCellValueFactory(new PropertyValueFactory<Book, String>("mainGenres"));
         allRateTab.setCellValueFactory(new PropertyValueFactory<Book, Double>("bookRatings"));
+        
+        searchTitleTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookTitles")); //initializes the table columns to prepare them to retrieve the data
+        searchAuthTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookAuthors"));
+        searchDescTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookDescriptions"));
+        searchPgCntTab.setCellValueFactory(new PropertyValueFactory<Book, Integer>("bookPageCounts"));
+        searchGenreTab.setCellValueFactory(new PropertyValueFactory<Book, String>("mainGenres"));
+        searchRateTab.setCellValueFactory(new PropertyValueFactory<Book, Double>("bookRatings"));
         
         usernameTab.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
         userFirstNameTab.setCellValueFactory(new PropertyValueFactory<User, String>("userFirstName"));
