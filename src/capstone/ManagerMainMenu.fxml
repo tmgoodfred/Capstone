@@ -32,7 +32,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <!--<Tab text="Book Information">
+            <Tab text="Search Books">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -47,10 +47,14 @@
                               <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
+                        <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search" />
+                        <Button fx:id="searchAddBookButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchAddButtonAction" text="Add" />
+                        <Button fx:id="searchEditBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchEditButtonAction" text="Edit" />
+                        <Button fx:id="searchDeleteBookButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchDeleteButtonAction" text="Delete" />
                      </children>
                   </AnchorPane>
               </content>
-            </Tab>-->
+            </Tab>
             <Tab text="User Information">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
