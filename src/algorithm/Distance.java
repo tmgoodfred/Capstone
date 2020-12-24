@@ -16,5 +16,18 @@ public interface Distance {
      * @return Calculated distance.
      * @throws IllegalArgumentException If the given feature vectors are invalid.
      */
-    double calculate(Map<String, Double> f1, Map<String, Double> f2);
+    double calculate(Map<String, Double> f1, Map<String, Double> f2);  //--ORIGINAL CODE
+    //am I going to need 12 sets of features? One for each genre?
+    /*double calculate(Map<String, Double> f1, 
+            Map<String, Double> f2,
+            Map<String, Double> f3,
+            Map<String, Double> f4,
+            Map<String, Double> f5,
+            Map<String, Double> f6,
+            Map<String, Double> f7,
+            Map<String, Double> f8,
+            Map<String, Double> f9,
+            Map<String, Double> f10,
+            Map<String, Double> f11,
+            Map<String, Double> f12);*/
 }
