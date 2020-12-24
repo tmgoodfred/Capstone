@@ -8,12 +8,12 @@ import java.util.Map;
  */
 public class Errors {
 
-    public static double sse(Map<Centroid, List<Record>> clustered, Distance distance) {
+    public static double sse(Map<Centroid, List<BookData>> clustered, Distance distance) {
         double sum = 0;
-        for (Map.Entry<Centroid, List<Record>> entry : clustered.entrySet()) {
+        for (Map.Entry<Centroid, List<BookData>> entry : clustered.entrySet()) {
             Centroid centroid = entry.getKey();
-            for (Record record : entry.getValue()) {
-                double d = distance.calculate(centroid.getCoordinates(), record.getFeatures());
+            for (BookData record : entry.getValue()) {
+                double d = distance.calculate(centroid.getCoordinates(), record.getGenreRatings());
                 sum += Math.pow(d, 2);
             }
         }
