@@ -28,25 +28,25 @@ public class KMeans {
     /**
      * Performs the K-Means clustering algorithm on the given dataset.
      *
-     * @param records       The dataset.
+     * @param bookInfo       The dataset.
      * @param k             Number of Clusters.
      * @param distance      To calculate the distance between two items.
      * @param maxIterations Upper bound for the number of iterations.
      * @return K clusters along with their features.
      */
-    public static Map<Centroid, List<Record>> fit(List<Record> records, int k, Distance distance, int maxIterations) {
-        applyPreconditions(records, k, distance, maxIterations);
+    public static Map<Centroid, List<BookData>> fit(List<BookData> bookInfo, int k, Distance distance, int maxIterations) {
+        applyPreconditions(bookInfo, k, distance, maxIterations);
 
-        List<Centroid> centroids = randomCentroids(records, k);
-        Map<Centroid, List<Record>> clusters = new HashMap<>();
-        Map<Centroid, List<Record>> lastState = new HashMap<>();
+        List<Centroid> centroids = randomCentroids(bookInfo, k);
+        Map<Centroid, List<BookData>> clusters = new HashMap<>();
+        Map<Centroid, List<BookData>> lastState = new HashMap<>();
 
         // iterate for a pre-defined number of times
         for (int i = 0; i < maxIterations; i++) {
             boolean isLastIteration = i == maxIterations - 1;
 
             // in each iteration we should find the nearest centroid for each record
-            for (Record record : records) {
+            for (BookData record : bookInfo) {
                 Centroid centroid = nearestCentroid(record, centroids, distance);
                 assignToCluster(clusters, record, centroid);
             }
@@ -72,7 +72,7 @@ public class KMeans {
      * @param clusters The current cluster configuration.
      * @return Collection of new and relocated centroids.
      */
-    private static List<Centroid> relocateCentroids(Map<Centroid, List<Record>> clusters) {
+    private static List<Centroid> relocateCentroids(Map<Centroid, List<BookData>> clusters) {
         return clusters
           .entrySet()
           .stream()
@@ -91,7 +91,7 @@ public class KMeans {
      * @param records  The assigned features.
      * @return The moved centroid.
      */
-    private static Centroid average(Centroid centroid, List<Record> records) {
+    private static Centroid average(Centroid centroid, List<BookData> records) {
         // if this cluster is empty, then we shouldn't move the centroid
         if (records == null || records.isEmpty()) {
             return centroid;
@@ -106,14 +106,14 @@ public class KMeans {
         records
           .stream()
           .flatMap(e -> e
-            .getFeatures()
+            .getGenreRatings()
             .keySet()
             .stream())
           .forEach(k -> average.put(k, 0.0));
 
-        for (Record record : records) {
+        for (BookData record : records) {
             record
-              .getFeatures()
+              .getGenreRatings()
               .forEach((k, v) -> average.compute(k, (k1, currentValue) -> v + currentValue));
         }
 
@@ -130,7 +130,7 @@ public class KMeans {
      * @param record   The feature vector.
      * @param centroid The centroid.
      */
-    private static void assignToCluster(Map<Centroid, List<Record>> clusters, Record record, Centroid centroid) {
+    private static void assignToCluster(Map<Centroid, List<BookData>> clusters, BookData record, Centroid centroid) {
         clusters.compute(centroid, (key, list) -> {
             if (list == null) {
                 list = new ArrayList<>();
@@ -150,12 +150,12 @@ public class KMeans {
      * @param distance  To calculate the distance between two items.
      * @return The nearest centroid to the given feature vector.
      */
-    private static Centroid nearestCentroid(Record record, List<Centroid> centroids, Distance distance) {
+    private static Centroid nearestCentroid(BookData record, List<Centroid> centroids, Distance distance) {
         double minimumDistance = Double.MAX_VALUE;
         Centroid nearest = null;
 
         for (Centroid centroid : centroids) {
-            double currentDistance = distance.calculate(record.getFeatures(), centroid.getCoordinates());
+            double currentDistance = distance.calculate(record.getGenreRatings(), centroid.getCoordinates());
 
             if (currentDistance < minimumDistance) {
                 minimumDistance = currentDistance;
@@ -177,14 +177,14 @@ public class KMeans {
      * @param k       Number of clusters.
      * @return Collections of randomly generated centroids.
      */
-    private static List<Centroid> randomCentroids(List<Record> records, int k) {
+    private static List<Centroid> randomCentroids(List<BookData> records, int k) {
         List<Centroid> centroids = new ArrayList<>();
         Map<String, Double> maxs = new HashMap<>();
         Map<String, Double> mins = new HashMap<>();
 
-        for (Record record : records) {
+        for (BookData record : records) {
             record
-              .getFeatures()
+              .getGenreRatings()
               .forEach((key, value) -> {
                   // compares the value with the current max and choose the bigger value between them
                   maxs.compute(key, (k1, max) -> max == null || value > max ? value : max);
@@ -197,7 +197,7 @@ public class KMeans {
         Set<String> attributes = records
           .stream()
           .flatMap(e -> e
-            .getFeatures()
+            .getGenreRatings()
             .keySet()
             .stream())
           .collect(toSet());
@@ -215,7 +215,7 @@ public class KMeans {
         return centroids;
     }
 
-    private static void applyPreconditions(List<Record> records, int k, Distance distance, int maxIterations) {
+    private static void applyPreconditions(List<BookData> records, int k, Distance distance, int maxIterations) {
         if (records == null || records.isEmpty()) {
             throw new IllegalArgumentException("The dataset can't be empty");
         }
