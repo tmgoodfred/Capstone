@@ -6,12 +6,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -39,6 +42,8 @@ public class AdminMainMenuController implements Initializable {
     StackedBarChart genreChart;
     @FXML
     PieChart readPieChart;
+    @FXML
+    BarChart popularBooksBarChart;
     
     int aaGoodBookRating = 0;
     int cGoodBookRating = 0;
@@ -80,6 +85,9 @@ public class AdminMainMenuController implements Initializable {
     Double ratingToCheck;
     int readToAdd;
     
+    List<String> bookTitleList = new ArrayList<>();
+    List<Integer> bookReadsList = new ArrayList<>();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Connection conn = null;
@@ -89,6 +97,7 @@ public class AdminMainMenuController implements Initializable {
             Statement stmt = null;
             String query = "SELECT bookRating, mainGenre FROM capstone.books;"; //gets login data from database
             String query2 = "SELECT mainGenre, bookTotalReads FROM capstone.books;";
+            String query3 = "SELECT bookTitle, bookTotalReads FROM capstone.books ORDER BY bookTotalReads DESC LIMIT 10;";
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -209,6 +218,11 @@ public class AdminMainMenuController implements Initializable {
                         yaTotalReads = yaTotalReads+readToAdd;
                     }
                 }
+                ResultSet rs3 = stmt.executeQuery(query3);
+                while (rs3.next()){
+                    bookTitleList.add(rs3.getString(1));
+                    bookReadsList.add(rs3.getInt(2));
+                }
             }
             catch (SQLException e ) {
               throw new Error("Problem", e);
@@ -285,6 +299,21 @@ public class AdminMainMenuController implements Initializable {
        
         readPieChart.getData().addAll(slice1,slice2,slice3,slice4,slice5,slice6,slice7,slice8,slice9,slice10,slice11,slice12);
 
+        
+        XYChart.Series seriesA = new XYChart.Series();
+        seriesA.setName("Total Reads");
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(0), bookReadsList.get(0)));
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(1), bookReadsList.get(1)));
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(2), bookReadsList.get(2)));
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(3), bookReadsList.get(3)));
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(4), bookReadsList.get(4)));
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(5), bookReadsList.get(5)));  
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(6), bookReadsList.get(6)));  
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(7), bookReadsList.get(7)));  
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(8), bookReadsList.get(8)));  
+        seriesA.getData().add(new XYChart.Data(bookTitleList.get(9), bookReadsList.get(9)));
+        
+        popularBooksBarChart.getData().add(seriesA);
     }    
     
 }
