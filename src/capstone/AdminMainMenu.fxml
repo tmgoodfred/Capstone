@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -14,7 +15,17 @@
           <Tab text="Table1">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="886.0">
-              </AnchorPane>
+                     <children>
+                        <StackedBarChart fx:id="genreChart" layoutX="77.0" layoutY="59.0" prefHeight="546.0" prefWidth="732.0" title="Preferred Books by Genre">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </StackedBarChart>
+                        <Label layoutX="191.0" layoutY="633.0" text="Books rated lower than 1.5/5.0 are considered &quot;disliked&quot;. Books without ratings are not counted." />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Table2">
