@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 public class MainMenuController implements Initializable {
 
     public static int bookIDtoShare;
-    static int userIDfromLogin = LoginScreenController.userIDtoShare;
+    int userIDfromLogin = LoginScreenController.userIDtoShare;
     
     public static String userBooksReadList;
     public static String userBooksRatingList;
@@ -274,6 +274,29 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Book.searchbookID.clear();
+        Book.searchbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.searchbookAuthor.clear();
+        Book.searchbookDescription.clear();
+        Book.searchbookPageCount.clear();
+        Book.searchbookMainGenre.clear();
+        Book.searchbookRating.clear();
+        
+        Book.bookID.clear();
+        Book.bookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.bookAuthor.clear();
+        Book.bookDescription.clear();
+        Book.bookPageCount.clear();
+        Book.bookMainGenre.clear();
+        Book.bookRating.clear();
+        
+        Book.readbookID.clear();
+        Book.readbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.readbookAuthor.clear();
+        Book.readbookDescription.clear();
+        Book.readbookPageCount.clear();
+        Book.readbookMainGenre.clear();
+        Book.readbookRating.clear();
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
