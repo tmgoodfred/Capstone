@@ -31,7 +31,9 @@
           <Tab text="Table2">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              </AnchorPane>
+                     <children>
+                        <PieChart fx:id="readPieChart" layoutX="126.0" layoutY="45.0" prefHeight="526.0" prefWidth="634.0" title="Which Genres are the Most Read" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Table3">
