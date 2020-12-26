@@ -7,10 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="165.0" prefWidth="383.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="capstone.LogOffController">
+<AnchorPane id="AnchorPane" prefHeight="165.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.LogOffController">
    <children>
-      <Label layoutX="52.0" layoutY="29.0" text="Are you sure you want to log off?">
+      <Label layoutX="67.0" layoutY="30.0" text="Are you sure you want to log off?">
          <font>
             <Font size="17.0" />
          </font>
