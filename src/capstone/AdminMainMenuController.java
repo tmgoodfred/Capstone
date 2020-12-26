@@ -23,6 +23,16 @@ import javafx.scene.chart.XYChart;
  */
 public class AdminMainMenuController implements Initializable {
     
+    /*ADD GRAPH FOR USERS ADDED PER MONTH
+
+    GET GRAPH OF HOW MANY USERS ARE ACCESSING PER MONTH? OR HOWEVER MANY ACCESSED PER DAY MAYBE
+
+    POSSIBLE GRAPH: MOST POPULAR BOOKS
+
+    SCATTER GRAPH OF WHICH GENRE'S HAVE THE MOST READS?
+
+    pie chart - which books are getting most reads*/
+
     @FXML
     StackedBarChart genreChart;
     
