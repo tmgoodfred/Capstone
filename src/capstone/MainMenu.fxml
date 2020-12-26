@@ -26,6 +26,7 @@
                           </columns>
                         </TableView>
                         <Button fx:id="recReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#recreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton1" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
             </content>
@@ -45,6 +46,7 @@
                            </columns>
                         </TableView>
                         <Button fx:id="allReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#allreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton2" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
             </content>
@@ -65,6 +67,7 @@
                         </TableView>
                         <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readreadMoreButtonAction" text="Read more" />
                         <Button fx:id="refreshButton" layoutX="501.0" layoutY="625.0" mnemonicParsing="false" onAction="#refreshButtonAction" text="Refresh" />
+                        <Button fx:id="logOffButton3" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
                </content>
@@ -86,6 +89,7 @@
                         </TableView>
                         <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Search" />
                         <Button fx:id="searchReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#searchreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton4" layoutX="806.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
               </content>
