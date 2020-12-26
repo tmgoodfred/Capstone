@@ -39,7 +39,16 @@
             <Tab text="Table3">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  </AnchorPane>
+                     <children>
+                        <BarChart fx:id="popularBooksBarChart" layoutX="94.0" layoutY="66.0" prefHeight="532.0" prefWidth="698.0" title="Most Popular Books">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>
