@@ -9,10 +9,12 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 
@@ -25,6 +27,8 @@ public class AdminMainMenuController implements Initializable {
     
     @FXML
     StackedBarChart genreChart;
+    @FXML
+    PieChart readPieChart;
     
     int aaGoodBookRating = 0;
     int cGoodBookRating = 0;
@@ -50,8 +54,21 @@ public class AdminMainMenuController implements Initializable {
     int ssBadBookRating = 0;
     int hsBadBookRating = 0;
     int yaBadBookRating = 0;
-    String genreToCheck;
+    int aaTotalReads = 0;
+    int cTotalReads = 0;
+    int mTotalReads = 0;
+    int fTotalReads = 0;
+    int hfTotalReads = 0;
+    int hTotalReads = 0;
+    int tTotalReads = 0;
+    int rTotalReads = 0;
+    int sfTotalReads = 0;
+    int ssTotalReads = 0;
+    int hsTotalReads = 0;
+    int yaTotalReads = 0;
+    String genreToCheck, genreToCheck2;
     Double ratingToCheck;
+    int readToAdd;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,7 +77,8 @@ public class AdminMainMenuController implements Initializable {
             String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
-            String query = "SELECT bookRating, mainGenre FROM capstone.books"; //gets login data from database
+            String query = "SELECT bookRating, mainGenre FROM capstone.books;"; //gets login data from database
+            String query2 = "SELECT mainGenre, bookTotalReads FROM capstone.books;";
             try {
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -140,6 +158,47 @@ public class AdminMainMenuController implements Initializable {
                         else if (ratingToCheck != 0.0 && ratingToCheck > 1.5) yaGoodBookRating++;
                     }
                 }
+                ResultSet rs2 = stmt.executeQuery(query2);
+                while (rs2.next()){
+                    genreToCheck2 = rs2.getString(1);
+                    readToAdd = rs2.getInt(2);
+                    if(genreToCheck2.equals("Action/Adventure")){
+                        aaTotalReads = aaTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Classic")){
+                        cTotalReads = cTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Mystery")){
+                        mTotalReads = mTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Fantasy")){
+                        fTotalReads = fTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Historical Fiction")){
+                        hfTotalReads = hfTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Horror")){
+                        hTotalReads = hTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Thriller")){
+                        tTotalReads = tTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Romance")){
+                        rTotalReads = rTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Sci-Fi")){
+                        sfTotalReads = sfTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Short Story")){
+                        ssTotalReads = ssTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("History")){
+                        hsTotalReads = hsTotalReads+readToAdd;
+                    }
+                    else if(genreToCheck2.equals("Young Adult")){
+                        yaTotalReads = yaTotalReads+readToAdd;
+                    }
+                }
             }
             catch (SQLException e ) {
               throw new Error("Problem", e);
@@ -198,6 +257,23 @@ public class AdminMainMenuController implements Initializable {
         series2.getData().add(new XYChart.Data<>("Young Adult", yaBadBookRating));
  
         genreChart.getData().addAll(series1, series2); 
+        
+        int totalReads = aaTotalReads + cTotalReads + mTotalReads + fTotalReads + hfTotalReads + hTotalReads + tTotalReads + rTotalReads + sfTotalReads + ssTotalReads + hsTotalReads + yaTotalReads;
+        
+        PieChart.Data slice1 = new PieChart.Data("Action/Adventure", (Double.valueOf(aaTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice2 = new PieChart.Data("Classic", (Double.valueOf(cTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice3 = new PieChart.Data("Mystery", (Double.valueOf(mTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice4 = new PieChart.Data("Fantasy", (Double.valueOf(fTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice5 = new PieChart.Data("Historical Fiction", (Double.valueOf(hfTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice6 = new PieChart.Data("Horror", (Double.valueOf(hTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice7 = new PieChart.Data("Thriller", (Double.valueOf(tTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice8 = new PieChart.Data("Romance", (Double.valueOf(rTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice9 = new PieChart.Data("Sci-Fi", (Double.valueOf(sfTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice10 = new PieChart.Data("Short Stories", (Double.valueOf(ssTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice11 = new PieChart.Data("History", (Double.valueOf(hsTotalReads)/Double.valueOf(totalReads)));
+        PieChart.Data slice12 = new PieChart.Data("Young Adult", (Double.valueOf(yaTotalReads)/Double.valueOf(totalReads)));
+       
+        readPieChart.getData().addAll(slice1,slice2,slice3,slice4,slice5,slice6,slice7,slice8,slice9,slice10,slice11,slice12);
 
     }    
     
