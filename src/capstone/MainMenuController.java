@@ -114,6 +114,14 @@ public class MainMenuController implements Initializable {
     Button readReadMoreButton;
     @FXML
     Button searchReadMoreButton;
+    @FXML
+    Button logOffButton1;
+    @FXML
+    Button logOffButton2;
+    @FXML
+    Button logOffButton3;
+    @FXML
+    Button logOffButton4;
     
     @FXML
     private void refreshButtonAction (ActionEvent event){   //for when a user adds books to their read list after the form has been initialized initially. 
@@ -171,6 +179,23 @@ public class MainMenuController implements Initializable {
                   catch (SQLException ex) {System.out.println(ex.getMessage());}
                 }
         readTableView.setItems(Book.getReadItems()); //puts the read book data into the table view
+    }
+    
+    @FXML
+    private void logOffButtonAction (ActionEvent event) throws IOException{
+        Stage stage2 = (Stage) logOffButton1.getScene().getWindow();
+        stage2.close();
+        Stage stage3 = (Stage) logOffButton2.getScene().getWindow();
+        stage3.close();
+        Stage stage4 = (Stage) logOffButton3.getScene().getWindow();
+        stage4.close();
+        Stage stage5 = (Stage) logOffButton4.getScene().getWindow();
+        stage5.close();
+        Parent root = FXMLLoader.load(getClass().getResource("LogOff.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
     @FXML
