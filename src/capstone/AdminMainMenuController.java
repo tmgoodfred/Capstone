@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -27,16 +26,6 @@ import javafx.scene.chart.XYChart;
  * @author Tyler Goodfred
  */
 public class AdminMainMenuController implements Initializable {
-    
-    /*ADD GRAPH FOR USERS ADDED PER MONTH
-
-    GET GRAPH OF HOW MANY USERS ARE ACCESSING PER MONTH? OR HOWEVER MANY ACCESSED PER DAY MAYBE
-
-    POSSIBLE GRAPH: MOST POPULAR BOOKS
-
-    SCATTER GRAPH OF WHICH GENRE'S HAVE THE MOST READS?
-
-    pie chart - which books are getting most reads*/
 
     @FXML
     StackedBarChart genreChart;
