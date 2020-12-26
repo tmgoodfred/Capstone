@@ -159,6 +159,7 @@ public class LoginScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {    //upon initialization, the datbase is access and queries are run
+        userIDtoShare = 0;
         Connection conn = null;
         try {
             String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
