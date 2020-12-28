@@ -7,6 +7,13 @@ import java.util.Objects;
  *
  * @author Tyler Goodfred
  */
+
+/*
+the big difference between this sample class and mine is that this was made to use
+an API for LASTFM, so the data it's using is like artist, genres, etc. that it pulls
+from the website. My data is all stored in a database, but the thing is, the actual data it's
+manipulating is kinda similar.
+*/
 public class BookData {
 
     /**
