@@ -14,7 +14,6 @@
       <Button fx:id="bookCoverImageBtn" layoutX="43.0" layoutY="230.0" mnemonicParsing="false" onAction="#uploadImageButtonAction" text="Book Cover Art" />
       <TextField fx:id="pageCountTxt" layoutX="43.0" layoutY="267.0" prefHeight="25.0" prefWidth="129.0" promptText="Page Count" />
       <TextField fx:id="difficultyTxt" layoutX="43.0" layoutY="305.0" prefHeight="25.0" prefWidth="129.0" promptText="Difficulty Level (1-10)" />
-      <TextField fx:id="mainGenreTxt" layoutX="43.0" layoutY="344.0" prefHeight="25.0" prefWidth="129.0" promptText="Main Genre" />
       <TextField fx:id="aaTxt" layoutX="390.0" layoutY="59.0" promptText="Action/Adventure Level" />
       <TextField fx:id="cTxt" layoutX="390.0" layoutY="84.0" promptText="Classic Level" />
       <TextField fx:id="mTxt" layoutX="390.0" layoutY="109.0" promptText="Mystery Level" />
@@ -38,5 +37,6 @@
       <Label layoutX="37.0" layoutY="311.0" text="*" />
       <Label layoutX="37.0" layoutY="348.0" text="*" />
       <Button fx:id="backBtn" layoutX="220.0" layoutY="383.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <ComboBox fx:id="genreDropBox" layoutX="43.0" layoutY="343.0" prefWidth="150.0" promptText="Genre"/>
    </children>
 </AnchorPane>
