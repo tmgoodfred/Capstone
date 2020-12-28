@@ -1,5 +1,9 @@
 package capstone;
 
+import algorithm.BookData;
+import algorithm.Centroid;
+import algorithm.EuclideanDistance;
+import algorithm.KMeans;
 import capstone.Book;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +19,10 @@ import javafx.scene.control.TableColumn;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import static java.util.stream.Collectors.toSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,6 +47,9 @@ public class MainMenuController implements Initializable {
     public static String userBooksRatingList;
     public static String[] elements = {"0"};
     public static Integer userTotalBooksReadList;
+    
+    List<BookData> records = new ArrayList<>();
+    Map<Centroid, List<BookData>> clusters;
     
     @FXML
     TableColumn allTitleTab;
@@ -272,6 +283,38 @@ public class MainMenuController implements Initializable {
         searchTableView.setItems(Book.getSearchItems()); //puts the data from the searched books list into to table view
     }
     
+    public void printClusterInfo(){
+    clusters.forEach((key, value) -> {
+    System.out.println("------------------------------ CLUSTER -----------------------------------");
+
+    System.out.println(sortedCentroid(key));
+    String members = String.join(", ", value
+      .stream()
+      .map(BookData::getBookTitle)
+      .collect(toSet()));
+    System.out.print(members);
+
+    System.out.println();
+    System.out.println();
+        });
+    }
+    
+    private Centroid sortedCentroid(Centroid key) {
+        List<Map.Entry<String, Double>> entries = new ArrayList<>(key
+          .getCoordinates()
+          .entrySet());
+        entries.sort((e1, e2) -> e2
+          .getValue()
+          .compareTo(e1.getValue()));
+
+        Map<String, Double> sorted = new LinkedHashMap<>();
+        for (Map.Entry<String, Double> entry : entries) {
+            sorted.put(entry.getKey(), entry.getValue());
+        }
+
+        return new Centroid(sorted);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Book.searchbookID.clear();
@@ -303,6 +346,11 @@ public class MainMenuController implements Initializable {
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
             String query = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre FROM capstone.books"; //gets relevant book data from database
+            String bookQuery = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre,"
+                    + "actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl,"
+                    + "horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl FROM capstone.books"; //gets relevant book data from database
+            String userQuery2 = "SELECT actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, "
+                    + "shortStoriesLvl, historyLvl, youngAdultLvl FROM capstone.users WHERE userID = "+userIDfromLogin+";";
             String userQuery = "SELECT userBooksRead, userBooksRating, userBooksReadTotal FROM capstone.users WHERE userID = "+userIDfromLogin+";";
             try {
                 stmt = conn.createStatement();
@@ -323,6 +371,40 @@ public class MainMenuController implements Initializable {
                     userBooksReadList = rs2.getString(1);   //these are actually strings not lists despite the naming
                     userBooksRatingList = rs2.getString(2);
                     userTotalBooksReadList = rs2.getInt(3);
+                }
+                ResultSet rs5 = stmt.executeQuery(bookQuery);
+                while (rs5.next()){
+                    Map<String, Double> genreRatings = new HashMap<String, Double>();
+                    genreRatings.put("Action/Aventure",rs5.getDouble(9));
+                    genreRatings.put("Classic",rs5.getDouble(10));
+                    genreRatings.put("Mystery",rs5.getDouble(11));
+                    genreRatings.put("Fantasy",rs5.getDouble(12));
+                    genreRatings.put("Historical Fiction",rs5.getDouble(13));
+                    genreRatings.put("Horror",rs5.getDouble(14));
+                    genreRatings.put("Thriller",rs5.getDouble(15));
+                    genreRatings.put("Romance",rs5.getDouble(16));
+                    genreRatings.put("Sci-Fi",rs5.getDouble(17));
+                    genreRatings.put("Short Story",rs5.getDouble(18));
+                    genreRatings.put("History",rs5.getDouble(19));
+                    genreRatings.put("Young Adult",rs5.getDouble(20));
+                    records.add(new BookData(rs5.getString(2), genreRatings));
+                }
+                ResultSet rs4 = stmt.executeQuery(userQuery2);
+                while(rs4.next()){
+                    Map<String, Double> genreRatings = new HashMap<String, Double>();
+                    genreRatings.put("Action/Aventure",rs4.getDouble(1));
+                    genreRatings.put("Classic",rs4.getDouble(2));
+                    genreRatings.put("Mystery",rs4.getDouble(3));
+                    genreRatings.put("Fantasy",rs4.getDouble(4));
+                    genreRatings.put("Historical Fiction",rs4.getDouble(5));
+                    genreRatings.put("Horror",rs4.getDouble(6));
+                    genreRatings.put("Thriller",rs4.getDouble(7));
+                    genreRatings.put("Romance",rs4.getDouble(8));
+                    genreRatings.put("Sci-Fi",rs4.getDouble(9));
+                    genreRatings.put("Short Story",rs4.getDouble(10));
+                    genreRatings.put("History",rs4.getDouble(11));
+                    genreRatings.put("Young Adult",rs4.getDouble(12));
+                    records.add(new BookData("USER", genreRatings));
                 }
                 if(!userBooksReadList.equals("0")){
                     elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
@@ -384,6 +466,8 @@ public class MainMenuController implements Initializable {
         
         allTableView.setItems(Book.getBookItems());  //puts all book data into the table view
         readTableView.setItems(Book.getReadItems()); //puts the read book data into the table view
+        clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
+        printClusterInfo();
         
     }
 }
