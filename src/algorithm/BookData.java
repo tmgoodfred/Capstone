@@ -7,23 +7,9 @@ import java.util.Objects;
  *
  * @author Tyler Goodfred
  */
-
-/*
-the big difference between this sample class and mine is that this was made to use
-an API for LASTFM, so the data it's using is like artist, genres, etc. that it pulls
-from the website. My data is all stored in a database, but the thing is, the actual data it's
-manipulating is kinda similar.
-*/
 public class BookData {
-
-    /**
-     * The record description. For example, this can be the artist name for the famous musician
-     * example.
-     */
+    
     private final String bookTitle;
-    /**
-     * Encapsulates all attributes and their corresponding values, i.e. features.
-     */
     private final Map<String, Double> genreRatings; //should be genre name and then the relative number, so Mystery, 0.6
 
     public BookData(String bookTitle, Map<String, Double> genreRatings) {
