@@ -8,10 +8,6 @@ import java.util.Objects;
  * @author Tyler Goodfred
  */
 public class Centroid {
-
-    /**
-     * The centroid coordinates.
-     */
     private final Map<String, Double> coordinates;
 
     public Centroid(Map<String, Double> coordinates) {
