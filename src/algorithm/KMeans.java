@@ -20,9 +20,6 @@ public class KMeans {
         throw new IllegalAccessError("You shouldn't call this constructor");
     }
 
-    /**
-     * Will be used to generate random numbers.
-     */
     private static final Random random = new Random();
 
     /**
@@ -40,26 +37,21 @@ public class KMeans {
         List<Centroid> centroids = randomCentroids(bookInfo, k);
         Map<Centroid, List<BookData>> clusters = new HashMap<>();
         Map<Centroid, List<BookData>> lastState = new HashMap<>();
-
-        // iterate for a pre-defined number of times
-        for (int i = 0; i < maxIterations; i++) {
+        
+        for (int i = 0; i < maxIterations; i++) {       // iterate for a pre-defined number of times
             boolean isLastIteration = i == maxIterations - 1;
 
-            // in each iteration we should find the nearest centroid for each record
-            for (BookData record : bookInfo) {
+            for (BookData record : bookInfo) {              // in each iteration we should find the nearest centroid for each record
                 Centroid centroid = nearestCentroid(record, centroids, distance);
                 assignToCluster(clusters, record, centroid);
             }
-
-            // if the assignment does not change, then the algorithm terminates
-            boolean shouldTerminate = isLastIteration || clusters.equals(lastState);
+            
+            boolean shouldTerminate = isLastIteration || clusters.equals(lastState);  // if the assignment does not change, then the algorithm terminates
             lastState = clusters;
             if (shouldTerminate) {
                 break;
             }
-
-            // at the end of each iteration we should relocate the centroids
-            centroids = relocateCentroids(clusters);
+            centroids = relocateCentroids(clusters);        // at the end of each iteration we should relocate the centroids
             clusters = new HashMap<>();
         }
 
