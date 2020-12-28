@@ -60,17 +60,6 @@ public class EditUserController implements Initializable {
     
     @FXML
     private void submitButtonAction(ActionEvent event) throws IOException{ 
-        //String username = usernameTxt.getText();
-        //String[] usernameArray = new String[usernameList.size()];
-        //usernameArray = usernameList.toArray(usernameArray);
-        /*for(int i=0; i<usernameList.size();i++){
-            if(username.matches(usernameArray[i]))  //checks the username input against every username in the database, as soon as one matches, it throws the error
-            {
-                moveOn = 2;
-                break;
-            }
-        }*/
-        //String username = usernameTxt.getText();
         for(int i=0; i<usernameList.size();i++){
             System.out.println("name entered = " + usernameTxt.getText() + " comparing to ="+usernameList.get(i));
             if(usernameTxt.getText().equals(usernameList.get(i))){    //checks to make sure the book doesn't already exist except for the current book
