@@ -23,6 +23,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
@@ -73,6 +75,9 @@ public class EditBookController implements Initializable {
     TextField yaTxt;
     
     @FXML
+    ComboBox genreDropBox;
+    
+    @FXML
     TextArea descriptionTxt;
     
     @FXML
@@ -94,6 +99,7 @@ public class EditBookController implements Initializable {
     int moveOn2 = 0;
     int moveOn3 = 0;
     int moveOn4 = 0;
+    int moveOn5 = 0;
     int uploadCheck = 0;
     
     @FXML
@@ -112,9 +118,17 @@ public class EditBookController implements Initializable {
             bookTitle = titleTxt.getText();
         }
         
+        String genre = (String) genreDropBox.getValue();
+        if((genre == "Genre" || genre == null)){ //this checks to make sure a gender is selected
+            moveOn5 = 1;
+        }
+        else{
+            mainGenre = genreDropBox.getValue().toString();
+        }
+        
         bookAuthor = authorTxt.getText();
         bookDescription = descriptionTxt.getText();
-        mainGenre = mainGenreTxt.getText();
+        //mainGenre = mainGenreTxt.getText();
         //<editor-fold defaultstate="collapsed" desc="if statements for checking input">
         if(0>Integer.parseInt(pageCountTxt.getText())){ //checks if page count is smaller than 0, if so it triggers moveOn
             moveOn = 1;
@@ -561,7 +575,7 @@ public class EditBookController implements Initializable {
                     pageCountTxt.setText(page_count.toString());
                     Integer difficulty = rs.getInt(5);
                     difficultyTxt.setText(difficulty.toString());
-                    mainGenreTxt.setText(rs.getString(6));
+                    genreDropBox.setValue(rs.getString(6));
                     Double aa = rs.getDouble(7);
                     String aaS = String.valueOf(aa);
                     Double c = rs.getDouble(8);
@@ -617,6 +631,8 @@ public class EditBookController implements Initializable {
           try {if (conn != null) {conn.close();}} 
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
+        
+        genreDropBox.getItems().addAll("Action/Adventure", "Classic", "Mystery", "Fantasy", "Historical Fiction", "Horror", "Thriler", "Romance", "Sci-Fi", "Short Story", "History", "Young Adult");    //fills the genre choice box with options
     }    
     
 }
