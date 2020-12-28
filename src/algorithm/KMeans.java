@@ -17,22 +17,17 @@ import static java.util.stream.Collectors.toSet;
 public class KMeans {
 
     private KMeans() {
-        throw new IllegalAccessError("You shouldn't call this constructor");
+        throw new IllegalAccessError("Don't Call");
     }
 
     private static final Random random = new Random();
 
-    /**
-     * Performs the K-Means clustering algorithm on the given dataset.
-     *
-     * @param bookInfo       The dataset.
-     * @param k             Number of Clusters.
-     * @param distance      To calculate the distance between two items.
-     * @param maxIterations Upper bound for the number of iterations.
-     * @return K clusters along with their features.
-     */
+    // @param bookInfo       The dataset.
+    // @param k             Number of Clusters.
+    //@param distance      To calculate the distance between two items.
+    //@param maxIterations Upper bound for the number of iterations.
     public static Map<Centroid, List<BookData>> fit(List<BookData> bookInfo, int k, Distance distance, int maxIterations) {
-        applyPreconditions(bookInfo, k, distance, maxIterations);
+        errorCheck(bookInfo, k, distance, maxIterations);
 
         List<Centroid> centroids = randomCentroids(bookInfo, k);
         Map<Centroid, List<BookData>> clusters = new HashMap<>();
@@ -54,94 +49,38 @@ public class KMeans {
             centroids = relocateCentroids(clusters);        // at the end of each iteration we should relocate the centroids
             clusters = new HashMap<>();
         }
-
         return lastState;
     }
 
-    /**
-     * Move all cluster centroids to the average of all assigned features.
-     *
-     * @param clusters The current cluster configuration.
-     * @return Collection of new and relocated centroids.
-     */
     private static List<Centroid> relocateCentroids(Map<Centroid, List<BookData>> clusters) {
-        return clusters
-          .entrySet()
-          .stream()
-          .map(e -> average(e.getKey(), e.getValue()))
-          .collect(toList());
+        return clusters.entrySet().stream().map(e -> average(e.getKey(), e.getValue())).collect(toList());
     }
 
-    /**
-     * Moves the given centroid to the average position of all assigned features. If
-     * the centroid has no feature in its cluster, then there would be no need for a
-     * relocation. Otherwise, for each entry we calculate the average of all records
-     * first by summing all the entries and then dividing the final summation value by
-     * the number of records.
-     *
-     * @param centroid The centroid to move.
-     * @param records  The assigned features.
-     * @return The moved centroid.
-     */
     private static Centroid average(Centroid centroid, List<BookData> records) {
-        // if this cluster is empty, then we shouldn't move the centroid
-        if (records == null || records.isEmpty()) {
+        if (records == null || records.isEmpty()) {     // if this cluster is empty, then we shouldn't move the centroid
             return centroid;
         }
 
-        // Since some records don't have all possible attributes, we initialize
-        // average coordinates equal to current centroid coordinates
         Map<String, Double> average = centroid.getCoordinates();
-
-        // The average function works correctly if we clear all coordinates corresponding
-        // to present record attributes
-        records
-          .stream()
-          .flatMap(e -> e
-            .getGenreRatings()
-            .keySet()
-            .stream())
-          .forEach(k -> average.put(k, 0.0));
+        records.stream().flatMap(e -> e.getGenreRatings().keySet().stream()).forEach(k -> average.put(k, 0.0));
 
         for (BookData record : records) {
-            record
-              .getGenreRatings()
-              .forEach((k, v) -> average.compute(k, (k1, currentValue) -> v + currentValue));
+            record.getGenreRatings().forEach((k, v) -> average.compute(k, (k1, currentValue) -> v + currentValue));
         }
-
         average.forEach((k, v) -> average.put(k, v / records.size()));
-
         return new Centroid(average);
     }
 
-    /**
-     * Assigns a feature vector to the given centroid. If this is the first assignment for this centroid,
-     * first we should create the list.
-     *
-     * @param clusters The current cluster configuration.
-     * @param record   The feature vector.
-     * @param centroid The centroid.
-     */
     private static void assignToCluster(Map<Centroid, List<BookData>> clusters, BookData record, Centroid centroid) {
         clusters.compute(centroid, (key, list) -> {
             if (list == null) {
                 list = new ArrayList<>();
             }
-
             list.add(record);
             return list;
         });
     }
 
-    /**
-     * With the help of the given distance calculator, iterates through centroids and finds the
-     * nearest one to the given record.
-     *
-     * @param record    The feature vector to find a centroid for.
-     * @param centroids Collection of all centroids.
-     * @param distance  To calculate the distance between two items.
-     * @return The nearest centroid to the given feature vector.
-     */
     private static Centroid nearestCentroid(BookData record, List<Centroid> centroids, Distance distance) {
         double minimumDistance = Double.MAX_VALUE;
         Centroid nearest = null;
@@ -154,30 +93,16 @@ public class KMeans {
                 nearest = centroid;
             }
         }
-
-        return nearest;
+      return nearest;
     }
 
-    /**
-     * Generates k random centroids. Before kicking-off the centroid generation process,
-     * first we calculate the possible value range for each attribute. Then when
-     * we're going to generate the centroids, we generate random coordinates in
-     * the [min, max] range for each attribute.
-     *
-     * @param records The dataset which helps to calculate the [min, max] range for
-     *                each attribute.
-     * @param k       Number of clusters.
-     * @return Collections of randomly generated centroids.
-     */
     private static List<Centroid> randomCentroids(List<BookData> records, int k) {
         List<Centroid> centroids = new ArrayList<>();
         Map<String, Double> maxs = new HashMap<>();
         Map<String, Double> mins = new HashMap<>();
 
         for (BookData record : records) {
-            record
-              .getGenreRatings()
-              .forEach((key, value) -> {
+            record.getGenreRatings().forEach((key, value) -> {
                   // compares the value with the current max and choose the bigger value between them
                   maxs.compute(key, (k1, max) -> max == null || value > max ? value : max);
 
@@ -186,13 +111,7 @@ public class KMeans {
               });
         }
 
-        Set<String> attributes = records
-          .stream()
-          .flatMap(e -> e
-            .getGenreRatings()
-            .keySet()
-            .stream())
-          .collect(toSet());
+        Set<String> attributes = records.stream().flatMap(e -> e.getGenreRatings().keySet().stream()).collect(toSet());
         for (int i = 0; i < k; i++) {
             Map<String, Double> coordinates = new HashMap<>();
             for (String attribute : attributes) {
@@ -200,27 +119,22 @@ public class KMeans {
                 double min = mins.get(attribute);
                 coordinates.put(attribute, random.nextDouble() * (max - min) + min);
             }
-
             centroids.add(new Centroid(coordinates));
         }
-
         return centroids;
     }
 
-    private static void applyPreconditions(List<BookData> records, int k, Distance distance, int maxIterations) {
+    private static void errorCheck(List<BookData> records, int k, Distance distance, int maxIterations) {
         if (records == null || records.isEmpty()) {
             throw new IllegalArgumentException("The dataset can't be empty");
         }
-
         if (k <= 1) {
             throw new IllegalArgumentException("It doesn't make sense to have less than or equal to 1 cluster");
         }
-
         if (distance == null) {
             throw new IllegalArgumentException("The distance calculator is required");
         }
-
-        if (maxIterations <= 0) {
+        if (maxIterations <= 0) {   //checks if null
             throw new IllegalArgumentException("Max iterations should be a positive number");
         }
     }
