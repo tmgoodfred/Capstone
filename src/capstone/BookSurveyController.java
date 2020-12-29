@@ -150,7 +150,7 @@ public class BookSurveyController implements Initializable {
                             userRatingR = rs3.getDouble(8);
                             userRatingSF = rs3.getDouble(9);
                             userRatingSS = rs3.getDouble(10);
-                            userRatingH = rs3.getDouble(11);
+                            userRatingHS = rs3.getDouble(11);
                             userRatingYA = rs3.getDouble(12);
                             usersReadBooks = rs3.getString(13);
                             usersReadBookRatings = rs3.getString(14);
@@ -223,66 +223,102 @@ public class BookSurveyController implements Initializable {
                             }
                         }
                        
-                        if(aaBooks.size() != 0){
-                            userRatingAA = (aaRateTotal/aaBooks.size())/5.0;
+                        if(aaBooks.size() == 1 && userRatingAA != 0.0){ //if theres only one book, make sure to add the user's original genre rating to the total ratings
+                            userRatingAA = ((aaRateTotal+userRatingAA)/(aaBooks.size()+1))/5.0;
                         }
-                        else{userRatingAA = 0.0;}
-                        
-                        if(cBooks.size() != 0){
-                            userRatingC = (cRateTotal/cBooks.size())/5.0;
+                        else if(aaBooks.size() != 0 && userRatingAA != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingAA = (aaRateTotal)/(aaBooks.size())/5.0;
                         }
-                        else{userRatingC = 0.0;}
-                        
-                        if(mBooks.size() != 0){
-                            userRatingM = (mRateTotal/mBooks.size())/5.0;
+                        else if (userRatingAA == 0.0){userRatingAA = 0.0;}  //if the user has rated the genre as 0.0, make sure it's still 0.0
+                        //---------------------------------
+                        if(cBooks.size() == 1 && userRatingC != 0.0){
+                            userRatingC = ((cRateTotal+userRatingC)/(cBooks.size()+1))/5.0;
                         }
-                        else{userRatingM = 0.0;}
-                        
-                        if(fBooks.size() != 0){
-                            userRatingF = (fRateTotal/fBooks.size())/5.0;
+                        else if(cBooks.size() != 0 && userRatingC != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingC = (cRateTotal)/(cBooks.size())/5.0;
                         }
-                        else{userRatingF = 0.0;}
-                        
-                        if(hfBooks.size() != 0){
-                            userRatingHF = (hfRateTotal/hfBooks.size())/5.0;
+                        else if (userRatingC == 0.0){userRatingC = 0.0;}
+                        //---------------------------------
+                        if(mBooks.size() == 1 && userRatingM != 0.0){
+                            userRatingM = ((mRateTotal+userRatingM)/(mBooks.size()+1))/5.0;
                         }
-                        else{userRatingHF = 0.0;}
-                        
-                        if(hBooks.size() != 0){
-                            userRatingH = (hRateTotal/hBooks.size())/5.0;
+                        else if(mBooks.size() != 0 && userRatingM != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingM = (mRateTotal)/(mBooks.size())/5.0;
                         }
-                        else{userRatingH = 0.0;}
-                        
-                        if(tBooks.size() != 0){
-                            userRatingT = (tRateTotal/tBooks.size())/5.0;
+                        else if (userRatingM == 0.0){userRatingM = 0.0;}
+                        //---------------------------------
+                        if(fBooks.size() == 1 && userRatingF != 0.0){
+                            userRatingF = ((fRateTotal+userRatingF)/(fBooks.size()+1))/5.0;
                         }
-                        else{userRatingT = 0.0;}
-                        
-                        if(rBooks.size() != 0){
-                            userRatingR = (rRateTotal/rBooks.size())/5.0;
+                        else if(fBooks.size() != 0 && userRatingF != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingF = (fRateTotal)/(fBooks.size())/5.0;
                         }
-                        else{userRatingR = 0.0;}
-                        
-                        if(sfBooks.size() != 0){
-                            userRatingSF = (sfRateTotal/sfBooks.size())/5.0;
+                        else if (userRatingF == 0.0){userRatingF = 0.0;}
+                        //---------------------------------
+                        if(hfBooks.size() == 1 && userRatingHF != 0.0){
+                            userRatingHF = ((hfRateTotal+userRatingHF)/(hfBooks.size()+1))/5.0;
                         }
-                        else{userRatingSF = 0.0;}
-                        
-                        if(ssBooks.size() != 0){
-                            userRatingSS = (ssRateTotal/ssBooks.size())/5.0;
+                        else if(hfBooks.size() != 0 && userRatingHF != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingHF = (hfRateTotal)/(hfBooks.size())/5.0;
                         }
-                        else{userRatingSS = 0.0;}
-                        
-                        if(hsBooks.size() != 0){
-                            userRatingHS = (hsRateTotal/hsBooks.size())/5.0;
+                        else if (userRatingHF == 0.0){userRatingHF = 0.0;}
+                        //---------------------------------
+                        if(hBooks.size() == 1 && userRatingH != 0.0){
+                            userRatingH = ((hRateTotal+userRatingH)/(hBooks.size()+1))/5.0;
                         }
-                        else{userRatingHS = 0.0;}
-                        
-                        if(yaBooks.size() != 0){
-                            userRatingYA = (yaRateTotal/yaBooks.size())/5.0;
+                        else if(hBooks.size() != 0 && userRatingH != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingH = (hRateTotal)/(hBooks.size())/5.0;
                         }
-                        else{userRatingYA = 0.0;}
-                        
+                        else if (userRatingH == 0.0){userRatingH = 0.0;}
+                        //---------------------------------
+                        if(tBooks.size() == 1 && userRatingT != 0.0){
+                            userRatingT = ((tRateTotal+userRatingT)/(tBooks.size()+1))/5.0;
+                        }
+                        else if(tBooks.size() != 0 && userRatingT != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingT = (tRateTotal)/(tBooks.size())/5.0;
+                        }
+                        else if (userRatingT == 0.0){userRatingT = 0.0;}
+                        //---------------------------------
+                        if(rBooks.size() == 1 && userRatingR != 0.0){
+                            userRatingR = ((rRateTotal+userRatingR)/(rBooks.size()+1))/5.0;
+                        }
+                        else if(rBooks.size() != 0 && userRatingR != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingR = (rRateTotal)/(rBooks.size())/5.0;
+                        }
+                        else if (userRatingR == 0.0){userRatingR = 0.0;}
+                        //---------------------------------
+                        if(sfBooks.size() == 1 && userRatingSF != 0.0){
+                            userRatingSF = ((sfRateTotal+userRatingSF)/(sfBooks.size()+1))/5.0;
+                        }
+                        else if(sfBooks.size() != 0 && userRatingSF != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingSF = (sfRateTotal)/(sfBooks.size())/5.0;
+                        }
+                        else if (userRatingSF == 0.0){userRatingSF = 0.0;}
+                        //---------------------------------
+                        if(ssBooks.size() == 1 && userRatingSS != 0.0){
+                            userRatingSS = ((ssRateTotal+userRatingSS)/(ssBooks.size()+1))/5.0;
+                        }
+                        else if(ssBooks.size() != 0 && userRatingSS != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingSS = (ssRateTotal)/(ssBooks.size())/5.0;
+                        }
+                        else if (userRatingSS == 0.0){userRatingSS = 0.0;}
+                        //---------------------------------
+                        if(hsBooks.size() == 1 && userRatingHS != 0.0){
+                            userRatingHS = ((hsRateTotal+userRatingHS)/(hsBooks.size()+1))/5.0;
+                        }
+                        else if(hsBooks.size() != 0 && userRatingHS != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingHS = (hsRateTotal)/(hsBooks.size())/5.0;
+                        }
+                        else if (userRatingHS == 0.0){userRatingHS = 0.0;}
+                        //---------------------------------
+                        if(yaBooks.size() == 1 && userRatingYA != 0.0){
+                            userRatingYA = ((yaRateTotal+userRatingYA)/(yaBooks.size()+1))/5.0;
+                        }
+                        else if(yaBooks.size() != 0 && userRatingYA != 0.0){    //if there's multiple books, then no need to concern with original genre rating
+                            userRatingYA = (yaRateTotal)/(yaBooks.size())/5.0;
+                        }
+                        else if (userRatingYA == 0.0){userRatingYA = 0.0;}
+                        //---------------------------------
                         String updateUser = "UPDATE capstone.users SET actionAdventureLvl =\""+userRatingAA+"\", classicLvl =\""+userRatingC+"\", mysteryLvl =\""+userRatingM+"\", "
                                 + "fantasyLvl =\""+userRatingF+"\", historicalFictionLvl =\""+userRatingHF+"\", horrorLvl =\""+userRatingH+"\", thrillerLvl =\""+userRatingT+"\", "
                                 + "romanceLvl =\""+userRatingR+"\", sciFiLvl =\""+userRatingSF+"\", shortStoriesLvl =\""+userRatingSS+"\", historyLvl =\""+userRatingHS+"\", "
