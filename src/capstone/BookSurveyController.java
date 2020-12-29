@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,6 +56,24 @@ public class BookSurveyController implements Initializable {
     Double userRatingAA, userRatingC,userRatingM, userRatingF, userRatingHF,        //variables to store the user's genre preference data
             userRatingH, userRatingT, userRatingR, userRatingSF, userRatingSS, userRatingHS, userRatingYA;
     String usersReadBooks, usersReadBookRatings;
+    
+    double aaRateTotal = 0.0, cRateTotal = 0.0, mRateTotal = 0.0, fRateTotal = 0.0, hfRateTotal = 0.0, hRateTotal = 0.0, tRateTotal = 0.0,
+                                rRateTotal = 0.0, sfRateTotal = 0.0, ssRateTotal = 0.0, hsRateTotal = 0.0, yaRateTotal = 0.0;
+    
+    List<Integer> aaBooks = new ArrayList<>();
+    List<Integer> cBooks = new ArrayList<>();
+    List<Integer> mBooks = new ArrayList<>();
+    List<Integer> fBooks = new ArrayList<>();
+    List<Integer> hfBooks = new ArrayList<>();
+    List<Integer> hBooks = new ArrayList<>();
+    List<Integer> tBooks = new ArrayList<>();
+    List<Integer> rBooks = new ArrayList<>();
+    List<Integer> sfBooks = new ArrayList<>();
+    List<Integer> ssBooks = new ArrayList<>();
+    List<Integer> hsBooks = new ArrayList<>();
+    List<Integer> yaBooks = new ArrayList<>();
+    String bookQuery;
+    String genreToComp;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -118,7 +137,7 @@ public class BookSurveyController implements Initializable {
                         stmt.executeUpdate(update2);
                         
                         String userRatingQuery = "SELECT actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl,"
-                                + "romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl, userBooksRead, userBooksRating WHERE userID = "+LoginScreenController.userIDtoShare+";";
+                                + "romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl, userBooksRead, userBooksRating FROM capstone.users WHERE userID = "+LoginScreenController.userIDtoShare+";";
                         ResultSet rs3 = stmt.executeQuery(userRatingQuery);
                         while(rs3.next()){
                             userRatingAA = rs3.getDouble(1);
@@ -139,6 +158,137 @@ public class BookSurveyController implements Initializable {
                         //need to parse through the string, comma delimiter, and then from there put those into a list and compare them in
                         //a series of if statements comparing the bookID in a select statement in a for loop to the genre, and then putting that into a list for each genre
                         //kinda convoluted
+                        String[] readBooksArray;
+                        String[] bookRatingArray;
+                        readBooksArray = usersReadBooks.split(",");
+                        bookRatingArray = usersReadBookRatings.split(",");
+                        for(int i=0; i < readBooksArray.length;i++){
+                            bookQuery = "SELECT mainGenre from capstone.books WHERE bookID ="+readBooksArray[i]+";";
+                            stmt = conn.createStatement();
+                            ResultSet rs4 = stmt.executeQuery(bookQuery);
+                            while(rs4.next()){
+                                genreToComp = rs4.getString(1);
+                                if(genreToComp.equals("Action/Adventure")){
+                                    aaBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    aaRateTotal = aaRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Classic")){
+                                    cBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    cRateTotal = cRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Mystery")){
+                                    mBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    mRateTotal = mRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Fantasy")){
+                                    fBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    fRateTotal = fRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Historical Fiction")){
+                                    hfBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    hfRateTotal = hfRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Horror")){
+                                    hBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    hRateTotal = hRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Thriller")){
+                                    tBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    tRateTotal = tRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Romance")){
+                                    rBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    rRateTotal = rRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Sci-Fi")){
+                                    sfBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    sfRateTotal = sfRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Short Story")){
+                                    ssBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    ssRateTotal = ssRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("History")){
+                                    hsBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    hsRateTotal = hsRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else if(genreToComp.equals("Young Adult")){
+                                    yaBooks.add(Integer.parseInt(readBooksArray[i]));
+                                    yaRateTotal = yaRateTotal + Double.parseDouble(bookRatingArray[i]);
+                                }
+                                else
+                                {
+                                    System.out.println("what");
+                                }
+                            }
+                        }
+                       
+                        if(aaBooks.size() != 0){
+                            userRatingAA = (aaRateTotal/aaBooks.size())/5.0;
+                        }
+                        else{userRatingAA = 0.0;}
+                        
+                        if(cBooks.size() != 0){
+                            userRatingC = (cRateTotal/cBooks.size())/5.0;
+                        }
+                        else{userRatingC = 0.0;}
+                        
+                        if(mBooks.size() != 0){
+                            userRatingM = (mRateTotal/mBooks.size())/5.0;
+                        }
+                        else{userRatingM = 0.0;}
+                        
+                        if(fBooks.size() != 0){
+                            userRatingF = (fRateTotal/fBooks.size())/5.0;
+                        }
+                        else{userRatingF = 0.0;}
+                        
+                        if(hfBooks.size() != 0){
+                            userRatingHF = (hfRateTotal/hfBooks.size())/5.0;
+                        }
+                        else{userRatingHF = 0.0;}
+                        
+                        if(hBooks.size() != 0){
+                            userRatingH = (hRateTotal/hBooks.size())/5.0;
+                        }
+                        else{userRatingH = 0.0;}
+                        
+                        if(tBooks.size() != 0){
+                            userRatingT = (tRateTotal/tBooks.size())/5.0;
+                        }
+                        else{userRatingT = 0.0;}
+                        
+                        if(rBooks.size() != 0){
+                            userRatingR = (rRateTotal/rBooks.size())/5.0;
+                        }
+                        else{userRatingR = 0.0;}
+                        
+                        if(sfBooks.size() != 0){
+                            userRatingSF = (sfRateTotal/sfBooks.size())/5.0;
+                        }
+                        else{userRatingSF = 0.0;}
+                        
+                        if(ssBooks.size() != 0){
+                            userRatingSS = (ssRateTotal/ssBooks.size())/5.0;
+                        }
+                        else{userRatingSS = 0.0;}
+                        
+                        if(hsBooks.size() != 0){
+                            userRatingHS = (hsRateTotal/hsBooks.size())/5.0;
+                        }
+                        else{userRatingHS = 0.0;}
+                        
+                        if(yaBooks.size() != 0){
+                            userRatingYA = (yaRateTotal/yaBooks.size())/5.0;
+                        }
+                        else{userRatingYA = 0.0;}
+                        
+                        String updateUser = "UPDATE capstone.users SET actionAdventureLvl =\""+userRatingAA+"\", classicLvl =\""+userRatingC+"\", mysteryLvl =\""+userRatingM+"\", "
+                                + "fantasyLvl =\""+userRatingF+"\", historicalFictionLvl =\""+userRatingHF+"\", horrorLvl =\""+userRatingH+"\", thrillerLvl =\""+userRatingT+"\", "
+                                + "romanceLvl =\""+userRatingR+"\", sciFiLvl =\""+userRatingSF+"\", shortStoriesLvl =\""+userRatingSS+"\", historyLvl =\""+userRatingHS+"\", "
+                                + "youngAdultLvl =\""+userRatingYA+"\" WHERE userID = "+LoginScreenController.userIDtoShare+";";
+                        stmt.executeUpdate(updateUser);
+                        
                     }
                     catch (SQLException e ) {
                       throw new Error("Problem", e);
