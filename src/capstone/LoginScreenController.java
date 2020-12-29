@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,7 +44,7 @@ public class LoginScreenController implements Initializable {
     TextField usernameTxt;
     
     @FXML
-    TextField passwordTxt;
+    PasswordField passwordTxt;
     
     @FXML
     Button createAccountBtn;
