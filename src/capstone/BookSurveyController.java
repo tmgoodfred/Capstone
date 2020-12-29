@@ -52,6 +52,10 @@ public class BookSurveyController implements Initializable {
     String booksRatingToInsert;
     int totalReadToInsert;
     
+    Double userRatingAA, userRatingC,userRatingM, userRatingF, userRatingHF,        //variables to store the user's genre preference data
+            userRatingH, userRatingT, userRatingR, userRatingSF, userRatingSS, userRatingHS, userRatingYA;
+    String usersReadBooks, usersReadBookRatings;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          rate1.setToggleGroup(rate);
@@ -100,18 +104,41 @@ public class BookSurveyController implements Initializable {
                         stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
                         while (rs.next()){
-                            bookRating = rs.getDouble(1);
-                            bookTotalReads = rs.getInt(2);
+                            bookRating = rs.getDouble(1);   //gets the current book rating of the selected book
+                            bookTotalReads = rs.getInt(2);  //gets the current total reads of the book selected
                         }
-                        readsToInsert = bookTotalReads+1;
-                        ratingToInsert = (bookRating+rating)/readsToInsert;
+                        readsToInsert = bookTotalReads+1;   //increases the total reads by 1
+                        ratingToInsert = (bookRating+rating)/readsToInsert; //recalculates the reating to insert
                         String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
                         stmt.executeUpdate(update);
-                        booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;
-                        booksRatingToInsert = MainMenuController.userBooksRatingList+","+rating.toString();
-                        totalReadToInsert = MainMenuController.userTotalBooksReadList+1;
+                        booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;  //adds the book to the user's read list
+                        booksRatingToInsert = MainMenuController.userBooksRatingList+","+rating.toString(); //inserts the user's rating to the string
+                        totalReadToInsert = MainMenuController.userTotalBooksReadList+1;    //increases the user's total books read by 1
                         String update2 = "UPDATE capstone.users SET userBooksRead=\""+booksReadToInsert+"\", userBooksRating=\""+booksRatingToInsert+"\", userBooksReadTotal="+totalReadToInsert+" WHERE userID="+LoginScreenController.userIDtoShare+";";
                         stmt.executeUpdate(update2);
+                        
+                        String userRatingQuery = "SELECT actionAdventureLvl, classicLvl, mysteryLvl, fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl,"
+                                + "romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl, userBooksRead, userBooksRating WHERE userID = "+LoginScreenController.userIDtoShare+";";
+                        ResultSet rs3 = stmt.executeQuery(userRatingQuery);
+                        while(rs3.next()){
+                            userRatingAA = rs3.getDouble(1);
+                            userRatingC = rs3.getDouble(2);
+                            userRatingM = rs3.getDouble(3);
+                            userRatingF = rs3.getDouble(4);
+                            userRatingHF = rs3.getDouble(5);
+                            userRatingH = rs3.getDouble(6);
+                            userRatingT = rs3.getDouble(7);
+                            userRatingR = rs3.getDouble(8);
+                            userRatingSF = rs3.getDouble(9);
+                            userRatingSS = rs3.getDouble(10);
+                            userRatingH = rs3.getDouble(11);
+                            userRatingYA = rs3.getDouble(12);
+                            usersReadBooks = rs3.getString(13);
+                            usersReadBookRatings = rs3.getString(14);
+                        }
+                        //need to parse through the string, comma delimiter, and then from there put those into a list and compare them in
+                        //a series of if statements comparing the bookID in a select statement in a for loop to the genre, and then putting that into a list for each genre
+                        //kinda convoluted
                     }
                     catch (SQLException e ) {
                       throw new Error("Problem", e);
@@ -126,9 +153,6 @@ public class BookSurveyController implements Initializable {
                   try {if (conn != null) {conn.close();}} 
                   catch (SQLException ex) {System.out.println(ex.getMessage());}
                 }
-                
-                Stage stage = (Stage) submitBtn.getScene().getWindow();
-                stage.close();
         }
         else{   //shows if the user has already read the book selected
             Alert alert = new Alert(AlertType.ERROR);
