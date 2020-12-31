@@ -16,6 +16,15 @@ import javafx.collections.ObservableList;
  * @author Tyler Goodfred
  */
 public class Book {
+    static List<Integer> recbookID = new ArrayList<>();    //lists to store book data to be added to the tableviews
+    static List<String> recbookTitle = new ArrayList<>();
+    static List<String> recbookAuthor = new ArrayList<>();
+    static List<String> recbookDescription = new ArrayList<>();
+    static List<Integer> recbookPageCount = new ArrayList<>();
+    static List<Double> recbookRating = new ArrayList<>();
+    static List<Integer> recbookTotalReads = new ArrayList<>();
+    static List<String> recbookMainGenre = new ArrayList<>();
+    
     static List<Integer> bookID = new ArrayList<>();    //lists to store book data to be added to the tableviews
     static List<String> bookTitle = new ArrayList<>();
     static List<String> bookAuthor = new ArrayList<>();
@@ -95,6 +104,14 @@ public class Book {
             items.add(new Book(bookID.get(i), bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
         }
         return items;
+    }
+    
+    public static ObservableList<Book> getRecItems(){
+        ObservableList<Book> items4 = FXCollections.observableArrayList();
+        for(int i=0; i<recbookID.size();i++){
+            items4.add(new Book(bookID.get(i), bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
+        }
+        return items4;
     }
     
     public static ObservableList<Book> getSearchItems(){ //gets specifically the items that match the searched term on the search tab into one observable list - needed for putting into a table column
