@@ -19,9 +19,14 @@ import javafx.scene.control.TableColumn;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.stream.Collectors.toSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -284,22 +289,37 @@ public class MainMenuController implements Initializable {
         searchTableView.setItems(Book.getSearchItems()); //puts the data from the searched books list into to table view
     }
     
+    int flag = 0;
+    String[] tempy;
+    String members;
     public void printClusterInfo(){
-    clusters.forEach((key, value) -> {
-    System.out.println("------------------------------ CLUSTER -----------------------------------");
+        clusters.forEach((key, value) -> {
+        System.out.println("------------------------------ CLUSTER -----------------------------------");
+        System.out.println(sortedCentroid(key));    
 
-    System.out.println(sortedCentroid(key));
-    String members = String.join(",", value
-      .stream()
-      .map(BookData::getBookTitle)
-      .collect(toSet()));
-    System.out.print(members);
+        members = String.join(" ‽ ", value
+          .stream()
+          .map(BookData::getBookTitle)
+          .collect(toSet()));
+        System.out.print(members);
+        tempy = members.split(" ‽ ");
+        for(int i=0; i<tempy.length;i++){
+            if(tempy[i].equals("USER")){
+                flag = 1;
+            }
+        }
 
-    bookTitleCluster = members.split(",");
-    
-    System.out.println();
-    System.out.println();
-        });
+        System.out.println();
+        System.out.println();
+            });
+        if(flag == 1){
+            bookTitleCluster = members.split(" ‽ ");
+        }
+        else if (tempy.length == 1 && flag == 1){    //in case the user is in a lone cluster for some reason, it will at least give *some* recommendation
+            bookTitleCluster = members.split(" ‽ ");
+            System.out.println("UH OH, NO MATCH");
+        }
+        else{System.out.println("No matches");}
     }
     
     private Centroid sortedCentroid(Centroid key) {
@@ -320,6 +340,14 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Book.recbookID.clear();
+        Book.recbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
+        Book.recbookAuthor.clear();
+        Book.recbookDescription.clear();
+        Book.recbookPageCount.clear();
+        Book.recbookMainGenre.clear();
+        Book.recbookRating.clear();
+        
         Book.searchbookID.clear();
         Book.searchbookTitle.clear();    //clears all lists because if you don't, the data just stacks and shows repeats or innacurate data
         Book.searchbookAuthor.clear();
@@ -409,16 +437,6 @@ public class MainMenuController implements Initializable {
                     genreRatings.put("Young Adult",rs4.getDouble(12));
                     records.add(new BookData("USER", genreRatings));
                 }
-                clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
-                printClusterInfo();
-                String recQuery = "";
-                for(int i=0;i<bookTitleCluster.length;i++){
-                    if(!bookTitleCluster[i].equals("USER")){
-                        String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
-                                + "FROM capstone.books WHERE bookTitle = "+bookTitleCluster[i]+";";
-                        ResultSet rs6 = stmt.executeQuery(recQuery2);
-                    }
-                }
                 if(!userBooksReadList.equals("0")){
                     elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
                     List<String> fixedLengthList = Arrays.asList(elements);
@@ -440,6 +458,97 @@ public class MainMenuController implements Initializable {
                 } //end of if statement
                 else{
                     elements = userBooksReadList.split(""); //if the users books read are = 0, split it by "nothing"
+                }
+                
+                clusters = KMeans.fit(records, 5, new EuclideanDistance(), 1000);
+                printClusterInfo();
+                int readFlag = 0;
+                List<Integer> clusterIDs = new ArrayList<>();
+                for(int i=0;i<bookTitleCluster.length;i++){
+                    if(!bookTitleCluster[i].equals("USER")){
+                        String temp = "SELECT bookID FROM capstone.books WHERE bookTitle = \""+bookTitleCluster[i]+"\""+";";
+                        ResultSet rs7 = stmt.executeQuery(temp);
+                        while(rs7.next()){
+                            for(int j=0;j<elements.length;j++){
+                                if(rs7.getInt(1) == Integer.parseInt(elements[j])){ //if the book is one that the user has read, don't add it
+                                    readFlag = 1;
+                                    System.out.println("READ BOOK ID = "+rs7.getInt(1));
+                                }
+                            }
+                            if(readFlag == 0){
+                                clusterIDs.add(rs7.getInt(1));
+                                System.out.println("UNREAD BOOK ID = "+rs7.getInt(1));
+                            }
+                        }
+                    }
+                }
+                
+                clusterIDs.sort(new Comparator<Integer>(){
+                    public int compare(Integer thing1, Integer thing2){
+                        String ratingGet = "SELECT bookRating FROM capstone.books WHERE bookID = "+thing1+";";
+                        String ratingGet2 = "SELECT bookRating FROM capstone.books WHERE bookID = "+thing2+";";
+                        Connection conn = null;
+                        Statement stmt = null;
+                        String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+                        try {
+                            conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
+                            stmt = conn.createStatement();
+                            ResultSet rs1 = stmt.executeQuery(ratingGet);
+                            while(rs1.next()){
+                                thing1 = rs1.getInt(1);
+                            }
+                            ResultSet rs2 = stmt.executeQuery(ratingGet2);
+                            while(rs2.next()){
+                                thing2 = rs2.getInt(1);
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if(thing1 < thing2){
+                            return -1;  //if thing1's book rating is less than thing2's rating
+                        }
+                        else if(thing2 < thing1){
+                            return 1; //if thing1's books rating is more than thing2's rating
+                        }
+                        else
+                            return 0;
+                    }
+                });
+                
+                System.out.println("THIS IS CLUSTER SIZE WITH THE BOOKS READ REMOVED = " + clusterIDs.size());
+                if(clusterIDs.size() >=7){    //as long as theres more than 7 books in the cluster, only show 7*
+                    for(int i=0;i<7;i++){
+                        String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
+                                + "FROM capstone.books WHERE bookID = "+clusterIDs.get(i)+";";
+                        ResultSet rs6 = stmt.executeQuery(recQuery2);
+                        while(rs6.next()){
+                            Book.recbookID.add(rs6.getInt(1));
+                            Book.recbookTitle.add(rs6.getString(2));
+                            Book.recbookAuthor.add(rs6.getString(3));
+                            Book.recbookDescription.add(rs6.getString(4));
+                            Book.recbookPageCount.add(rs6.getInt(5));
+                            Book.recbookRating.add(rs6.getDouble(6));
+                            Book.recbookTotalReads.add(rs6.getInt(7));
+                            Book.recbookMainGenre.add(rs6.getString(8));
+                        }
+                    }
+                }
+                else{                                   //if there's less than 7 books in the cluster, display all of them
+                    for(int i=0;i<clusterIDs.size();i++){
+                        String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
+                                + "FROM capstone.books WHERE bookID = "+clusterIDs.get(i)+";";
+                        ResultSet rs6 = stmt.executeQuery(recQuery2);
+                        while(rs6.next()){
+                            Book.recbookID.add(rs6.getInt(1));
+                            Book.recbookTitle.add(rs6.getString(2));
+                            Book.recbookAuthor.add(rs6.getString(3));
+                            Book.recbookDescription.add(rs6.getString(4));
+                            Book.recbookPageCount.add(rs6.getInt(5));
+                            Book.recbookRating.add(rs6.getDouble(6));
+                            Book.recbookTotalReads.add(rs6.getInt(7));
+                            Book.recbookMainGenre.add(rs6.getString(8));
+                        }
+                    }
                 }
             }
             catch (SQLException e ) {
