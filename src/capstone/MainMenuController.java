@@ -46,6 +46,7 @@ public class MainMenuController implements Initializable {
     public static String userBooksReadList;
     public static String userBooksRatingList;
     public static String[] elements = {"0"};
+    String[] bookTitleCluster;
     public static Integer userTotalBooksReadList;
     
     List<BookData> records = new ArrayList<>();
@@ -288,12 +289,14 @@ public class MainMenuController implements Initializable {
     System.out.println("------------------------------ CLUSTER -----------------------------------");
 
     System.out.println(sortedCentroid(key));
-    String members = String.join(", ", value
+    String members = String.join(",", value
       .stream()
       .map(BookData::getBookTitle)
       .collect(toSet()));
     System.out.print(members);
 
+    bookTitleCluster = members.split(",");
+    
     System.out.println();
     System.out.println();
         });
@@ -406,6 +409,16 @@ public class MainMenuController implements Initializable {
                     genreRatings.put("Young Adult",rs4.getDouble(12));
                     records.add(new BookData("USER", genreRatings));
                 }
+                clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
+                printClusterInfo();
+                String recQuery = "";
+                for(int i=0;i<bookTitleCluster.length;i++){
+                    if(!bookTitleCluster[i].equals("USER")){
+                        String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
+                                + "FROM capstone.books WHERE bookTitle = "+bookTitleCluster[i]+";";
+                        ResultSet rs6 = stmt.executeQuery(recQuery2);
+                    }
+                }
                 if(!userBooksReadList.equals("0")){
                     elements = userBooksReadList.split(",");    //splits the string of books read by a comma delimiter
                     List<String> fixedLengthList = Arrays.asList(elements);
@@ -443,6 +456,13 @@ public class MainMenuController implements Initializable {
           catch (SQLException ex) {System.out.println(ex.getMessage());}
         }
         
+        recTitleTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookTitles"));    //initializes the table columns to prepare them to retrieve the data
+        recAuthTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookAuthors"));
+        recDescTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookDescriptions"));
+        recPgCntTab.setCellValueFactory(new PropertyValueFactory<Book, Integer>("bookPageCounts"));
+        recGenreTab.setCellValueFactory(new PropertyValueFactory<Book, String>("mainGenres"));
+        recRateTab.setCellValueFactory(new PropertyValueFactory<Book, Double>("bookRatings"));
+        
         allTitleTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookTitles"));    //initializes the table columns to prepare them to retrieve the data
         allAuthTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookAuthors"));
         allDescTab.setCellValueFactory(new PropertyValueFactory<Book, String>("bookDescriptions"));
@@ -464,10 +484,11 @@ public class MainMenuController implements Initializable {
         readGenreTab.setCellValueFactory(new PropertyValueFactory<Book, String>("mainGenres"));
         readRateTab.setCellValueFactory(new PropertyValueFactory<Book, Double>("bookRatings"));
         
+        recTableView.setItems(Book.getRecItems()); //puts the recommended books into the table view
         allTableView.setItems(Book.getBookItems());  //puts all book data into the table view
         readTableView.setItems(Book.getReadItems()); //puts the read book data into the table view
-        clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
-        printClusterInfo();
+        //clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
+        //printClusterInfo();
         
     }
 }
