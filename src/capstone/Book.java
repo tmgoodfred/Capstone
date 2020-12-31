@@ -109,7 +109,7 @@ public class Book {
     public static ObservableList<Book> getRecItems(){
         ObservableList<Book> items4 = FXCollections.observableArrayList();
         for(int i=0; i<recbookID.size();i++){
-            items4.add(new Book(bookID.get(i), bookTitle.get(i), bookAuthor.get(i), bookDescription.get(i), bookPageCount.get(i), bookMainGenre.get(i),bookRating.get(i)));
+            items4.add(new Book(recbookID.get(i), recbookTitle.get(i), recbookAuthor.get(i), recbookDescription.get(i), recbookPageCount.get(i), recbookMainGenre.get(i),recbookRating.get(i)));
         }
         return items4;
     }
