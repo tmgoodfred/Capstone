@@ -294,14 +294,14 @@ public class MainMenuController implements Initializable {
     String members;
     public void printClusterInfo(){
         clusters.forEach((key, value) -> {
-        System.out.println("------------------------------ CLUSTER -----------------------------------");
-        System.out.println(sortedCentroid(key));    
+        //System.out.println("------------------------------ CLUSTER -----------------------------------");
+        //System.out.println(sortedCentroid(key));    
 
         members = String.join(" ‽ ", value
           .stream()
           .map(BookData::getBookTitle)
           .collect(toSet()));
-        System.out.print(members);
+        //ystem.out.print(members);
         tempy = members.split(" ‽ ");
         for(int i=0; i<tempy.length;i++){
             if(tempy[i].equals("USER")){
@@ -309,8 +309,8 @@ public class MainMenuController implements Initializable {
             }
         }
 
-        System.out.println();
-        System.out.println();
+        //System.out.println();
+        //System.out.println();
             });
         if(flag == 1){
             bookTitleCluster = members.split(" ‽ ");
@@ -472,12 +472,12 @@ public class MainMenuController implements Initializable {
                             for(int j=0;j<elements.length;j++){
                                 if(rs7.getInt(1) == Integer.parseInt(elements[j])){ //if the book is one that the user has read, don't add it
                                     readFlag = 1;
-                                    System.out.println("READ BOOK ID = "+rs7.getInt(1));
+                                    //System.out.println("READ BOOK ID = "+rs7.getInt(1));
                                 }
                             }
                             if(readFlag == 0){
                                 clusterIDs.add(rs7.getInt(1));
-                                System.out.println("UNREAD BOOK ID = "+rs7.getInt(1));
+                                //System.out.println("UNREAD BOOK ID = "+rs7.getInt(1));
                             }
                         }
                     }
@@ -515,7 +515,7 @@ public class MainMenuController implements Initializable {
                     }
                 });
                 
-                System.out.println("THIS IS CLUSTER SIZE WITH THE BOOKS READ REMOVED = " + clusterIDs.size());
+                //System.out.println("THIS IS CLUSTER SIZE WITH THE BOOKS READ REMOVED = " + clusterIDs.size());
                 if(clusterIDs.size() >=7){    //as long as theres more than 7 books in the cluster, only show 7*
                     for(int i=0;i<7;i++){
                         String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
