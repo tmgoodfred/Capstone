@@ -460,7 +460,7 @@ public class MainMenuController implements Initializable {
                     elements = userBooksReadList.split(""); //if the users books read are = 0, split it by "nothing"
                 }
                 
-                clusters = KMeans.fit(records, 5, new EuclideanDistance(), 1000);
+                clusters = KMeans.fit(records, 4, new EuclideanDistance(), 1500);
                 printClusterInfo();
                 int readFlag = 0;
                 List<Integer> clusterIDs = new ArrayList<>();
@@ -516,7 +516,7 @@ public class MainMenuController implements Initializable {
                 });
                 
                 //System.out.println("THIS IS CLUSTER SIZE WITH THE BOOKS READ REMOVED = " + clusterIDs.size());
-                if(clusterIDs.size() >=7){    //as long as theres more than 7 books in the cluster, only show 7*
+                if(clusterIDs.size() >=7){    //as long as theres more than 7 books in the cluster, only show 7
                     for(int i=0;i<7;i++){
                         String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
                                 + "FROM capstone.books WHERE bookID = "+clusterIDs.get(i)+";";
