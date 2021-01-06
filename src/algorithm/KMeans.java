@@ -17,13 +17,13 @@ import static java.util.stream.Collectors.toSet;
 public class KMeans {
 
     private KMeans() {
-        throw new IllegalAccessError("Don't Call");
+        throw new IllegalAccessError("Don't Call This");
     }
 
     private static final Random random = new Random();
 
-    // @param bookInfo       The dataset.
-    // @param k             Number of Clusters.
+    //@param bookInfo       The dataset.
+    //@param k             Number of Clusters.
     //@param distance      To calculate the distance between two items.
     //@param maxIterations Upper bound for the number of iterations.
     public static Map<Centroid, List<BookData>> fit(List<BookData> bookInfo, int k, Distance distance, int maxIterations) {
@@ -103,11 +103,8 @@ public class KMeans {
 
         for (BookData record : records) {
             record.getGenreRatings().forEach((key, value) -> {
-                  // compares the value with the current max and choose the bigger value between them
-                  maxs.compute(key, (k1, max) -> max == null || value > max ? value : max);
-
-                  // compare the value with the current min and choose the smaller value between them
-                  mins.compute(key, (k1, min) -> min == null || value < min ? value : min);
+                  maxs.compute(key, (k1, max) -> max == null || value > max ? value : max); // compares the value with the current max and choose the bigger value between them
+                  mins.compute(key, (k1, min) -> min == null || value < min ? value : min); // compare the value with the current min and choose the smaller value between them
               });
         }
 
@@ -132,7 +129,7 @@ public class KMeans {
             throw new IllegalArgumentException("It doesn't make sense to have less than or equal to 1 cluster");
         }
         if (distance == null) {
-            throw new IllegalArgumentException("The distance calculator is required");
+            throw new IllegalArgumentException("distance is required");
         }
         if (maxIterations <= 0) {   //checks if null
             throw new IllegalArgumentException("Max iterations should be a positive number");
