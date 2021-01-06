@@ -6,7 +6,7 @@ import java.util.Map;
  *
  * @author Tyler Goodfred
  */
-public class EuclideanDistance implements Distance {
+public class EuclideanDistance implements Distance {    //class used to calculate distances between values for the centroid
 
     @Override
     public double calculate(Map<String, Double> f1, Map<String, Double> f2) {
