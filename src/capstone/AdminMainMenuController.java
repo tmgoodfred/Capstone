@@ -84,12 +84,12 @@ public class AdminMainMenuController implements Initializable {
             String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
             conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
             Statement stmt = null;
-            String query = "SELECT bookRating, mainGenre FROM capstone.books;"; //gets login data from database
+            String query = "SELECT bookRating, mainGenre FROM capstone.books;";
             String query2 = "SELECT mainGenre, bookTotalReads FROM capstone.books;";
             String query3 = "SELECT bookTitle, bookTotalReads FROM capstone.books ORDER BY bookTotalReads DESC LIMIT 10;";
             try {
                 stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                ResultSet rs = stmt.executeQuery(query);        //checks each book, what their genre is, and what the rating is to populate graph 1
                 while (rs.next()){
                     ratingToCheck = rs.getDouble(1);
                     genreToCheck = rs.getString(2);
@@ -166,7 +166,7 @@ public class AdminMainMenuController implements Initializable {
                         else if (ratingToCheck != 0.0 && ratingToCheck > 1.5) yaGoodBookRating++;
                     }
                 }
-                ResultSet rs2 = stmt.executeQuery(query2);
+                ResultSet rs2 = stmt.executeQuery(query2);      //checks the genre and how many reads each book has and totals them all up by genre
                 while (rs2.next()){
                     genreToCheck2 = rs2.getString(1);
                     readToAdd = rs2.getInt(2);
@@ -207,7 +207,7 @@ public class AdminMainMenuController implements Initializable {
                         yaTotalReads = yaTotalReads+readToAdd;
                     }
                 }
-                ResultSet rs3 = stmt.executeQuery(query3);
+                ResultSet rs3 = stmt.executeQuery(query3);      //simply retrieves the first 10 books when sorted by total reads, giving the 10 most read books
                 while (rs3.next()){
                     bookTitleList.add(rs3.getString(1));
                     bookReadsList.add(rs3.getInt(2));
