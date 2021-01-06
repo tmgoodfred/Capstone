@@ -294,41 +294,27 @@ public class MainMenuController implements Initializable {
     String members;
     public void printClusterInfo(){
         clusters.forEach((key, value) -> {
-        //System.out.println("------------------------------ CLUSTER -----------------------------------");
-        //System.out.println(sortedCentroid(key));    
-
-        members = String.join(" ‽ ", value
-          .stream()
-          .map(BookData::getBookTitle)
-          .collect(toSet()));
-        //ystem.out.print(members);
-        tempy = members.split(" ‽ ");
-        for(int i=0; i<tempy.length;i++){
+        members = String.join(" ‽ ", value.stream().map(BookData::getBookTitle).collect(toSet()));  //uses interrobang to split each book title 
+        tempy = members.split(" ‽ ");                                                               //since some books will use commas and single quotes
+        for(int i=0; i<tempy.length;i++){       //checks to find which cluster has the user in it
             if(tempy[i].equals("USER")){
-                flag = 1;
+                flag = 1;           //flag flipped if user is in the cluster
             }
         }
-
-        //System.out.println();
-        //System.out.println();
             });
-        if(flag == 1){
+        if(flag == 1){      //sets the user's personal cluster to the cluster that will be parsed and displayed
             bookTitleCluster = members.split(" ‽ ");
         }
         else if (tempy.length == 1 && flag == 1){    //in case the user is in a lone cluster for some reason, it will at least give *some* recommendation
             bookTitleCluster = members.split(" ‽ ");
-            System.out.println("UH OH, NO MATCH");
+            System.out.println("NO MATCHES, RANDOM CLUSTER USED");
         }
         else{System.out.println("No matches");}
     }
     
-    private Centroid sortedCentroid(Centroid key) {
-        List<Map.Entry<String, Double>> entries = new ArrayList<>(key
-          .getCoordinates()
-          .entrySet());
-        entries.sort((e1, e2) -> e2
-          .getValue()
-          .compareTo(e1.getValue()));
+    private Centroid sortedCentroid(Centroid key) { //sorts centroids
+        List<Map.Entry<String, Double>> entries = new ArrayList<>(key.getCoordinates().entrySet());
+        entries.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
 
         Map<String, Double> sorted = new LinkedHashMap<>();
         for (Map.Entry<String, Double> entry : entries) {
@@ -403,7 +389,7 @@ public class MainMenuController implements Initializable {
                     userBooksRatingList = rs2.getString(2);
                     userTotalBooksReadList = rs2.getInt(3);
                 }
-                ResultSet rs5 = stmt.executeQuery(bookQuery);
+                ResultSet rs5 = stmt.executeQuery(bookQuery);       //this is used to put the books and genre information into the map for the clustering
                 while (rs5.next()){
                     Map<String, Double> genreRatings = new HashMap<String, Double>();
                     genreRatings.put("Action/Aventure",rs5.getDouble(9));
@@ -420,7 +406,7 @@ public class MainMenuController implements Initializable {
                     genreRatings.put("Young Adult",rs5.getDouble(20));
                     records.add(new BookData(rs5.getString(2), genreRatings));
                 }
-                ResultSet rs4 = stmt.executeQuery(userQuery2);
+                ResultSet rs4 = stmt.executeQuery(userQuery2);              //this one is used to get the user's data in the form of a book for comparison to other books for clustering
                 while(rs4.next()){
                     Map<String, Double> genreRatings = new HashMap<String, Double>();
                     genreRatings.put("Action/Aventure",rs4.getDouble(1));
@@ -460,30 +446,28 @@ public class MainMenuController implements Initializable {
                     elements = userBooksReadList.split(""); //if the users books read are = 0, split it by "nothing"
                 }
                 
-                clusters = KMeans.fit(records, 4, new EuclideanDistance(), 1500);
-                printClusterInfo();
-                int readFlag = 0;
+                clusters = KMeans.fit(records, 4, new EuclideanDistance(), 1500);       //the big boy, the call to algorithm that makes the whole recommendation section display
+                printClusterInfo();                                                     //first variable is the data for clustering, second is the number of clusters, next is the clustering
+                int readFlag = 0;                                                       //centroid distance call, and the last is the amount of time it's run. The more the more accurate, but the longer it takes to run
                 List<Integer> clusterIDs = new ArrayList<>();
                 for(int i=0;i<bookTitleCluster.length;i++){
-                    if(!bookTitleCluster[i].equals("USER")){
+                    if(!bookTitleCluster[i].equals("USER")){    //checks to make sure the book ID is not going to be checked if the "book title" is the USER "book"
                         String temp = "SELECT bookID FROM capstone.books WHERE bookTitle = \""+bookTitleCluster[i]+"\""+";";
                         ResultSet rs7 = stmt.executeQuery(temp);
                         while(rs7.next()){
                             for(int j=0;j<elements.length;j++){
                                 if(rs7.getInt(1) == Integer.parseInt(elements[j])){ //if the book is one that the user has read, don't add it
                                     readFlag = 1;
-                                    //System.out.println("READ BOOK ID = "+rs7.getInt(1));
                                 }
                             }
                             if(readFlag == 0){
-                                clusterIDs.add(rs7.getInt(1));
-                                //System.out.println("UNREAD BOOK ID = "+rs7.getInt(1));
+                                clusterIDs.add(rs7.getInt(1));      //the list of book IDs that the user has not read to be put in the form
                             }
                         }
                     }
                 }
                 
-                clusterIDs.sort(new Comparator<Integer>(){
+                clusterIDs.sort(new Comparator<Integer>(){      //this is kind of a clunky sorting algorithm, but it used to sort the books by rating instead of being in order by bookID
                     public int compare(Integer thing1, Integer thing2){
                         String ratingGet = "SELECT bookRating FROM capstone.books WHERE bookID = "+thing1+";";
                         String ratingGet2 = "SELECT bookRating FROM capstone.books WHERE bookID = "+thing2+";";
@@ -515,7 +499,6 @@ public class MainMenuController implements Initializable {
                     }
                 });
                 
-                //System.out.println("THIS IS CLUSTER SIZE WITH THE BOOKS READ REMOVED = " + clusterIDs.size());
                 if(clusterIDs.size() >=7){    //as long as theres more than 7 books in the cluster, only show 7
                     for(int i=0;i<7;i++){
                         String recQuery2 = "SELECT bookID,bookTitle,bookAuthor,bookDescription,bookPageCount,bookRating,bookTotalReads,mainGenre "
@@ -595,10 +578,7 @@ public class MainMenuController implements Initializable {
         
         recTableView.setItems(Book.getRecItems()); //puts the recommended books into the table view
         allTableView.setItems(Book.getBookItems());  //puts all book data into the table view
-        readTableView.setItems(Book.getReadItems()); //puts the read book data into the table view
-        //clusters = KMeans.fit(records, 6, new EuclideanDistance(), 1000);
-        //printClusterInfo();
-        
+        readTableView.setItems(Book.getReadItems()); //puts the read book data into the table view  
     }
 }
 
