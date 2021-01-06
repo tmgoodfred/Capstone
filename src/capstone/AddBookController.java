@@ -23,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -89,8 +88,6 @@ public class AddBookController implements Initializable {
     
     String bookTitle="", bookAuthor="", bookDescription="", bookPageCount="", bookDifficultyLvl="", mainGenre="";
     List<String> bookTitleToComp = new ArrayList<>();
-    //Image bookCover; //maybe need to fix or change?
-    //byte[] bookCover;
     FileInputStream bookCover;
     Double actionAdventureLvl = 0.0, classicLvl = 0.0, mysteryLvl = 0.0, fantasyLvl = 0.0, historicalFictionLvl = 0.0, horrorLvl= 0.0, thrillerLvl= 0.0,
             romanceLvl= 0.0, sciFiLvl= 0.0, shortStoriesLvl= 0.0, historyLvl= 0.0, youngAdultLvl= 0.0;
@@ -99,6 +96,8 @@ public class AddBookController implements Initializable {
     int moveOn3 = 0;
     int moveOn4 = 0;
     int moveOn5 = 0;
+    int moveOn6 = 0;
+    int moveOn7 = 0;
     
     @FXML
     public void submitButtonAction(ActionEvent event) throws IOException{
@@ -110,7 +109,7 @@ public class AddBookController implements Initializable {
         }
         if(moveOn4 == 0)
         {
-            bookTitle = titleTxt.getText();
+            bookTitle = titleTxt.getText();     //if book title does not already exist, set it to the variable to be entered
         }
         
         String genre = (String) genreDropBox.getValue();
@@ -121,9 +120,24 @@ public class AddBookController implements Initializable {
             mainGenre = genreDropBox.getValue().toString();
         }
         
-        bookAuthor = authorTxt.getText();
-        bookDescription = descriptionTxt.getText();
-        //mainGenre = mainGenreTxt.getText();
+        if (authorTxt.getText().equals("") || authorTxt.getText().equals(null))
+        {
+            moveOn6 = 1;
+        }
+        else
+        {
+            bookAuthor = authorTxt.getText();
+        }
+        
+        if (descriptionTxt.getText().equals("") || descriptionTxt.getText().equals(null))
+        {
+            moveOn7 = 1;
+        }
+        else
+        {
+            bookDescription = descriptionTxt.getText();
+        }
+        
         //<editor-fold defaultstate="collapsed" desc="if statements for checking input">
         if(0>Integer.parseInt(pageCountTxt.getText())){ //checks if page count is smaller than 0, if so it triggers moveOn
             moveOn = 1;
@@ -320,7 +334,7 @@ public class AddBookController implements Initializable {
         String insert = "INSERT INTO capstone.books (bookTitle, bookAuthor, bookCover, bookDescription, bookPageCount, bookDifficultyLvl, mainGenre, actionAdventureLvl, classicLvl, mysteryLvl, "    //statement for inserting into the database
                         + "fantasyLvl, historicalFictionLvl, horrorLvl, thrillerLvl, romanceLvl, sciFiLvl, shortStoriesLvl, historyLvl, youngAdultLvl) "
                         + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        if(moveOn == 0 && moveOn2 == 0 && moveOn3 == 0 && moveOn4 == 0){
+        if(moveOn == 0 && moveOn2 == 0 && moveOn3 == 0 && moveOn4 == 0 && moveOn5 == 0 && moveOn6 == 0 && moveOn7 ==0){ //only moves on if the data is correctly entered
             Connection conn = null;
             try {
                 String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
@@ -416,6 +430,24 @@ public class AddBookController implements Initializable {
             alert.showAndWait();
             moveOn5 = 0;
         }
+        else if(moveOn6 == 1 && moveOn5 == 0 && moveOn4 == 0 && moveOn3 == 0 && moveOn == 0 && moveOn2 == 0){   //only displays if there is no author entered
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Please put an author");
+
+            alert.showAndWait();
+            moveOn6 = 0;
+        }
+        else if(moveOn7 == 1 && moveOn6 == 0 && moveOn5 == 0 && moveOn4 == 0 && moveOn3 == 0 && moveOn == 0 && moveOn2 == 0){   //only displays if there is no description does not match
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Please put a description");
+
+            alert.showAndWait();
+            moveOn7 = 0;
+        }
     }
     @FXML
     public void uploadImageButtonAction(ActionEvent event) throws IOException{
@@ -447,14 +479,6 @@ public class AddBookController implements Initializable {
         WritableImage image = SwingFXUtils.toFXImage(bufferedImage, null);
         
         bookCover = new FileInputStream(file);
-        /*ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-
-        for (int readNum; (readNum = fin.read(buf)) != -1;) {
-            bos.write(buf, 0, readNum);
-        }
-        bookCover = bos.toByteArray();*/
-
     }
     
     public void backButtonAction(ActionEvent event) throws IOException{
