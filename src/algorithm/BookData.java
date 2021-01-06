@@ -12,7 +12,7 @@ public class BookData {
     private final String bookTitle;
     private final Map<String, Double> genreRatings; //should be genre name and then the relative number, so Mystery, 0.6
 
-    public BookData(String bookTitle, Map<String, Double> genreRatings) {
+    public BookData(String bookTitle, Map<String, Double> genreRatings) {   //the title, and then a map of the genres and the related number with it
         this.bookTitle = bookTitle;
         this.genreRatings = genreRatings;
     }
@@ -21,11 +21,11 @@ public class BookData {
         this("", genreRatings);
     }
 
-    public String getBookTitle() {
+    public String getBookTitle() {  //retrieves the title
         return bookTitle;
     }
 
-    public Map<String, Double> getGenreRatings() {
+    public Map<String, Double> getGenreRatings() {  //retrieves the map of the genre ratings
         return genreRatings;
     }
 
