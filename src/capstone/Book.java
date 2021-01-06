@@ -106,7 +106,7 @@ public class Book {
         return items;
     }
     
-    public static ObservableList<Book> getRecItems(){
+    public static ObservableList<Book> getRecItems(){       //used to get the recommended book data to put into the table
         ObservableList<Book> items4 = FXCollections.observableArrayList();
         for(int i=0; i<recbookID.size();i++){
             items4.add(new Book(recbookID.get(i), recbookTitle.get(i), recbookAuthor.get(i), recbookDescription.get(i), recbookPageCount.get(i), recbookMainGenre.get(i),recbookRating.get(i)));
