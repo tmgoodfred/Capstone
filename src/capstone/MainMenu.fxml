@@ -9,24 +9,24 @@
 
 <AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.MainMenuController">
    <children>
-      <TabPane prefHeight="693.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="727.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Recommendations">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="886.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="667.0" prefWidth="895.0">
                      <children>
-                        <TableView fx:id="recTableView" layoutX="20.0" layoutY="21.0" prefHeight="590.0" prefWidth="847.0">
+                        <TableView fx:id="recTableView" layoutX="20.0" layoutY="21.0" prefHeight="601.0" prefWidth="876.0">
                           <columns>
                             <TableColumn fx:id="recTitleTab" prefWidth="139.0" text="Title" />
                             <TableColumn fx:id="recAuthTab" minWidth="8.0" prefWidth="133.0" text="Author" />
                               <TableColumn fx:id="recDescTab" prefWidth="317.0" text="Description" />
-                              <TableColumn fx:id="recPgCntTab" minWidth="0.0" prefWidth="73.0" text="Page Count" />
-                              <TableColumn fx:id="recGenreTab" prefWidth="109.0" text="Genre" />
-                              <TableColumn fx:id="recRateTab" prefWidth="75.0" text="Avg. Rating" />
+                              <TableColumn fx:id="recPgCntTab" minWidth="0.0" prefWidth="89.0" text="Page Count" />
+                              <TableColumn fx:id="recGenreTab" prefWidth="105.0" text="Genre" />
+                              <TableColumn fx:id="recRateTab" prefWidth="92.0" text="Avg. Rating" />
                           </columns>
                         </TableView>
-                        <Button fx:id="recReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#recreadMoreButtonAction" text="Read more" />
-                        <Button fx:id="logOffButton1" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
+                        <Button fx:id="recReadMoreButton" layoutX="411.0" layoutY="641.0" mnemonicParsing="false" onAction="#recreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton1" layoutX="826.0" layoutY="641.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
             </content>
@@ -35,18 +35,18 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="604.0" prefWidth="875.0">
                            <columns>
                               <TableColumn fx:id="allTitleTab" prefWidth="139.0" text="Title" />
                               <TableColumn fx:id="allAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
-                              <TableColumn fx:id="allDescTab" prefWidth="306.0" text="Description" />
-                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
-                              <TableColumn fx:id="allGenreTab" prefWidth="112.0" text="Genre" />
-                              <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
+                              <TableColumn fx:id="allDescTab" prefWidth="284.0" text="Description" />
+                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="103.0" text="Page Count" />
+                              <TableColumn fx:id="allGenreTab" prefWidth="114.0" text="Genre" />
+                              <TableColumn fx:id="allRateTab" prefWidth="92.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
-                        <Button fx:id="allReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#allreadMoreButtonAction" text="Read more" />
-                        <Button fx:id="logOffButton2" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
+                        <Button fx:id="allReadMoreButton" layoutX="411.0" layoutY="641.0" mnemonicParsing="false" onAction="#allreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton2" layoutX="796.0" layoutY="641.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
             </content>
@@ -55,19 +55,19 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="readTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                        <TableView fx:id="readTableView" layoutX="20.0" layoutY="21.0" prefHeight="610.0" prefWidth="873.0">
                            <columns>
                               <TableColumn fx:id="readTitleTab" prefWidth="139.0" text="Title" />
                               <TableColumn fx:id="readAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
                               <TableColumn fx:id="readDescTab" prefWidth="306.0" text="Description" />
-                              <TableColumn fx:id="readPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
-                              <TableColumn fx:id="readGenreTab" prefWidth="112.0" text="Genre" />
-                              <TableColumn fx:id="readRateTab" prefWidth="75.0" text="Avg. Rating" />
+                              <TableColumn fx:id="readPgCntTab" minWidth="0.0" prefWidth="92.0" text="Page Count" />
+                              <TableColumn fx:id="readGenreTab" prefWidth="96.0" text="Genre" />
+                              <TableColumn fx:id="readRateTab" prefWidth="97.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
-                        <Button fx:id="readReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#readreadMoreButtonAction" text="Read more" />
-                        <Button fx:id="refreshButton" layoutX="501.0" layoutY="625.0" mnemonicParsing="false" onAction="#refreshButtonAction" text="Refresh" />
-                        <Button fx:id="logOffButton3" layoutX="810.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
+                        <Button fx:id="readReadMoreButton" layoutX="408.0" layoutY="641.0" mnemonicParsing="false" onAction="#readreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="refreshButton" layoutX="508.0" layoutY="641.0" mnemonicParsing="false" onAction="#refreshButtonAction" text="Refresh" />
+                        <Button fx:id="logOffButton3" layoutX="823.0" layoutY="641.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
                </content>
@@ -77,19 +77,19 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Enter a Keyword" />
-                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
+                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="571.0" prefWidth="872.0">
                            <columns>
                               <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
                               <TableColumn fx:id="searchAuthTab" minWidth="8.0" prefWidth="132.0" text="Author" />
                               <TableColumn fx:id="searchDescTab" prefWidth="319.0" text="Description" />
-                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="70.0" text="Page Count" />
-                              <TableColumn fx:id="searchGenreTab" prefWidth="103.0" text="Genre" />
-                              <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
+                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="95.0" text="Page Count" />
+                              <TableColumn fx:id="searchGenreTab" prefWidth="106.0" text="Genre" />
+                              <TableColumn fx:id="searchRateTab" prefWidth="90.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
                         <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Search" />
-                        <Button fx:id="searchReadMoreButton" layoutX="406.0" layoutY="625.0" mnemonicParsing="false" onAction="#searchreadMoreButtonAction" text="Read more" />
-                        <Button fx:id="logOffButton4" layoutX="806.0" layoutY="625.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
+                        <Button fx:id="searchReadMoreButton" layoutX="411.0" layoutY="641.0" mnemonicParsing="false" onAction="#searchreadMoreButtonAction" text="Read more" />
+                        <Button fx:id="logOffButton4" layoutX="825.0" layoutY="641.0" mnemonicParsing="false" onAction="#logOffButtonAction" text="Log Off" />
                      </children>
                   </AnchorPane>
               </content>
