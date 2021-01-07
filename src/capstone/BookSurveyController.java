@@ -1,6 +1,5 @@
 package capstone;
 
-import static capstone.MainMenuController.elements;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,6 +51,7 @@ public class BookSurveyController implements Initializable {
     String booksReadToInsert;
     String booksRatingToInsert;
     int totalReadToInsert;
+    String[] elements = {"0"};
     
     Double userRatingAA, userRatingC,userRatingM, userRatingF, userRatingHF,        //variables to store the user's genre preference data
             userRatingH, userRatingT, userRatingR, userRatingSF, userRatingSS, userRatingHS, userRatingYA;
@@ -81,15 +81,42 @@ public class BookSurveyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         rate1.setToggleGroup(rate);        //puts the rating radio button into one group so only one can be selected 
-         rate2.setToggleGroup(rate);
-         rate3.setToggleGroup(rate);
-         rate4.setToggleGroup(rate);
-         rate5.setToggleGroup(rate);
-         ID = MainMenuController.bookIDtoShare;
-         userReadBooks = MainMenuController.userBooksReadList;
-         userBookRatings = MainMenuController.userBooksRatingList;
-         userTotalReads = MainMenuController.userTotalBooksReadList;
+        rate1.setToggleGroup(rate);        //puts the rating radio button into one group so only one can be selected 
+        rate2.setToggleGroup(rate);
+        rate3.setToggleGroup(rate);
+        rate4.setToggleGroup(rate);
+        rate5.setToggleGroup(rate);
+        ID = MainMenuController.bookIDtoShare;
+        Connection conn = null;
+        try {
+            String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
+            Statement stmt = null;
+            String userQuery = "SELECT userBooksRead, userBooksRating, userBooksReadTotal FROM capstone.users WHERE userID = "+LoginScreenController.userIDtoShare+";";
+            try {
+                stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(userQuery);   //gets the users read list
+                while(rs.next())
+                {
+                    userReadBooks = rs.getString(1);   //these are actually strings not lists despite the naming
+                    userBookRatings = rs.getString(2);
+                    userTotalReads = rs.getInt(3);
+                }
+                    elements = userReadBooks.split(",");    //splits the string of books read by a comma delimiter
+                }
+            catch (SQLException e ) {
+                    throw new Error("Problem", e);
+                  } finally {
+                    if (stmt != null) { stmt.close(); }
+                  }
+              }
+              catch (SQLException e) {
+                  throw new Error("Problem", e);
+              } 
+              finally {
+                try {if (conn != null) {conn.close();}} 
+                catch (SQLException ex) {System.out.println(ex.getMessage());}
+              }
     }
 
     @FXML
