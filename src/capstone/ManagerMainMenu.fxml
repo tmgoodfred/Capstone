@@ -9,25 +9,25 @@
 
 <AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.ManagerMainMenuController">
    <children>
-      <TabPane prefHeight="693.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="725.0" prefWidth="925.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="All Books">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="906.0">
                      <children>
-                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                        <TableView fx:id="allTableView" layoutX="20.0" layoutY="21.0" prefHeight="611.0" prefWidth="883.0">
                            <columns>
                               <TableColumn fx:id="allTitleTab" prefWidth="139.0" text="Title" />
                               <TableColumn fx:id="allAuthTab" minWidth="8.0" prefWidth="142.0" text="Author" />
                               <TableColumn fx:id="allDescTab" prefWidth="306.0" text="Description" />
-                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="71.0" text="Page Count" />
-                              <TableColumn fx:id="allGenreTab" prefWidth="112.0" text="Genre" />
-                              <TableColumn fx:id="allRateTab" prefWidth="75.0" text="Avg. Rating" />
+                              <TableColumn fx:id="allPgCntTab" minWidth="0.0" prefWidth="90.0" text="Page Count" />
+                              <TableColumn fx:id="allGenreTab" prefWidth="113.0" text="Genre" />
+                              <TableColumn fx:id="allRateTab" prefWidth="92.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
-                        <Button fx:id="addBookButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#addButtonAction" text="Add" />
-                        <Button fx:id="editBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#editButtonAction" text="Edit" />
-                        <Button fx:id="deleteBookButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
+                        <Button fx:id="addBookButton" layoutX="357.0" layoutY="641.0" mnemonicParsing="false" onAction="#addButtonAction" text="Add" />
+                        <Button fx:id="editBookButton" layoutX="440.0" layoutY="641.0" mnemonicParsing="false" onAction="#editButtonAction" text="Edit" />
+                        <Button fx:id="deleteBookButton" layoutX="513.0" layoutY="641.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
                      </children>
                   </AnchorPane>
             </content>
@@ -37,20 +37,20 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="searchTxt" layoutX="335.0" layoutY="14.0" promptText="Enter a Keyword" />
-                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="553.0" prefWidth="839.0">
+                        <TableView fx:id="searchTableView" layoutX="23.0" layoutY="55.0" prefHeight="575.0" prefWidth="883.0">
                            <columns>
                               <TableColumn fx:id="searchTitleTab" prefWidth="129.0" text="Title" />
                               <TableColumn fx:id="searchAuthTab" minWidth="8.0" prefWidth="132.0" text="Author" />
                               <TableColumn fx:id="searchDescTab" prefWidth="319.0" text="Description" />
-                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="70.0" text="Page Count" />
-                              <TableColumn fx:id="searchGenreTab" prefWidth="103.0" text="Genre" />
-                              <TableColumn fx:id="searchRateTab" prefWidth="85.0" text="Avg. Rating" />
+                              <TableColumn fx:id="searchPgCntTab" minWidth="0.0" prefWidth="88.0" text="Page Count" />
+                              <TableColumn fx:id="searchGenreTab" prefWidth="125.0" text="Genre" />
+                              <TableColumn fx:id="searchRateTab" prefWidth="89.0" text="Avg. Rating" />
                            </columns>
                         </TableView>
                         <Button fx:id="searchBtn" layoutX="502.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButtonAction" text="Search" />
-                        <Button fx:id="searchAddBookButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchAddButtonAction" text="Add" />
-                        <Button fx:id="searchEditBookButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchEditButtonAction" text="Edit" />
-                        <Button fx:id="searchDeleteBookButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" onAction="#searchDeleteButtonAction" text="Delete" />
+                        <Button fx:id="searchAddBookButton" layoutX="357.0" layoutY="641.0" mnemonicParsing="false" onAction="#searchAddButtonAction" text="Add" />
+                        <Button fx:id="searchEditBookButton" layoutX="440.0" layoutY="641.0" mnemonicParsing="false" onAction="#searchEditButtonAction" text="Edit" />
+                        <Button fx:id="searchDeleteBookButton" layoutX="522.0" layoutY="641.0" mnemonicParsing="false" onAction="#searchDeleteButtonAction" text="Delete" />
                      </children>
                   </AnchorPane>
               </content>
@@ -59,18 +59,18 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="userTableView" layoutX="20.0" layoutY="21.0" prefHeight="589.0" prefWidth="846.0">
+                        <TableView fx:id="userTableView" layoutX="20.0" layoutY="21.0" prefHeight="606.0" prefWidth="885.0">
                            <columns>
                               <TableColumn fx:id="usernameTab" prefWidth="176.0" text="Username" />
                               <TableColumn fx:id="userFirstNameTab" minWidth="8.0" prefWidth="185.0" text="First Name" />
                               <TableColumn fx:id="userLastNameTab" prefWidth="263.0" text="Last Name" />
-                              <TableColumn fx:id="userBooksReadTotalTab" minWidth="0.0" prefWidth="123.0" text="Total Books Read" />
-                              <TableColumn fx:id="userTimesAccessedTab" prefWidth="98.0" text="Times Accessed" />
+                              <TableColumn fx:id="userBooksReadTotalTab" minWidth="0.0" prefWidth="139.0" text="Total Books Read" />
+                              <TableColumn fx:id="userTimesAccessedTab" prefWidth="121.0" text="Times Accessed" />
                            </columns>
                         </TableView>
-                        <Button fx:id="addUserButton" layoutX="353.0" layoutY="619.0" mnemonicParsing="false" onAction="#addUserButtonAction" text="Add" />
-                        <Button fx:id="editUserButton" layoutX="425.0" layoutY="619.0" mnemonicParsing="false" onAction="#editUserButtonAction" text="Edit" />
-                        <Button fx:id="deleteUserButton" layoutX="497.0" layoutY="619.0" mnemonicParsing="false" onAction="#deleteUserButtonAction" text="Delete" />
+                        <Button fx:id="addUserButton" layoutX="363.0" layoutY="641.0" mnemonicParsing="false" onAction="#addUserButtonAction" text="Add" />
+                        <Button fx:id="editUserButton" layoutX="440.0" layoutY="641.0" mnemonicParsing="false" onAction="#editUserButtonAction" text="Edit" />
+                        <Button fx:id="deleteUserButton" layoutX="515.0" layoutY="641.0" mnemonicParsing="false" onAction="#deleteUserButtonAction" text="Delete" />
                      </children>
                   </AnchorPane>
                </content>
