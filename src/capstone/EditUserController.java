@@ -62,10 +62,8 @@ public class EditUserController implements Initializable {
     private void submitButtonAction(ActionEvent event) throws IOException{ 
         for(int i=0; i<usernameList.size();i++){
             System.out.println("name entered = " + usernameTxt.getText() + " comparing to ="+usernameList.get(i));
-            if(usernameTxt.getText().equals(usernameList.get(i))){    //checks to make sure the book doesn't already exist except for the current book
-                System.out.println("MATCHIN USERNAME");
+            if(usernameTxt.getText().equals(usernameList.get(i))){    //checks to make sure the user doesn't already exist except for the current user
                 if(usernameList.get(i).equals(usernameComp)){
-                    System.out.println("IT'S THE SAME, DON'T WORRY");
                     username = usernameTxt.getText();
                     break;
                 }
@@ -79,8 +77,23 @@ public class EditUserController implements Initializable {
             moveOn = 3;
         }
         
-        String firstName = firstNameTxt.getText();
-        String lastName = lastNameTxt.getText();
+        String firstName = "";
+        if(firstNameTxt.getText().equals("") || firstNameTxt.getText().equals(null) || firstNameTxt.getText().isEmpty()){   //checks if first name is null or empty
+            moveOn = 7;
+        }
+        else
+        {
+            firstName = firstNameTxt.getText();
+        }
+        
+        String lastName = "";
+        if(lastNameTxt.getText().equals("") || lastNameTxt.getText().equals(null)|| lastNameTxt.getText().isEmpty()){ //checks if last name null or empty
+            moveOn = 8;
+        }
+        else
+        {
+            lastName = lastNameTxt.getText();
+        }
         
         String age = ageTxt.getText();
         int ageNum = Integer.parseInt(age);
@@ -107,9 +120,7 @@ public class EditUserController implements Initializable {
                     insert.setInt(5, Integer.parseInt(age));
                     insert.setString(6, gender);
                     insert.executeUpdate(); //executes the insert
-                    insert.close();       
-                    //Stage stage2 = (Stage) submitBtn.getScene().getWindow();  //the following takes the user back to the login screen
-                    //stage2.close();
+                    insert.close();
                     Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
@@ -168,6 +179,22 @@ public class EditUserController implements Initializable {
 
             alert.showAndWait();
             moveOn = 0;
+        }
+        if (moveOn == 7){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please enter a first name");
+
+            alert.showAndWait();
+        }
+        if (moveOn == 8){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please enter a last name");
+
+            alert.showAndWait();
         }
     }
     
