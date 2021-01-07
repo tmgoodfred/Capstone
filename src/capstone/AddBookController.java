@@ -120,7 +120,7 @@ public class AddBookController implements Initializable {
             mainGenre = genreDropBox.getValue().toString();
         }
         
-        if (authorTxt.getText().equals("") || authorTxt.getText().equals(null))
+        if (authorTxt.getText().equals("") || authorTxt.getText().equals(null) || authorTxt.getText().isEmpty())
         {
             moveOn6 = 1;
         }
@@ -129,7 +129,7 @@ public class AddBookController implements Initializable {
             bookAuthor = authorTxt.getText();
         }
         
-        if (descriptionTxt.getText().equals("") || descriptionTxt.getText().equals(null))
+        if (descriptionTxt.getText().equals("") || descriptionTxt.getText().equals(null) || descriptionTxt.getText().isEmpty())
         {
             moveOn7 = 1;
         }
