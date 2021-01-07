@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  *
  * @author Tyler Goodfred
  */
-public class Capstone extends Application {
+public class Capstone extends Application { //this is merely here to launch the program
     
     @Override
     public void start(Stage stage) throws Exception {
