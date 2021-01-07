@@ -10,13 +10,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="659.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="capstone.AdminMainMenuController">
    <children>
-      <TabPane prefHeight="693.0" prefWidth="886.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="759.0" prefWidth="968.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Table1">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="673.0" prefWidth="886.0">
                      <children>
-                        <StackedBarChart fx:id="genreChart" layoutX="77.0" layoutY="59.0" prefHeight="546.0" prefWidth="732.0" title="Preferred Books by Genre">
+                        <StackedBarChart fx:id="genreChart" layoutX="118.0" layoutY="56.0" prefHeight="546.0" prefWidth="732.0" title="Preferred Books by Genre">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -24,7 +24,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </StackedBarChart>
-                        <Label layoutX="191.0" layoutY="633.0" text="Books rated lower than 1.5/5.0 are considered &quot;disliked&quot;. Books without ratings are not counted." />
+                        <Label layoutX="167.0" layoutY="675.0" text="Books rated lower than 1.5/5.0 are considered &quot;disliked&quot;. Books without ratings are not counted." />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -32,7 +32,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <PieChart fx:id="readPieChart" layoutX="126.0" layoutY="45.0" prefHeight="526.0" prefWidth="634.0" title="Which Genres are the Most Read" />
+                        <PieChart fx:id="readPieChart" layoutX="167.0" layoutY="43.0" prefHeight="526.0" prefWidth="634.0" title="Which Genres are the Most Read" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -40,7 +40,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart fx:id="popularBooksBarChart" layoutX="94.0" layoutY="66.0" prefHeight="532.0" prefWidth="698.0" title="Most Popular Books">
+                        <BarChart fx:id="popularBooksBarChart" layoutX="135.0" layoutY="55.0" prefHeight="532.0" prefWidth="698.0" title="Most Popular Books">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
