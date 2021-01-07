@@ -23,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -100,6 +99,8 @@ public class EditBookController implements Initializable {
     int moveOn3 = 0;
     int moveOn4 = 0;
     int moveOn5 = 0;
+    int moveOn6 = 0;
+    int moveOn7 = 0;
     int uploadCheck = 0;
     
     @FXML
@@ -126,8 +127,23 @@ public class EditBookController implements Initializable {
             mainGenre = genreDropBox.getValue().toString();
         }
         
-        bookAuthor = authorTxt.getText();
-        bookDescription = descriptionTxt.getText();
+        if (authorTxt.getText().equals("") || authorTxt.getText().equals(null) || authorTxt.getText().isEmpty())
+        {
+            moveOn6 = 1;
+        }
+        else
+        {
+            bookAuthor = authorTxt.getText();
+        }
+        
+        if (descriptionTxt.getText().equals("") || descriptionTxt.getText().equals(null) || descriptionTxt.getText().isEmpty())
+        {
+            moveOn7 = 1;
+        }
+        else
+        {
+            bookDescription = descriptionTxt.getText();
+        }
         //mainGenre = mainGenreTxt.getText();
         //<editor-fold defaultstate="collapsed" desc="if statements for checking input">
         if(0>Integer.parseInt(pageCountTxt.getText())){ //checks if page count is smaller than 0, if so it triggers moveOn
@@ -323,7 +339,7 @@ public class EditBookController implements Initializable {
         //</editor-fold>
         
         if(uploadCheck == 1){   //will execute if a new book cover is uploaded
-            if(moveOn == 0 && moveOn2 == 0 && moveOn3 == 0 && moveOn4 == 0){
+            if(moveOn == 0 && moveOn2 == 0 && moveOn3 == 0 && moveOn4 == 0 && moveOn5 == 0 && moveOn6 == 0 && moveOn7 == 0){
                 Connection conn = null;
                 try {
                     String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
@@ -412,6 +428,33 @@ public class EditBookController implements Initializable {
 
                 alert.showAndWait();
                 moveOn4 = 0;
+            }
+            else if(moveOn5 == 1 && moveOn4 == 0 && moveOn3 == 0 && moveOn == 0 && moveOn2 == 0){   //only displays if the title does not match
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Please select a genre");
+
+            alert.showAndWait();
+            moveOn5 = 0;
+        }
+            else if(moveOn6 == 1 && moveOn5 == 0 && moveOn4 == 0 && moveOn3 == 0 && moveOn == 0 && moveOn2 == 0){   //only displays if there is no author entered
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Please put an author");
+
+            alert.showAndWait();
+            moveOn6 = 0;
+            }
+            else if(moveOn7 == 1 && moveOn6 == 0 && moveOn5 == 0 && moveOn4 == 0 && moveOn3 == 0 && moveOn == 0 && moveOn2 == 0){   //only displays if there is no description does not match
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("ERROR");
+                alert.setContentText("Please put a description");
+
+                alert.showAndWait();
+                moveOn7 = 0;
             }
         }
         else if(uploadCheck == 0){  //will execute if no new book cover is uploaded
