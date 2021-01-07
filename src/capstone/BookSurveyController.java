@@ -74,20 +74,27 @@ public class BookSurveyController implements Initializable {
     List<Integer> yaBooks = new ArrayList<>();
     String bookQuery;
     String genreToComp;
+    Integer ID;
+    String userReadBooks;
+    String userBookRatings;
+    Integer userTotalReads;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         rate1.setToggleGroup(rate);
+         rate1.setToggleGroup(rate);        //puts the rating radio button into one group so only one can be selected 
          rate2.setToggleGroup(rate);
          rate3.setToggleGroup(rate);
          rate4.setToggleGroup(rate);
          rate5.setToggleGroup(rate);
+         ID = MainMenuController.bookIDtoShare;
+         userReadBooks = MainMenuController.userBooksReadList;
+         userBookRatings = MainMenuController.userBooksRatingList;
+         userTotalReads = MainMenuController.userTotalBooksReadList;
     }
 
     @FXML
     private void submitButtonAction(ActionEvent event) throws Exception {
         List<String> listOfBooksRead = Arrays.asList(elements); //[3],[4],[1]
-        Integer ID = MainMenuController.bookIDtoShare;
         for(int i=0;i<listOfBooksRead.size();i++)
         {
             if(listOfBooksRead.get(i).equals(ID.toString()))    //if any books match the books the user has read, do not allow them to rate again
@@ -118,7 +125,7 @@ public class BookSurveyController implements Initializable {
                     String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
                     conn = DriverManager.getConnection(url2, "tyler", "Rootpass1!");
                     Statement stmt = null;
-                    String query = "SELECT bookRating, bookTotalReads FROM capstone.books WHERE bookID = "+MainMenuController.bookIDtoShare+";"; //gets relevant book data from database
+                    String query = "SELECT bookRating, bookTotalReads FROM capstone.books WHERE bookID = "+ID+";"; //gets relevant book data from database
                     try {
                         stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
@@ -127,12 +134,12 @@ public class BookSurveyController implements Initializable {
                             bookTotalReads = rs.getInt(2);  //gets the current total reads of the book selected
                         }
                         readsToInsert = bookTotalReads+1;   //increases the total reads by 1
-                        ratingToInsert = (bookRating+rating)/readsToInsert; //recalculates the reating to insert
-                        String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+MainMenuController.bookIDtoShare+";";
+                        ratingToInsert = (bookRating+rating)/readsToInsert; //recalculates the rating to insert
+                        String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+ID+";";
                         stmt.executeUpdate(update);
-                        booksReadToInsert = MainMenuController.userBooksReadList+","+MainMenuController.bookIDtoShare;  //adds the book to the user's read list
-                        booksRatingToInsert = MainMenuController.userBooksRatingList+","+rating.toString(); //inserts the user's rating to the string
-                        totalReadToInsert = MainMenuController.userTotalBooksReadList+1;    //increases the user's total books read by 1
+                        booksReadToInsert = userReadBooks+","+ID;  //adds the book to the user's read list
+                        booksRatingToInsert = userBookRatings+","+rating.toString(); //inserts the user's rating to the string
+                        totalReadToInsert = userTotalReads+1;    //increases the user's total books read by 1
                         String update2 = "UPDATE capstone.users SET userBooksRead=\""+booksReadToInsert+"\", userBooksRating=\""+booksRatingToInsert+"\", userBooksReadTotal="+totalReadToInsert+" WHERE userID="+LoginScreenController.userIDtoShare+";";
                         stmt.executeUpdate(update2);
                         
@@ -218,7 +225,7 @@ public class BookSurveyController implements Initializable {
                                 }
                                 else
                                 {
-                                    System.out.println("what");
+                                    System.out.println("error with genre");
                                 }
                             }
                         }
