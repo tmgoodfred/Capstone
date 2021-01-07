@@ -104,6 +104,8 @@ public class MoreBookInfoController implements Initializable {
     
     @FXML
     private void readButtonAction(ActionEvent event) throws Exception {
+        Stage stage2 = (Stage) bookReadBtn.getScene().getWindow();
+        stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("BookSurvey.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
