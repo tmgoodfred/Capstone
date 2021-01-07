@@ -1,7 +1,5 @@
 package capstone;
 
-import capstone.User;
-import capstone.Book;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
