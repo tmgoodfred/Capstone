@@ -60,19 +60,17 @@ public class LoginScreenController implements Initializable {
         passwordArray = passwordList.toArray(passwordArray);    //converts list to array
         String username = usernameTxt.getText();    //extracts the data from the text field
         String password = passwordTxt.getText();    //extracts the data from the text field
-        for(int i = 0; i < usernameList.size();i++) //iterates through all usernames extracted from the database
-        {
-            if(username.matches(usernameArray[i]))  //checks the username input against every username in the database, as soon as one matches, it moves on
-            {
+        OUTER:
+        for (int i = 0; i < usernameList.size(); i++) {
+            if (username.matches(usernameArray[i])) {
                 moveOn=2;
                 noneFoundFlag = 2;
-                if(password.matches(passwordArray[i]))  //this is important, this checks the password entered against the password stored in the same tuple in the database
-                {
+                if (password.matches(passwordArray[i])) {
                     userIDtoShare = userIDList.get(i);
-                    Integer accessLvl = accessLvlList.get(i);   //gets the access level of the user that matches the login info to navigate to whichever screen is neccessary
-                    Integer userID = userIDList.get(i);     //userID is used to specify which row to update in the database for the user times accessed field
-                    Integer userAccess = userAccessList.get(i); //gets the user's times accessed
-                    userAccess = userAccess + 1;    //increments by 1
+                    Integer accessLvl = accessLvlList.get(i);
+                    Integer userID = userIDList.get(i);
+                    Integer userAccess = userAccessList.get(i);
+                    userAccess = userAccess + 1;
                     Connection conn = null;
                     try {
                         String url2 = "jdbc:mysql://72.190.54.247:3306/capstone?zeroDateTimeBehavior=CONVERT_TO_NULL";
@@ -84,51 +82,60 @@ public class LoginScreenController implements Initializable {
                             stmt.executeUpdate(update);
                         }
                         catch (SQLException e ) {
-                          throw new Error("Problem", e);
+                            throw new Error("Problem", e);
                         } finally {
-                          if (stmt != null) { stmt.close(); }
+                            if (stmt != null) { stmt.close(); }
                         }
                     }
                     catch (SQLException e) {
                         throw new Error("Problem", e);
                     } 
                     finally {
-                      try {if (conn != null) {conn.close();}} 
-                      catch (SQLException ex) {System.out.println(ex.getMessage());}
+                        try {if (conn != null) {conn.close();}}
+                        catch (SQLException ex) {System.out.println(ex.getMessage());}
                     }
-                    
-                    if(accessLvl == 3){ //shows the main menu screen for the typical user - access level 3
-                        noneFoundFlag2 = 3;
-                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
-                        stage3.close();
-                        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-                        Stage stage = new Stage();
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
-                        break;
-                    }
-                    else if (accessLvl == 1){
-                        noneFoundFlag2 = 3;
-                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
-                        stage3.close();
-                        Parent root = FXMLLoader.load(getClass().getResource("AdminMainMenu.fxml"));
-                        Stage stage = new Stage();
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
-                        break;
-                    }
-                    else if (accessLvl == 2){
-                        noneFoundFlag2 = 3;
-                        Stage stage3 = (Stage) submitBtn.getScene().getWindow();
-                        stage3.close();
-                        Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
-                        Stage stage = new Stage();
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
-                        break;
+                    if (null != accessLvl) {
+                        switch (accessLvl) {
+                            case 3:
+                                {
+                                    //shows the main menu screen for the typical user - access level 3
+                                    noneFoundFlag2 = 3;
+                                    Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                                    stage3.close();
+                                    Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+                                    Stage stage = new Stage();
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    break OUTER;
+                                }
+                            case 1:
+                                {
+                                    noneFoundFlag2 = 3;
+                                    Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                                    stage3.close();
+                                    Parent root = FXMLLoader.load(getClass().getResource("AdminMainMenu.fxml"));
+                                    Stage stage = new Stage();
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    break OUTER;
+                                }
+                            case 2:
+                                {
+                                    noneFoundFlag2 = 3;
+                                    Stage stage3 = (Stage) submitBtn.getScene().getWindow();
+                                    stage3.close();
+                                    Parent root = FXMLLoader.load(getClass().getResource("ManagerMainMenu.fxml"));
+                                    Stage stage = new Stage();
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    break OUTER;
+                                }
+                            default:
+                                break;
+                        }
                     }
                 }
             }
