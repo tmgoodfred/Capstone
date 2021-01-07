@@ -38,19 +38,14 @@ public class CreateAccountScreenController implements Initializable {
     
     @FXML
     TextField usernameTxt;
-    
     @FXML
     TextField firstNameTxt;
-    
     @FXML
     TextField lastNameTxt;
-    
     @FXML
     TextField passwordTxt;
-    
     @FXML
     TextField confirmPasswordTxt;
-    
     @FXML
     TextField ageTxt;
     
@@ -397,9 +392,23 @@ public class CreateAccountScreenController implements Initializable {
         if(!password.matches(confirmPassword) && moveOn != 2){  //checks if the passwords match
             moveOn = 3;
         }
+        String firstName = "";
+        if(firstNameTxt.getText().equals("") || firstNameTxt.getText().equals(null) || firstNameTxt.getText().isEmpty()){   //checks if first name is null or empty
+            moveOn = 7;
+        }
+        else
+        {
+            firstName = firstNameTxt.getText();
+        }
         
-        String firstName = firstNameTxt.getText();
-        String lastName = lastNameTxt.getText();
+        String lastName = "";
+        if(lastNameTxt.getText().equals("") || lastNameTxt.getText().equals(null)|| lastNameTxt.getText().isEmpty()){ //checks if last name null or empty
+            moveOn = 8;
+        }
+        else
+        {
+            lastName = lastNameTxt.getText();
+        }
         
         String age = ageTxt.getText();
         int ageNum = Integer.parseInt(age);
@@ -496,6 +505,22 @@ public class CreateAccountScreenController implements Initializable {
             alert.setTitle("Error");
             alert.setHeaderText("ERROR");
             alert.setContentText("Error: Please select a gender");
+
+            alert.showAndWait();
+        }
+        if (moveOn == 7){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please enter a first name");
+
+            alert.showAndWait();
+        }
+        if (moveOn == 8){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Error: Please enter a last name");
 
             alert.showAndWait();
         }
