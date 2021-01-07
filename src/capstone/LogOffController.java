@@ -3,7 +3,6 @@ package capstone;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,8 +36,8 @@ public class LogOffController implements Initializable {
     }
     
     @FXML
-    public void noButtonAction(ActionEvent event) throws IOException{
-        Stage stage2 = (Stage) noBtn.getScene().getWindow();
+    public void noButtonAction(ActionEvent event) throws IOException{   //unfortunately this means it has to run the algorithm again and can make the launch take time but
+        Stage stage2 = (Stage) noBtn.getScene().getWindow();            //it's neccesary for the log off to work properly. 
         stage2.close();
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Stage stage = new Stage();
