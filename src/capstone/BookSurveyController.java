@@ -161,7 +161,7 @@ public class BookSurveyController implements Initializable {
                             bookTotalReads = rs.getInt(2);  //gets the current total reads of the book selected
                         }
                         readsToInsert = bookTotalReads+1;   //increases the total reads by 1
-                        ratingToInsert = (bookRating+rating)/readsToInsert; //recalculates the rating to insert
+                        ratingToInsert = (bookRating+rating)/2; //recalculates the rating to insert
                         String update = "UPDATE capstone.books SET bookRating="+ratingToInsert+", bookTotalReads="+readsToInsert+" WHERE bookID = "+ID+";";
                         stmt.executeUpdate(update);
                         booksReadToInsert = userReadBooks+","+ID;  //adds the book to the user's read list
